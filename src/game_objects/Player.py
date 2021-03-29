@@ -13,6 +13,9 @@ class Player(Actor.Actor):
         self.selected_item = None
     
     def update(self):
+        self.player_movement()
+        
+    def player_movement(self):
         if pygame.key.get_pressed()[PLAYER_MOVE_RIGHT] == True:
             self.x += self.speed 
         if pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
