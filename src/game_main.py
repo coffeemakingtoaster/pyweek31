@@ -22,7 +22,7 @@ def launch_game():
     pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
     pygame.init()
     screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
-    gameMap = pytmx.load_pygame("data/maps/test-map.tmx")
+    gameMap = pytmx.load_pygame("data/maps/test-map-csv.tmx")
     running = True
     button = pygame_additions.button(40,40,100,100)
     button.set_action(hallo_welt)
@@ -67,6 +67,13 @@ def launch_game():
         logic.update()
         next_frame = render.generate_new_frame()
         ui.say("Frames per second: "+str(last_second_frames))
+        ui.uiHelper.createText("Frames per second: "+str(last_second_frames), {
+            'font': ui.uiHelper.fonts['text'],
+            'render': render,
+            'x': WINDOW_WIDHT - 250,
+            'y': 100,
+            'color': (255, 255, 255)
+        })
         screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
         for event in pygame.event.get():

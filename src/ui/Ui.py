@@ -3,13 +3,14 @@ import pygame
 from .UiHelper import * 
 from ..config import *
 from .Notification import *
+from .Menu import *
 
 class Ui:
 
     def __init__(self):
         self.uiHelper = UiHelper()
         self.notification = Notification(self)
-
+        self.menu = Menu(self)
         self.say('Ui loaded!')
 
 
