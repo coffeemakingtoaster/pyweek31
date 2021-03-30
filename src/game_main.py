@@ -34,15 +34,20 @@ def launch_game():
             "chest": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'chest.png'))
         },
         'sounds': {
-            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3'))
+            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3')),
+            "bark" : [
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'pew_sfx.mp3')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'bark.mp3')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'bark_2.mp3'))
+            ]
         }
     }
 
     #Load sound
     soundHelper = SoundHelper.SoundHelper()
 
-    #play background music
-    soundHelper.play_music(assets['sounds']['background'], 0)
+    #Play background music
+    soundHelper.play_music(assets['sounds']['background'], -1)
 
     #Create logic
     logic = Logic.Logic()
@@ -54,6 +59,11 @@ def launch_game():
         next_frame = render.generate_new_frame()
         screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
+
+        #Sound test
+        if pygame.key.get_pressed()[pygame.K_SPACE]:
+            soundHelper.play_sfx(assets['sounds']['bark'], 0)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

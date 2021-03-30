@@ -12,8 +12,6 @@ MIN_VER = (3, 8)
         
 class Launcher():
     def __init__(self):
-        game.launch_game()
-        return
         root.geometry("400x200")
         root.title("pyweek31 - placeholder")
         self.banner = tkinter.Label(root, text = "pygame 31!").pack()
