@@ -21,9 +21,10 @@ class Render():
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid, in layer:
-                    tile = self.map.get_tile_image_by_gid(gid)
+                    tile = self.map.get_tile_image_by_gid(gid)              
                     if tile != None:
-                        self.frame.blit(tile, ( (x * self.map.tilewidth) - self.logic.player.x, (y * self.map.tileheight) - self.logic.player.y))
+                        tile = pygame.transform.scale(tile,(config.TILE_SIZE,config.TILE_SIZE))
+                        self.frame.blit(tile, ( (x * config.TILE_SIZE) - self.logic.player.x, (y * config.TILE_SIZE) - self.logic.player.y))
 
     
     def draw_game_objects(self):
@@ -31,7 +32,7 @@ class Render():
             self.add_asset_to_screen(self.assets['textures']['enemy'], enemy.x , enemy.y)
         
         for chest in self.logic.chests:
-            self.add_asset_to_screen(self.assets['textures']['chest'], chest.x, chest.y)
+            self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
         #draw player                        
         self.add_asset_to_screen(self.assets['textures']['max'])
         
