@@ -30,7 +30,7 @@ def launch_game():
     }
 
     #Create logic
-    logic = Logic.Logic()
+    logic = Logic.Logic(gameMap)
 
     render = Render.Render(logic, assets, gameMap)
 

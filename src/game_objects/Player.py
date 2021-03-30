@@ -25,7 +25,7 @@ class Player(Actor.Actor):
         if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
             self.y -= self.speed 
         
-        print("Player ", "x:" + str(self.x), "y: " + str(self.y))
+        # print("Player ", "x:" + str(self.x), "y: " + str(self.y))
 
     #call on item pickup    
     def add_item_to_inventory(item):
