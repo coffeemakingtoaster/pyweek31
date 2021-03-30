@@ -13,7 +13,7 @@ class Logic():
 
         self.enemies = []
         self.enemies.append(Guard.Guard())
-        self.player = Player.Player()
+        self.player = Player.Player(self.chests)
         
         self.collision_objects = []
         

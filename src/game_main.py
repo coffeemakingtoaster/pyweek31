@@ -1,9 +1,14 @@
+#library imports
 import pygame
-from . import pygame_additions
 import pytmx 
+import os
+
+#local imports
+from . import pygame_additions
 from . import Logic
 from . import Render
-import os
+
+from .helper import SoundHelper
 
 from . import config
 
@@ -11,6 +16,7 @@ def hallo_welt():
     print("hallo")
 
 def launch_game():
+    pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
     pygame.init()
     screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
     gameMap = pytmx.load_pygame("data/maps/gameart2d-desert.tmx")
@@ -26,8 +32,17 @@ def launch_game():
             "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png')),
             "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
             "chest": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'chest.png'))
+        },
+        'sounds': {
+            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3'))
         }
     }
+
+    #Load sound
+    soundHelper = SoundHelper.SoundHelper()
+
+    #play background music
+    soundHelper.play_music(assets['sounds']['background'], 0)
 
     #Create logic
     logic = Logic.Logic(gameMap)
