@@ -34,7 +34,7 @@ def launch_game():
         'textures': {
             "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png')),
             "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
-            "chest": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'chest.png'))
+            "chest": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png'))
         },
         'sounds': {
             "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3'))
@@ -76,6 +76,8 @@ def launch_game():
         })
         screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
+        x,y = pygame.mouse.get_pos()
+        #print("mouse: {},{} || Player: {},{}".format(x-(config.WINDOW_WIDHT/2),y-(config.WINDOW_HEIGHT/2),logic.player.x,logic.player.y))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
