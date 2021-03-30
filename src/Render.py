@@ -9,13 +9,14 @@ class Render():
         self.assets = assets
         self.map = gameMap
         self.ui = ui
+        self.cnt = 0
 
     def generate_new_frame(self):
-        self.cnt = 0
         self.frame = pygame.Surface(config.WINDOW_DIMENSIONS)
         self.draw_map()
         self.draw_game_objects()
         self.ui.draw_ui(self)
+        self.cnt+=1
         return self.frame
 
     def draw_map(self):            
@@ -54,5 +55,9 @@ class Render():
             return False
         if not (self.logic.player.y - config.WINDOW_HEIGHT) <= (y*self.map.tileheight) <= (self.logic.player.y + config.WINDOW_HEIGHT):
             return False
-        self.cnt+=1
         return True
+    
+    def get_drawn_frames(self):
+        x = self.cnt
+        self.cnt = 0
+        return x

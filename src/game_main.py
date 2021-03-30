@@ -2,6 +2,7 @@
 import pygame
 import pytmx 
 import os
+import time
 
 #local imports
 from . import pygame_additions
@@ -55,9 +56,17 @@ def launch_game():
     render = Render.Render(logic, assets, gameMap, ui)
     ui.say('Game Main loaded!')
     
+    last_second_frames = 0
+    
+    start_time = time.time()
+    
     while running:
+        if time.time() - start_time > 1 :
+            start_time = time.time()
+            last_second_frames = render.get_drawn_frames()
         logic.update()
         next_frame = render.generate_new_frame()
+        ui.say("Frames per second: "+str(last_second_frames))
         screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
         for event in pygame.event.get():
