@@ -389,3 +389,4 @@ Thumbs.db #thumbnail cache on Windows
 
 
 .vscode/
+.DS_Store

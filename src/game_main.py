@@ -1,16 +1,19 @@
+#library imports
 import pygame
-from . import pygame_additions
 import pytmx 
+import os
+
+#local imports
+from . import pygame_additions
 from . import Logic
 from . import Render
+
 from .helper import SoundHelper
-import os
 
 from . import config
 
 def hallo_welt():
     print("hallo")
-
 
 def launch_game():
     pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
@@ -50,7 +53,7 @@ def launch_game():
     while running:
         logic.update()
         next_frame = render.generate_new_frame()
-        screen.blit(next_frame, (0, 0))     
+        screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
