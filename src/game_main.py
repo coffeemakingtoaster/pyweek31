@@ -21,7 +21,7 @@ def launch_game():
     pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
     pygame.init()
     screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
-    gameMap = pytmx.load_pygame("data/maps/gameart2d-desert.tmx")
+    gameMap = pytmx.load_pygame("data/maps/test-map.tmx")
     running = True
     button = pygame_additions.button(40,40,100,100)
     button.set_action(hallo_welt)
@@ -50,7 +50,7 @@ def launch_game():
     ui = Ui()
 
     #Create logic
-    logic = Logic.Logic()
+    logic = Logic.Logic(gameMap)
 
     render = Render.Render(logic, assets, gameMap, ui)
     ui.say('Game Main loaded!')
