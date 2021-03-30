@@ -1,9 +1,13 @@
+#library imports
 import pygame
-from . import pygame_additions
 import pytmx 
+import os
+
+#local imports
+from . import pygame_additions
 from . import Logic
 from . import Render
-import os
+
 
 from . import config
 
