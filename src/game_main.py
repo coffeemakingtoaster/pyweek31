@@ -45,7 +45,7 @@ def launch_game():
     soundHelper.play_music(assets['sounds']['background'], 0)
 
     #Create logic
-    logic = Logic.Logic()
+    logic = Logic.Logic(gameMap)
 
     render = Render.Render(logic, assets, gameMap)
 

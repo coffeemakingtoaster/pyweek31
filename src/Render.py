@@ -1,5 +1,6 @@
 import pygame
 from . import config
+import pytmx
 
 class Render(): 
 
@@ -16,13 +17,14 @@ class Render():
         self.draw_hud()
         return self.frame
 
-    #TODO: If there is more logic in map -> outsource this
-    def draw_map(self):
+    def draw_map(self):            
         for layer in self.map.visible_layers:
-            for x, y, gid, in layer:
-                tile = self.map.get_tile_image_by_gid(gid)
-                if tile != None and self.tile_is_onscreen(x,y):
-                    self.frame.blit(tile, ( (x * self.map.tilewidth) - self.logic.player.x, (y * self.map.tileheight) - self.logic.player.y))
+            if isinstance(layer, pytmx.TiledTileLayer):
+                for x, y, gid, in layer:
+                    tile = self.map.get_tile_image_by_gid(gid)
+                    if tile != None:
+                        self.frame.blit(tile, ( (x * self.map.tilewidth) - self.logic.player.x, (y * self.map.tileheight) - self.logic.player.y))
+
     
     def draw_game_objects(self):
         for enemy in self.logic.enemies:
