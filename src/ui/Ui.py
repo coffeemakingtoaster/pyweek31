@@ -20,6 +20,8 @@ class Ui:
     def draw_ui(self, render):
 
         self.notification.render(render)
+        self.menu.update()
+        self.menu.render(render)
 
         start_time = pygame.time.get_ticks()
         self.uiHelper.createText(str(start_time/1000), {

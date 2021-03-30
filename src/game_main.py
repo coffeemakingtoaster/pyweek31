@@ -66,7 +66,7 @@ def launch_game():
             last_second_frames = render.get_drawn_frames()
         logic.update()
         next_frame = render.generate_new_frame()
-        ui.say("Frames per second: "+str(last_second_frames))
+        #ui.say("Frames per second: "+str(last_second_frames))
         ui.uiHelper.createText("Frames per second: "+str(last_second_frames), {
             'font': ui.uiHelper.fonts['text'],
             'render': render,
