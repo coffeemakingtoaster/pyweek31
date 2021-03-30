@@ -3,7 +3,7 @@ import pygame
 
 class Menu():
 
-    def __init__(self, ui):
+    def __init__(self, ui, classes):
         self.menu = {}
         self.current_menu = 'main'
         self.current_option = 0
@@ -15,7 +15,7 @@ class Menu():
         self.time_wait = 100
 
         self.add_menu('main')
-        self.add_option("main", "Start", lambda: print('hello'))
+        self.add_option("main", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         self.add_option("main", "Options", lambda: print('options'))
         self.add_option("main", "End", lambda: print('end'))
 

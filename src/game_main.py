@@ -53,7 +53,10 @@ def launch_game():
     soundHelper.play_music(assets['sounds']['background'], -1)
 
     #Load User Interface
-    ui = Ui()
+    ui = Ui({
+        'assets': assets,
+        'soundHelper': soundHelper
+    })
 
     #Create logic
     logic = Logic.Logic(gameMap)
