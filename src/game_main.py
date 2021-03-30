@@ -24,29 +24,25 @@ def launch_game():
     #Load assets
     assets = {
         'textures': {
-            "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png'))
+            "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png')),
+            "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
+            "chest": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'chest.png'))
         }
     }
 
     #Create logic
     logic = Logic.Logic()
 
-    render = Render.Render(logic, assets)
+    render = Render.Render(logic, assets, gameMap)
 
     while running:
         logic.update()
         next_frame = render.generate_new_frame()
-        screen.blit(next_frame, (0, 0))
-        
+        screen.blit(next_frame, (0, 0))     
         #button.draw(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                button.handle_input(event.pos)
-        for layer in gameMap.visible_layers:
-            for x, y, gid, in layer:
-                tile = gameMap.get_tile_image_by_gid(gid)
-                if(tile != None):
-                    screen.blit(tile, (x * gameMap.tilewidth, y * gameMap.tileheight))        
+                button.handle_input(event.pos)               
         pygame.display.flip()
