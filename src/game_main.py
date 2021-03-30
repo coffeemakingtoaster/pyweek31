@@ -10,6 +10,8 @@ from . import Render
 
 from .helper import SoundHelper
 
+from .ui.Ui import *
+
 from . import config
 
 def hallo_welt():
@@ -44,11 +46,15 @@ def launch_game():
     #play background music
     soundHelper.play_music(assets['sounds']['background'], 0)
 
+    #Load User Interface
+    ui = Ui()
+
     #Create logic
     logic = Logic.Logic()
 
-    render = Render.Render(logic, assets, gameMap)
-
+    render = Render.Render(logic, assets, gameMap, ui)
+    ui.say('Game Main loaded!')
+    
     while running:
         logic.update()
         next_frame = render.generate_new_frame()

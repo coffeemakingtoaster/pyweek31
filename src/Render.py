@@ -3,17 +3,18 @@ from . import config
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap):
+    def __init__(self, logic, assets, gameMap, ui):
         self.logic = logic
         self.assets = assets
         self.map = gameMap
+        self.ui = ui
 
     def generate_new_frame(self):
         self.cnt = 0
         self.frame = pygame.Surface(config.WINDOW_DIMENSIONS)
         self.draw_map()
         self.draw_game_objects()
-        self.draw_hud()
+        self.ui.draw_ui(self)
         return self.frame
 
     #TODO: If there is more logic in map -> outsource this
@@ -45,15 +46,6 @@ class Render():
             y = y - self.logic.player.y + config.WINDOW_HEIGHT/2
         self.frame.blit(asset, ( x  - asset.get_width()/2 , y  - asset.get_height()/2))
     
-    def draw_hud(self):
-        font = pygame.font.SysFont(None, 24)
-        img = font.render('hello', True, (0, 0, 255))
-        self.frame.blit(img, (20, 20))
-        start_time = pygame.time.get_ticks()
-        font = pygame.font.Font(None, 54)
-        text = font.render(str(start_time/1000), True, (255, 255, 255))
-        self.frame.blit(text, (50, 50))
-
     def tile_is_onscreen(self,x,y):
         if not (self.logic.player.x - config.WINDOW_WIDHT) <= (x*self.map.tilewidth) <= (self.logic.player.x + config.WINDOW_WIDHT):
             return False
