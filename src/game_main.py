@@ -10,7 +10,6 @@ from . import config
 def hallo_welt():
     print("hallo")
 
-
 def launch_game():
     pygame.init()
     screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
@@ -38,7 +37,7 @@ def launch_game():
     while running:
         logic.update()
         next_frame = render.generate_new_frame()
-        screen.blit(next_frame, (0, 0))     
+        screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

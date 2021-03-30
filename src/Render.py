@@ -44,7 +44,10 @@ class Render():
         self.frame.blit(asset, ( x  - asset.get_width()/2 , y  - asset.get_height()/2))
     
     def draw_hud(self):
-        pass
+        start_time = pygame.time.get_ticks()
+        font = pygame.font.Font(None, 54)
+        text = font.render(str(start_time/1000), True, (255, 255, 255))
+        self.frame.blit(text, (50, 50))
 
     def tile_is_onscreen(self,x,y):
         if not (self.logic.player.x - config.WINDOW_WIDHT/2) <= x <= (self.logic.player.x + config.WINDOW_WIDHT/2):
