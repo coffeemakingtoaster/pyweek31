@@ -15,6 +15,7 @@ class Render():
         self.draw_hud()
         return self.frame
 
+    #TODO: If there is more logic in map -> outsource this
     def draw_map(self):
         for layer in self.map.visible_layers:
             for x, y, gid, in layer:
@@ -44,7 +45,9 @@ class Render():
         self.frame.blit(asset, ( x  - asset.get_width()/2 , y  - asset.get_height()/2))
     
     def draw_hud(self):
-        pass
+        font = pygame.font.SysFont(None, 24)
+        img = font.render('hello', True, (0, 0, 255))
+        self.frame.blit(img, (20, 20))
 
     def tile_is_onscreen(self,x,y):
         if not (self.logic.player.x - config.WINDOW_WIDHT/2) <= x <= (self.logic.player.x + config.WINDOW_WIDHT/2):

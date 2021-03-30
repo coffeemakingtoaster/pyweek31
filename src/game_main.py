@@ -21,6 +21,7 @@ def launch_game():
     #button.draw(screen)
     pygame.display.flip()
     print(os.path.join('..', 'data', 'assets', 'testing', 'max.png'))
+    
     #Load assets
     assets = {
         'textures': {
