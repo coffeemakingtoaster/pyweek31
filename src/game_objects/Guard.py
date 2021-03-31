@@ -5,7 +5,7 @@ import math
 
 class Guard(Actor.Actor):
 
-    def __init__(self,pos):
+    def __init__(self,pos,walls):
         super().__init__()
 
         self.pos = pos
@@ -19,7 +19,11 @@ class Guard(Actor.Actor):
 
     def raycast(self, degree, length, walls):
 
-        end = Point(200,200)
+
+
+        end = Point(300,300)
+
+
         ray = Section((self.pos.x,self.pos.y),(end.x,end.y))
         m = (ray.endPoint[0]-ray.startPoint[0])/(ray.endPoint[1]-ray.startPoint[1])
         intersections = []
@@ -50,3 +54,13 @@ class Guard(Actor.Actor):
 
     def distance(a,b):
         return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+
+    def addAngleToVector(self,angle,vector):
+        return  Point((cos(math.radians(angle))*vector.x - sin(math.radians(angle))*vector.y),(sin(math.radians(angle))*vector.x +cos(math.radians(angle))*vector.y));
+
+    def normVector(self,x,y):
+        if x == 0 and y == 0:
+            return Point(0,0)
+        normFactor = math.sqrt(1/(x*x+y*y))
+        return Point(normFactor*x,normFactor*y)
+
