@@ -22,41 +22,36 @@ class Player(Actor.Actor):
         self.player_interact()
         
     def player_movement(self):
+        new_rotation = -1       
         if pygame.key.get_pressed()[PLAYER_MOVE_RIGHT] == True:
             self.x += self.speed
-            if self.rotation<270 and self.rotation>90:
-                self.rotation += 5
-            elif self.rotation==270 :
-                pass
+            if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
+                new_rotation = 315
+            elif pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
+                new_rotation = 225
             else:
-                self.rotation -= 5 
-        if pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
-            self.y += self.speed 
-            if self.rotation<180:
-                self.rotation += 5
-            else:
-                self.rotation -= 5
+                new_rotation = 270
+                
         if pygame.key.get_pressed()[PLAYER_MOVE_LEFT] == True:
             self.x -= self.speed            
-            if self.rotation<180 and self.rotation>90:
-                self.rotation -= 5
-            elif self.rotation == 90:
-                pass
+            if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
+                new_rotation = 45
+            elif pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
+                new_rotation = 135
             else:
-                self.rotation += 5 
+                new_rotation = 90
+                
+        if pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
+            self.y += self.speed
+            if new_rotation == -1:
+                new_rotation = 180         
+                
         if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
             self.y -= self.speed
-            if self.rotation<180:
-                self.rotation -= 5
-            elif self.rotation == 0:
-                pass
-            else:
-                self.rotation += 5 
+            if new_rotation == -1:
+                new_rotation = 0 
         
-        if self.rotation < 0:
-            self.rotation = 359
-        elif self.rotation >= 360:
-            self.rotation = 0
+        self.rotation = new_rotation
 
         #print("Player ", "x:" + str(self.x), "y: " + str(self.y))
         
