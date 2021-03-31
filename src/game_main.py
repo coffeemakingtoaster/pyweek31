@@ -65,7 +65,8 @@ def launch_game():
     })
 
     #Create logic
-    logic = Logic.Logic(gameMap)
+    #logic = Logic.Logic(gameMap) MC: why was there here gameMap in it?
+    logic = Logic.Logic()
 
     render = Render.Render(logic, assets, gameMap, ui)
     ui.say('Game Main loaded!')
