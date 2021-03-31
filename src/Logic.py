@@ -7,14 +7,18 @@ import pytmx
 import pygame
 
 class Logic():
-    def __init__(self):
+    def __init__(self, game_map):
         self.chests = []
         self.chests.append(Chest.Chest())
+        
+        self.map = game_map
 
         self.enemies = []
         self.enemies.append(Guard.Guard(Point(200,200)))
         self.player = Player.Player(self.chests)
-
+        self.collision_objects = []
+        
+        self.add_collision_objects()
 
     def update(self):
         self.player.update()
