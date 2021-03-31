@@ -19,7 +19,6 @@ class Render():
         self.draw_game_objects()
         self.ui.draw_ui(self)
         self.cnt+=1
-        print("tiles on screen:"+ str(self.tiles_on_screen))
         self.tiles_on_screen = 0
         return self.frame
 
@@ -60,7 +59,6 @@ class Render():
             return False
         if not (self.logic.player.y - config.TILE_SIZE) <= (y* config.TILE_SIZE) <= (self.logic.player.y + config.WINDOW_HEIGHT):
             return False
-        self.tiles_on_screen +=1 
         return True
     
     def get_drawn_frames(self):
@@ -68,14 +66,3 @@ class Render():
         self.cnt = 0
         return x
    
-    '''     
-    def get_rotation(self,orientation):
-        x = orientation[0]
-        y = orientation[1]
-        if x==0 and y == 1:
-            return 0
-        angle = math.atan2(y-1,x) 
-        while angle < 0.0:
-            angle += math.pi * 2
-        return math.degrees(angle)
-    '''
