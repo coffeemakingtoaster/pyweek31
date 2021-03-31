@@ -7,8 +7,12 @@ class Guard(Actor.Actor):
 
     def __init__(self):
         super().__init__()
-        self.pos = Point()
-        self.goalPos = Point()
+
+        self.pos = pos
+        self.goalPos = pos
+
+        self.rotation = 0
+
 
     def update(self):
         pass

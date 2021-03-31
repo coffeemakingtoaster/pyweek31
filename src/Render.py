@@ -1,40 +1,50 @@
 import pygame
 from . import config
+from .helper import GraphicsHelper
 import pytmx
+import math 
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap):
+    def __init__(self, logic, assets, gameMap, ui):
         self.logic = logic
         self.assets = assets
         self.map = gameMap
+        self.ui = ui
+        self.cnt = 0
+        self.tiles_on_screen = 0
 
     def generate_new_frame(self):
-        self.cnt = 0
         self.frame = pygame.Surface(config.WINDOW_DIMENSIONS)
         self.draw_map()
         self.draw_game_objects()
-        self.draw_hud()
+        self.ui.draw_ui(self)
+        self.cnt+=1
+        self.tiles_on_screen = 0
         return self.frame
 
     def draw_map(self):            
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid, in layer:
-                    tile = self.map.get_tile_image_by_gid(gid)
-                    if tile != None:
-                        self.frame.blit(tile, ( (x * self.map.tilewidth) - self.logic.player.x, (y * self.map.tileheight) - self.logic.player.y))
+                    tile = self.map.get_tile_image_by_gid(gid)              
+                    if tile != None and self.tile_is_onscreen(x, y ):
+                        tile = pygame.transform.scale(tile,(config.TILE_SIZE,config.TILE_SIZE))
+                        self.frame.blit(tile, ( (x * config.TILE_SIZE) - self.logic.player.x, (y * config.TILE_SIZE) - self.logic.player.y))
 
     
     def draw_game_objects(self):
         for enemy in self.logic.enemies:
-            self.add_asset_to_screen(self.assets['textures']['enemy'], enemy.x , enemy.y)
-        
+            enemy_visual = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['enemy'], enemy.rotation)
+            enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
+            self.add_asset_to_screen(enemy_visual, enemy.x , enemy.y)       
         for chest in self.logic.chests:
-            self.add_asset_to_screen(self.assets['textures']['chest'], chest.x, chest.y)
-        #draw player                        
-        self.add_asset_to_screen(self.assets['textures']['max'])
-        
+            self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
+        #draw player
+        player = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['max'], self.logic.player.rotation)
+        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                      
+        self.add_asset_to_screen(player)
+              
     
     def add_asset_to_screen(self,asset, x = None, y = None):
         if not x:
@@ -47,19 +57,15 @@ class Render():
             y = y - self.logic.player.y + config.WINDOW_HEIGHT/2
         self.frame.blit(asset, ( x  - asset.get_width()/2 , y  - asset.get_height()/2))
     
-    def draw_hud(self):
-        font = pygame.font.SysFont(None, 24)
-        img = font.render('hello', True, (0, 0, 255))
-        self.frame.blit(img, (20, 20))
-        start_time = pygame.time.get_ticks()
-        font = pygame.font.Font(None, 54)
-        text = font.render(str(start_time/1000), True, (255, 255, 255))
-        self.frame.blit(text, (50, 50))
-
     def tile_is_onscreen(self,x,y):
-        if not (self.logic.player.x - config.WINDOW_WIDHT) <= (x*self.map.tilewidth) <= (self.logic.player.x + config.WINDOW_WIDHT):
+        if not (self.logic.player.x - config.TILE_SIZE) <= (x * config.TILE_SIZE) <= (self.logic.player.x + config.WINDOW_WIDHT):
             return False
-        if not (self.logic.player.y - config.WINDOW_HEIGHT) <= (y*self.map.tileheight) <= (self.logic.player.y + config.WINDOW_HEIGHT):
+        if not (self.logic.player.y - config.TILE_SIZE) <= (y* config.TILE_SIZE) <= (self.logic.player.y + config.WINDOW_HEIGHT):
             return False
-        self.cnt+=1
         return True
+    
+    def get_drawn_frames(self):
+        x = self.cnt
+        self.cnt = 0
+        return x
+   
