@@ -15,11 +15,11 @@ class Notification():
                 return
         print(text, " is printed to the screen as notification!")
 
-        self.notifications.append({
+        self.notifications[:0] = [{
             'message': text,
             'time': props['time'],
             'color': props['color']
-        })
+        }]
         
 
     def render(self, render):

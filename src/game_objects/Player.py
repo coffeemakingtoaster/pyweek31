@@ -65,7 +65,7 @@ class Player(Actor.Actor):
         move_vector.xy = x_movement,y_movement
             
         if move_vector.length() > self.speed:
-            print("normalizing")   
+            #print("normalizing")   
             move_vector.scale_to_length(self.speed)
             self.x += move_vector.x
             self.y += move_vector.y
@@ -82,7 +82,6 @@ class Player(Actor.Actor):
             closest_object = {"obj":None, "dist":10000}
             for chest in self.chests:
                 delta = (self.x - chest.x)**2
-                print(delta)
                 if (delta) <=10000:
                     delta += (self.y - chest.y)**2
                     print("valid chest found")
