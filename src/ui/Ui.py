@@ -1,7 +1,7 @@
 import pygame
 
 from .UiHelper import * 
-from ..config import *
+from .. import config
 from .Notification import *
 from .Menu import *
 
@@ -11,6 +11,7 @@ class Ui:
         self.uiHelper = UiHelper()
         self.notification = Notification(self)
         self.menu = Menu(self, classes)
+        self.classes = classes
         self.say('Ui loaded!')
 
 
@@ -27,11 +28,12 @@ class Ui:
         self.uiHelper.createText(str(start_time/1000), {
             'font': self.uiHelper.fonts['text'],
             'render': render,
-            'x': WINDOW_WIDHT - 100,
+            'x': WINDOW_WIDHT - 200,
             'y': 50,
             'color': (255, 255, 255)
         })
 
+        """
         self.uiHelper.createRectangle({
             'x': 20,
             'y': 20,
@@ -40,11 +42,35 @@ class Ui:
             'color': (255, 0, 0),
             'render': render
         })
+        """
+        self.uiHelper.createSprite({
+            'x': 10,
+            'y': 20,
+            'texture' : self.classes['assets']['textures']['hud'][0],
+            'render' : render
+        })
+
+        self.uiHelper.createSprite({
+            'x': 26,
+            'y': 20,
+            'texture' : self.classes['assets']['textures']['hud'][1],
+            'render' : render
+        })
+
+        self.uiHelper.createSprite({
+            'x': 42,
+            'y': 20,
+            'texture' : self.classes['assets']['textures']['hud'][2],
+            'render' : render
+        })
+        
 
     def say(self, message):
         self.notification.pushNotification(message, {
             'time': 600,
             'color': (255, 255, 255)
         })
-        
+
+    
+
 
