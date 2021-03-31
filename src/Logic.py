@@ -14,7 +14,7 @@ class Logic():
         self.map = game_map
 
         self.enemies = []
-        self.enemies.append(Guard.Guard(Point(200,200)))
+        self.enemies.append(Guard.Guard(Point(200,200),[(5,5)]))
         self.player = Player.Player(self.chests)
         self.collision_objects = []
         
