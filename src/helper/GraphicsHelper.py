@@ -16,7 +16,6 @@ class frame_handler():
         pygame.draw.rect(self.frame,(255,255,255),test_rect)
         
 class render_helper():
-
      def rotate_image(image, angle):
         orig_rect = image.get_rect()
         rot_image = pygame.transform.rotate(image, angle)
