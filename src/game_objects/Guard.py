@@ -6,6 +6,7 @@ class Guard(Actor.Actor):
         super().__init__()
         self.x = 200
         self.y = 200
+        self.rotation = 0
 
     def update(self):
         pass

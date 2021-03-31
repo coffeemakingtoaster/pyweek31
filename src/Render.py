@@ -1,5 +1,6 @@
 import pygame
 from . import config
+from .helper import GraphicsHelper
 import pytmx
 import math 
 
@@ -34,14 +35,16 @@ class Render():
     
     def draw_game_objects(self):
         for enemy in self.logic.enemies:
-            self.add_asset_to_screen(self.assets['textures']['enemy'], enemy.x , enemy.y)
-        
+            enemy_visual = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['enemy'], enemy.rotation)
+            enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
+            self.add_asset_to_screen(enemy_visual, enemy.x , enemy.y)       
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
         #draw player
-        player = pygame.transform.scale(pygame.transform.rotate(self.assets['textures']['max'], self.logic.player.rotation),(config.TILE_SIZE,config.TILE_SIZE))                      
+        player = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['max'], self.logic.player.rotation)
+        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                      
         self.add_asset_to_screen(player)
-        
+              
     
     def add_asset_to_screen(self,asset, x = None, y = None):
         if not x:
