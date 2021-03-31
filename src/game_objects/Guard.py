@@ -34,7 +34,7 @@ class Guard(Actor.Actor):
             tup = (distance,intersection)
             intersections.append(tup)
         intersections.sort(key=lambda tup: tup[1])
-        
+        return Point(intersections[0][1],intersections[0][2])
 
 
 
