@@ -65,7 +65,7 @@ class Menu():
 
     def add_option(self, menu_name, option_name, callback):
         if menu_name not in self.menu:
-            print(menu_name, " doesn't exist")
+            # print(menu_name, " doesn't exist")
             return
         self.menu[menu_name]['options'].append({
             'name': option_name,
