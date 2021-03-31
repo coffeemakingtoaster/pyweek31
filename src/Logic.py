@@ -30,7 +30,6 @@ class Logic():
                 # access collision object
                 for collision_object in layer:
                     properties = collision_object.__dict__
-                    print(properties['name'])
                     if properties['name'] == 'wall':
                         x = properties['x'] 
                         y = properties['y']
@@ -38,6 +37,4 @@ class Logic():
                         height = properties['height']
                         wall = pygame.Rect(x, y, width, height)
                         self.collision_objects.append(wall)
-                
-                print(collision_objects)
                     
