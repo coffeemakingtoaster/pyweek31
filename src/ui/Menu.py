@@ -14,6 +14,8 @@ class Menu():
         self.time_wait = 100
         self.time_wait_use = 150
         self.time_wait_back = 150
+        self.time_wait_open = 300
+        self.open = False
 
         # Create a menu
         # self.add_menu(<menu_name>, <[optional]parent_menu_name>, <[optional]custom_display_name>)
@@ -43,13 +45,10 @@ class Menu():
  
         self.add_menu('Dev Play Sounds', 'Options')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
-
-        ui.say('###MENU CONTROLS###')
-        ui.say('Move up and down with ARROW KEYS')
-        ui.say('Press ENTER to select an option')
-        ui.say('Press ESC to go back')
-
         #print(self.menu)
+
+        self.ui.say('Press ESC to open menu')
+
 
     def add_menu(self, name, parent = None, custom_display_name = None):
         if custom_display_name is None:
@@ -90,7 +89,15 @@ class Menu():
         if self.time_when_control is not None and pygame.time.get_ticks() > self.time_when_control:
             self.is_waiting = False
         if self.is_controlling is False and self.is_waiting is False:
-            if pygame.key.get_pressed()[pygame.K_UP] == True or pygame.key.get_pressed()[pygame.K_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True:
+            if self.open is not True and pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                self.is_waiting = True
+                self.time_when_control = pygame.time.get_ticks() + self.time_wait_open
+                self.open = True
+                self.ui.say('###MENU CONTROLS###')
+                self.ui.say('Move up and down with ARROW KEYS')
+                self.ui.say('Press ENTER to select an option')
+                self.ui.say('Press ESC to go back')
+            elif self.open is True and (pygame.key.get_pressed()[pygame.K_UP] == True or pygame.key.get_pressed()[pygame.K_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True):
                 self.is_waiting = True
                 self.is_controlling = True
                 if pygame.key.get_pressed()[pygame.K_UP] == True:
@@ -110,6 +117,10 @@ class Menu():
                 elif pygame.key.get_pressed()[pygame.K_RETURN] == True:
                     self.menu[self.current_menu]['options'][self.current_option]['callback']()
                     self.time_when_control = pygame.time.get_ticks() + self.time_wait_use
+                elif self.menu[self.current_menu]['parent'] == None and pygame.key.get_pressed()[pygame.K_ESCAPE] == True:
+                    self.is_waiting = True
+                    self.time_when_control = pygame.time.get_ticks() + self.time_wait_open
+                    self.open = False
                 elif pygame.key.get_pressed()[pygame.K_ESCAPE] == True:
                     self.time_when_control = pygame.time.get_ticks() + self.time_wait_back
                     if self.menu[self.current_menu]['parent'] is not None:
@@ -119,6 +130,9 @@ class Menu():
                 self.is_controlling = False
 
     def render(self, render):
+        if self.open is False:
+            return
+
         self.ui.uiHelper.createText(self.menu[self.current_menu]['name'], {
             'font': self.ui.uiHelper.fonts['headline']['font'],
             'render': render,
