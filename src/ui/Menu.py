@@ -19,7 +19,7 @@ class Menu():
         self.add_option("main", "Options", lambda: print('options'))
         self.add_option("main", "End", lambda: print('end'))
 
-        print(self.menu)
+        # print(self.menu)
 
     def add_menu(self, name, parent = None):
         self.menu[name] = {
@@ -30,7 +30,7 @@ class Menu():
 
     def add_option(self, menu_name, option_name, callback):
         if menu_name not in self.menu:
-            print(menu_name, " doesn't exist")
+            # print(menu_name, " doesn't exist")
             return
         self.menu[menu_name]['options'].append({
             'name': option_name,
@@ -56,7 +56,7 @@ class Menu():
                     self.current_option += 1
             elif pygame.key.get_pressed()[pygame.K_RETURN] == True:
                 self.menu[self.current_menu]['options'][self.current_option]['callback']()
-            print(self.current_option)
+            # print(self.current_option)
             self.is_controlling = False
     def render(self, render):
         self.ui.uiHelper.createRectangle({

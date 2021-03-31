@@ -3,6 +3,7 @@ from .game_objects import Player
 from .game_objects import Guard
 from .game_objects import Wall
 import pytmx
+import pygame
 
 class Logic():
     def __init__(self, game_map):
@@ -27,8 +28,16 @@ class Logic():
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
                 # access collision object
-                for obj in layer:
-                # TODO: set wall positions
-                    self.collision_objects.append(Wall.Wall())
-                    # print(obj)
+                for collision_object in layer:
+                    properties = collision_object.__dict__
+                    print(properties['name'])
+                    if properties['name'] == 'wall':
+                        x = properties['x'] 
+                        y = properties['y']
+                        width = properties['width']
+                        height = properties['height']
+                        wall = pygame.Rect(x, y, width, height)
+                        self.collision_objects.append(wall)
+                
+                print(collision_objects)
                     

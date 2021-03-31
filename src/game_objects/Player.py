@@ -61,7 +61,7 @@ class Player(Actor.Actor):
             closest_object = {"obj":None, "dist":10000}
             for chest in self.chests:
                 delta = (self.x - chest.x)**2
-                print(delta)
+                # print(delta)
                 if (delta) <=10000:
                     delta += (self.y - chest.y)**2
                     print("valid chest found")
