@@ -5,7 +5,7 @@ class Menu():
 
     def __init__(self, ui, classes):
         self.menu = {}
-        self.current_menu = 'main'
+        self.current_menu = 'Main Menu'
         self.current_option = 0
         self.font_height = 20
         self.ui = ui
@@ -13,11 +13,14 @@ class Menu():
         self.is_waiting = False
         self.time_when_control = None
         self.time_wait = 100
+        self.time_wait_use = 150
+        self.time_wait_back = 150
 
         # Create a menu
-        # self.add_menu(<menu_name>, <parent_menu_name>)
-        # <menu_name>: Menu name (string, key, not human readable)
-        # <parent_menu_name>: Menu name (string, key, not human readable) of the parent menu (if you go back with ESC)
+        # self.add_menu(<menu_name>, <[optional]parent_menu_name>, <[optional]custom_display_name>)
+        # <menu_name>: Menu name
+        # <parent_menu_name>: Menu name of the parent menu (if you go back with ESC)
+        # <custom_display_name>: Custom message if the Menu name is duplicated
 
         # Add option to a menu
         # self.add_option(<menu_name>, <option_name>, lambda: <callback_when_use>)
@@ -27,33 +30,37 @@ class Menu():
 
         # Link to another menu
         # self.add_option(<menu_name>, <option_name>, lambda: self.set_menu(<menu_name_you_want_to_go>))
-        # <menu_name_you_want_to_go>: The menu name (key) where you want to go
+        # <menu_name_you_want_to_go>: The menu name where you want to go
 
 
-        self.add_menu('main') 
-        self.add_option("main", "Options", lambda: self.set_menu('options'))
-        self.add_option("main", "End", lambda: print('end'))
+        self.add_menu('Main Menu') 
+        self.add_option("Main Menu", "Options", lambda: self.set_menu('Options'))
+        self.add_option("Main Menu", "End", lambda: pygame.quit())
         
-        self.add_menu('options', 'main')
-        self.add_option("options", "Dev play sounds", lambda: self.set_menu("options_sounds"))
+        self.add_menu('Options', 'Main Menu')
+        self.add_option("Options", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
         for x in range(100):
-            self.add_option("options", "opt " + str(x), lambda: print("opt"))
+            self.add_option("Options", "opt " + str(x), lambda: print("opt"))
  
-        self.add_menu('options_sounds', 'options')
-        self.add_option("options_sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
+        self.add_menu('Dev Play Sounds', 'Options')
+        self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
 
         ui.say('###MENU CONTROLS###')
         ui.say('Move up and down with ARROW KEYS')
         ui.say('Press ENTER to select an option')
         ui.say('Press ESC to go back')
 
-        print(self.menu)
+        #print(self.menu)
 
-    def add_menu(self, name, parent = None):
+    def add_menu(self, name, parent = None, custom_display_name = None):
+        if custom_display_name is None:
+            custom_display_name = name
+
         self.menu[name] = {
             'options': [],
             'scroller': 0,
-            'parent': parent
+            'parent': parent,
+            'name': custom_display_name
         }
 
     def add_option(self, menu_name, option_name, callback):
@@ -85,16 +92,17 @@ class Menu():
             self.is_waiting = False
         if self.is_controlling is False and self.is_waiting is False:
             if pygame.key.get_pressed()[pygame.K_UP] == True or pygame.key.get_pressed()[pygame.K_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True:
-                self.time_when_control = pygame.time.get_ticks() + self.time_wait
                 self.is_waiting = True
                 self.is_controlling = True
                 if pygame.key.get_pressed()[pygame.K_UP] == True:
+                    self.time_when_control = pygame.time.get_ticks() + self.time_wait
                     if self.current_option < 1:
                         self.current_option += len(self.menu[self.current_menu]['options']) - 1
                     else:
                         self.current_option -= 1 
                     self.menu[self.current_menu]['scroller'] = self.current_option
                 elif pygame.key.get_pressed()[pygame.K_DOWN] == True:
+                    self.time_when_control = pygame.time.get_ticks() + self.time_wait
                     if self.current_option > len(self.menu[self.current_menu]['options']) - 2:
                        self.current_option = 0
                     else:
@@ -102,14 +110,24 @@ class Menu():
                     self.menu[self.current_menu]['scroller'] = self.current_option
                 elif pygame.key.get_pressed()[pygame.K_RETURN] == True:
                     self.menu[self.current_menu]['options'][self.current_option]['callback']()
+                    self.time_when_control = pygame.time.get_ticks() + self.time_wait_use
                 elif pygame.key.get_pressed()[pygame.K_ESCAPE] == True:
+                    self.time_when_control = pygame.time.get_ticks() + self.time_wait_back
                     if self.menu[self.current_menu]['parent'] is not None:
                         self.set_menu(self.menu[self.current_menu]['parent'])
 
-                print("Current option is: ", self.current_option, " ", pygame.time.get_ticks())
+                #print("Current option is: ", self.current_option, " ", pygame.time.get_ticks())
                 self.is_controlling = False
 
     def render(self, render):
+        self.ui.uiHelper.createText(self.menu[self.current_menu]['name'], {
+            'font': self.ui.uiHelper.fonts['text'],
+            'render': render,
+            'x': 300,
+            'y': 100 - self.font_height,
+            'color': (255, 0, 0)
+        })
+
         self.ui.uiHelper.createRectangle({
             'x': 300,
             'y': 100  + self.font_height * self.current_option,
