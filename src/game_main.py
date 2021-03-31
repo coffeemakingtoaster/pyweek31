@@ -28,13 +28,19 @@ def launch_game():
     button.set_action(hallo_welt)
     #button.draw(screen)
     pygame.display.flip()
-    print(os.path.join('..', 'data', 'assets', 'testing', 'max.png'))
+
     #Load assets
     assets = {
         'textures': {
             "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png')),
             "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
-            "chest": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png'))
+            "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
+            "hud" : [
+                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_1.png')),
+                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_2.png')),
+                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_3.png'))
+            ]
+
         },
         'sounds': {
             "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3')),
@@ -76,10 +82,10 @@ def launch_game():
         logic.update()
         next_frame = render.generate_new_frame()
         #ui.say("Frames per second: "+str(last_second_frames))
-        ui.uiHelper.createText("Frames per second: "+str(last_second_frames), {
+        ui.uiHelper.createText("FPS "+ str(last_second_frames), {
             'font': ui.uiHelper.fonts['text'],
             'render': render,
-            'x': WINDOW_WIDHT - 250,
+            'x': WINDOW_WIDHT - 200,
             'y': 100,
             'color': (255, 255, 255)
         })
