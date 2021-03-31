@@ -14,7 +14,6 @@ class Player(Actor.Actor):
         self.inventory = defaultdict(lambda: 0)
         self.selected_item = None
         self.chests = chests
-        self.orientation = [0,1]
         self.rotation = 0
     
     def update(self):
@@ -22,9 +21,11 @@ class Player(Actor.Actor):
         self.player_interact()
         
     def player_movement(self):
-        new_rotation = -1       
+        new_rotation = -1 
+        x_movement = 0
+        y_movement = 0      
         if pygame.key.get_pressed()[PLAYER_MOVE_RIGHT] == True:
-            self.x += self.speed
+            x_movement += self.speed
             if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
                 new_rotation = 315
             elif pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
@@ -33,7 +34,7 @@ class Player(Actor.Actor):
                 new_rotation = 270
                 
         if pygame.key.get_pressed()[PLAYER_MOVE_LEFT] == True:
-            self.x -= self.speed            
+            x_movement -= self.speed            
             if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
                 new_rotation = 45
             elif pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
@@ -42,16 +43,29 @@ class Player(Actor.Actor):
                 new_rotation = 90
                 
         if pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
-            self.y += self.speed
+            y_movement += self.speed
             if new_rotation == -1:
                 new_rotation = 180         
                 
         if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
-            self.y -= self.speed
+            y_movement -= self.speed
             if new_rotation == -1:
                 new_rotation = 0 
         
         self.rotation = new_rotation
+        
+        move_vector = pygame.Vector2()
+        move_vector.xy = x_movement,y_movement
+            
+        if move_vector.length() > self.speed:
+            print("normalizing")   
+            move_vector.scale_to_length(self.speed)
+            self.x += move_vector.x
+            self.y += move_vector.y
+            return
+        self.x += x_movement
+        self.y += y_movement
+        
 
         #print("Player ", "x:" + str(self.x), "y: " + str(self.y))
         
@@ -72,6 +86,7 @@ class Player(Actor.Actor):
                             closest_object["dist"] = delta
             if closest_object["obj"] is not None:
                 self.add_item_to_inventory(closest_object["obj"].open())
+                print(self.inventory)
 
     #call on item pickup    
     def add_item_to_inventory(self,item):

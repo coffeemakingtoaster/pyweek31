@@ -16,3 +16,9 @@ PLAYER_MOVE_RIGHT = pygame.K_RIGHT
 PLAYER_INTERACT = pygame.K_e
 
 #TODO: This maybe in a data container for controls? ??? 
+
+
+ITEM_COIN_CHANCE = 0.2
+ITEM_DONUT_CHANCE = 0.3
+ITEM_COFFEE_CHANCE = 0.4
+ITEM_JAMMER_CHANCE = 0.1
