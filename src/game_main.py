@@ -37,18 +37,26 @@ def launch_game():
             "chest": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png'))
         },
         'sounds': {
-            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3'))
+            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3')),
+            "bark" : [
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'pew_sfx.mp3')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'bark.mp3')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'bark_2.mp3'))
+            ]
         }
     }
 
     #Load sound
     soundHelper = SoundHelper.SoundHelper()
 
-    #play background music
-    soundHelper.play_music(assets['sounds']['background'], 0)
+    #Play background music
+    soundHelper.play_music(assets['sounds']['background'], -1)
 
     #Load User Interface
-    ui = Ui()
+    ui = Ui({
+        'assets': assets,
+        'soundHelper': soundHelper
+    })
 
     #Create logic
     logic = Logic.Logic(gameMap)
@@ -66,7 +74,7 @@ def launch_game():
             last_second_frames = render.get_drawn_frames()
         logic.update()
         next_frame = render.generate_new_frame()
-        ui.say("Frames per second: "+str(last_second_frames))
+        #ui.say("Frames per second: "+str(last_second_frames))
         ui.uiHelper.createText("Frames per second: "+str(last_second_frames), {
             'font': ui.uiHelper.fonts['text'],
             'render': render,
@@ -76,8 +84,11 @@ def launch_game():
         })
         screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
-        x,y = pygame.mouse.get_pos()
-        #print("mouse: {},{} || Player: {},{}".format(x-(config.WINDOW_WIDHT/2),y-(config.WINDOW_HEIGHT/2),logic.player.x,logic.player.y))
+
+        #Sound test
+        if pygame.key.get_pressed()[pygame.K_SPACE]:
+            soundHelper.play_sfx(assets['sounds']['bark'], 0)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

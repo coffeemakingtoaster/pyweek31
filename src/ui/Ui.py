@@ -7,10 +7,10 @@ from .Menu import *
 
 class Ui:
 
-    def __init__(self):
+    def __init__(self, classes):
         self.uiHelper = UiHelper()
         self.notification = Notification(self)
-        self.menu = Menu(self)
+        self.menu = Menu(self, classes)
         self.say('Ui loaded!')
 
 
@@ -20,6 +20,8 @@ class Ui:
     def draw_ui(self, render):
 
         self.notification.render(render)
+        self.menu.update()
+        self.menu.render(render)
 
         start_time = pygame.time.get_ticks()
         self.uiHelper.createText(str(start_time/1000), {
