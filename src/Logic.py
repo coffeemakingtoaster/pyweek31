@@ -8,8 +8,8 @@ class Logic():
         self.chests.append(Chest.Chest())
 
         self.enemies = []
-        self.enemies.append(Guard.Guard())
-        self.player = Player.Player()
+        #self.enemies.append(Guard.Guard())
+        self.player = Player.Player(self.chests)
 
 
     def update(self):

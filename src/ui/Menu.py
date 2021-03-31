@@ -56,7 +56,7 @@ class Menu():
                     self.current_option += 1
             elif pygame.key.get_pressed()[pygame.K_RETURN] == True:
                 self.menu[self.current_menu]['options'][self.current_option]['callback']()
-            print(self.current_option)
+            #print(self.current_option)
             self.is_controlling = False
     def render(self, render):
         self.ui.uiHelper.createRectangle({
