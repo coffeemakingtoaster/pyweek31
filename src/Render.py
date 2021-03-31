@@ -4,12 +4,13 @@ import pytmx
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap, ui):
+    def __init__(self, logic, assets, gameMap, ui, keycard):
         self.logic = logic
         self.assets = assets
         self.map = gameMap
         self.ui = ui
         self.cnt = 0
+        self.keycard = keycard
 
     def generate_new_frame(self):
         self.frame = pygame.Surface(config.WINDOW_DIMENSIONS)
@@ -35,6 +36,11 @@ class Render():
         
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
+        
+        for keycard in self.keycard.container:
+            key_x = keycard[0]
+            key_y = keycard[1]
+            self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
         #draw player                        
         self.add_asset_to_screen(self.assets['textures']['max'])
         
