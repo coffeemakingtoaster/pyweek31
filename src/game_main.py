@@ -65,8 +65,8 @@ def launch_game():
     })
 
     #Create logic
-    #logic = Logic.Logic(gameMap) MC: why was there here gameMap in it?
-    logic = Logic.Logic()
+    logic = Logic.Logic(gameMap)
+    # logic = Logic.Logic()
 
     render = Render.Render(logic, assets, gameMap, ui)
     ui.say('Game Main loaded!')
@@ -83,7 +83,7 @@ def launch_game():
         next_frame = render.generate_new_frame()
         #ui.say("Frames per second: "+str(last_second_frames))
         ui.uiHelper.createText("FPS "+ str(last_second_frames), {
-            'font': ui.uiHelper.fonts['text'],
+            'font': ui.uiHelper.fonts['text']['font'],
             'render': render,
             'x': WINDOW_WIDHT - 200,
             'y': 100,

@@ -37,7 +37,7 @@ class Render():
         for enemy in self.logic.enemies:
             enemy_visual = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['enemy'], enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
-            self.add_asset_to_screen(enemy_visual, enemy.x , enemy.y)       
+            self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
         #draw player
