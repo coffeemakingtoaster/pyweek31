@@ -7,10 +7,20 @@ class UiHelper:
 
     def __init__(self):
         self.fonts = {
-            'text': self.createFont({
-                'font_size': 24,
-                'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf')
-            })
+            'text': {
+                'font': self.createFont({
+                    'font_size': 24,
+                    'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf'),
+                }),
+                'font_height': 30
+            },
+            'headline': {
+                'font': self.createFont({
+                    'font_size': 38,
+                    'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf'),
+                }),
+                'font_height': 44
+            },
         }
 
     def createFont(self, props):

@@ -7,7 +7,6 @@ class Menu():
         self.menu = {}
         self.current_menu = 'Main Menu'
         self.current_option = 0
-        self.font_height = 20
         self.ui = ui
         self.is_controlling = False
         self.is_waiting = False
@@ -121,18 +120,18 @@ class Menu():
 
     def render(self, render):
         self.ui.uiHelper.createText(self.menu[self.current_menu]['name'], {
-            'font': self.ui.uiHelper.fonts['text'],
+            'font': self.ui.uiHelper.fonts['headline']['font'],
             'render': render,
             'x': 300,
-            'y': 100 - self.font_height,
+            'y': 100 - self.ui.uiHelper.fonts['headline']['font_height'],
             'color': (255, 0, 0)
         })
 
         self.ui.uiHelper.createRectangle({
             'x': 300,
-            'y': 100  + self.font_height * self.current_option,
+            'y': 100  + self.ui.uiHelper.fonts['text']['font_height'] * self.current_option,
             'width': 100,
-            'height': self.font_height,
+            'height': self.ui.uiHelper.fonts['text']['font_height'],
             'color': (255, 0, 0),
             'render': render
         })
@@ -140,10 +139,10 @@ class Menu():
         for option in self.menu[self.current_menu]['options']:
             
             self.ui.uiHelper.createText(option['name'], {
-                'font': self.ui.uiHelper.fonts['text'],
+                'font': self.ui.uiHelper.fonts['text']['font'],
                 'render': render,
                 'x': 300,
-                'y': 100 + self.font_height * index,
+                'y': 100 + self.ui.uiHelper.fonts['text']['font_height'] * index,
                 'color': (255, 255, 255)
             })
 

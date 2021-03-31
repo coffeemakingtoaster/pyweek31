@@ -26,7 +26,7 @@ class Ui:
 
         start_time = pygame.time.get_ticks()
         self.uiHelper.createText(str(start_time/1000), {
-            'font': self.uiHelper.fonts['text'],
+            'font': self.uiHelper.fonts['text']['font'],
             'render': render,
             'x': WINDOW_WIDHT - 200,
             'y': 50,
