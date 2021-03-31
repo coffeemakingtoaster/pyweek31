@@ -14,21 +14,44 @@ class Player(Actor.Actor):
         self.inventory = defaultdict(lambda: 0)
         self.selected_item = None
         self.chests = chests
+        self.orientation = [0,1]
+        self.rotation = 0
     
     def update(self):
         self.player_movement()
         self.player_interact()
         
     def player_movement(self):
+        new_rotation = -1       
         if pygame.key.get_pressed()[PLAYER_MOVE_RIGHT] == True:
-            self.x += self.speed 
-        if pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
-            self.y += self.speed 
+            self.x += self.speed
+            if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
+                new_rotation = 315
+            elif pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
+                new_rotation = 225
+            else:
+                new_rotation = 270
+                
         if pygame.key.get_pressed()[PLAYER_MOVE_LEFT] == True:
-            self.x -= self.speed 
+            self.x -= self.speed            
+            if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
+                new_rotation = 45
+            elif pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
+                new_rotation = 135
+            else:
+                new_rotation = 90
+                
+        if pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
+            self.y += self.speed
+            if new_rotation == -1:
+                new_rotation = 180         
+                
         if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
-            self.y -= self.speed 
+            self.y -= self.speed
+            if new_rotation == -1:
+                new_rotation = 0 
         
+        self.rotation = new_rotation
 
         #print("Player ", "x:" + str(self.x), "y: " + str(self.y))
         
