@@ -1,4 +1,8 @@
 import pygame
+import time
+from threading import Timer
+
+
 from collections import defaultdict
 
 from ..config import *
@@ -10,15 +14,18 @@ class Player(Actor.Actor):
         super().__init__()
         self.x = 0
         self.y = 0
-        self.speed = 10
+        self.speed = PLAYER_SPEED
         self.inventory = defaultdict(lambda: 0)
         self.selected_item = None
         self.chests = chests
         self.rotation = 0
+        self.coffee_start_time = 0
+        
     
     def update(self):
         self.player_movement()
         self.player_interact()
+        self.player_use_item()
         
     def player_movement(self):
         new_rotation = -1 
@@ -86,6 +93,28 @@ class Player(Actor.Actor):
             if closest_object["obj"] is not None:
                 self.add_item_to_inventory(closest_object["obj"].open())
                 print(self.inventory)
+                
+    def player_use_item(self):
+        used_item = None
+        
+        if  time.time() - self.coffee_start_time > ITEM_COFFEE_DURATION and self.speed==ITEM_COFFEE_SPEED:
+            self.speed = PLAYER_SPEED
+            print("coffee has worn off")
+        if pygame.key.get_pressed()[HOTKEY_1] == True:
+            used_item = "coffee"
+            
+        if used_item is None:
+            return
+        
+        print(self.inventory["coffee"])
+        if used_item == "coffee" and self.inventory["coffee"]>0 and not self.speed==ITEM_COFFEE_SPEED:
+            print(self.inventory["coffee"])
+            print("Now using {}".format(used_item))           
+            self.inventory["coffee"] -=1
+            self.speed = ITEM_COFFEE_SPEED
+            self.coffee_start_time = time.time()        
+            
+            
 
     #call on item pickup    
     def add_item_to_inventory(self,item):
@@ -102,4 +131,3 @@ class Player(Actor.Actor):
         else:
             print("item is not in the players inventory")
             raise 
-
