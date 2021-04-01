@@ -36,11 +36,8 @@ class Menu():
 
 
         self.add_menu('Main Menu') 
-        for x in range(100):
-            self.add_option("Main Menu", "opt " + str(x), lambda: print("opt"))
-
-        #self.add_option("Main Menu", "Options", lambda: self.set_menu('Options'))
-        #self.add_option("Main Menu", "End", lambda: pygame.quit())
+        self.add_option("Main Menu", "Options", lambda: self.set_menu('Options'))
+        self.add_option("Main Menu", "End", lambda: pygame.quit())
         
         self.add_menu('Options', 'Main Menu')
         self.add_option("Options", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
