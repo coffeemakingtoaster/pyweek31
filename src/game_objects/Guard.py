@@ -33,16 +33,16 @@ class Guard(Actor.Actor):
         intersections = []
         intersections.append((length,end))
         for wall in walls:
-            m_wall = (wall.endPoint.x -wall.startPoint.x)/(wall.endPoint.y -wall.startPoint.y)
+            m_wall = (wall.endPoint.x -wall.startPoint.x)/(wall.endPoint.y+0.1 -wall.startPoint.y)
             intersection = Point((-ray.startPoint.y+wall.startPoint.y)/(m-m_wall),(ray.startPoint.y+m*(-ray.startPoint.y+wall.startPoint.y)/(m-m_wall)))
-            distance = distance(ray.startPoint,ray.endPoint)
+            distance = self.distance(ray.startPoint,ray.endPoint)
             if distance > length:
                 intersection = Point(999,999)
-            if not (wall.startPoint.x < intersection.x) and (wall.endPoint > intersection.x):
+            if not (wall.startPoint.x <= intersection.x) and (wall.endPoint.x >= intersection.x):
                 intersection = Point(999,999)
             tup = (distance,intersection)
             intersections.append(tup)
-        intersections.sort(key=lambda tup: tup[1])
+        intersections.sort(key=lambda tup: tup[0])
         return Point(intersections[0][1].x,intersections[0][1].y)
 
 
@@ -57,8 +57,8 @@ class Guard(Actor.Actor):
         #movement
         return goalPos
 
-    def distance(a,b):
-        return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+    def distance(self,a,b):
+        return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
 
     def addAngleToVector(self,angle,vector):
         return  Point((math.cos(math.radians(angle))*vector.x - math.sin(math.radians(angle))*vector.y),(math.sin(math.radians(angle))*vector.x +math.cos(math.radians(angle))*vector.y));
