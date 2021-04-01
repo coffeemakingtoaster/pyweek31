@@ -18,7 +18,7 @@ class Render():
         self.tiles_on_screen = 0
         self.enemy_animations = []
         for enemy in self.logic.enemies:
-            self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['player']))
+            self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies']))
         self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'])
         
 
@@ -65,7 +65,7 @@ class Render():
             for ray in enemy.intersections:
                 v = pygame.Vector2(ray.x - enemy.pos.x, ray.y - enemy.pos.y)
                 if v.length() != last_v_length:
-                    debug_string += " {} (x: {}, y:{})\n".format(v.length(),ray.x, ray.y)
+                    #debug_string += " {} (x: {}, y:{})\n".format(v.length(),ray.x, ray.y)
                     last_v_length = v.length()
                 start = (enemy.pos.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.pos.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)
                 end = (ray.x - self.logic.player.x  + config.WINDOW_WIDHT/2, ray.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)          
@@ -73,7 +73,7 @@ class Render():
             enemy_visual = GraphicsHelper.render_helper.rotate_image(self.enemy_animations[enemy_count].get_current_asset(True), enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
-            print(debug_string)
+            #print(debug_string)
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 

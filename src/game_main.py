@@ -40,7 +40,8 @@ def launch_game():
     assets = {
         'textures': {
             "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'player', 'player_1.png')),
-            "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
+            "enemies" : [pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'guard', 'guard1.png')),
+                         pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'guard', 'guard2.png'))],
             "keycard": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', '0.png')),
             "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
             "hud" : [

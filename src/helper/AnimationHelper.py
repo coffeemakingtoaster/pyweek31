@@ -11,7 +11,6 @@ class AnimatedGameObject():
     def get_current_asset(self,needs_update):
         if needs_update:
              self.ticks_passed +=1
-        print("tick:{}".format(self.ticks_passed))
         if self.ticks_passed < config.FRAME_TIME:          
             return self.assets[0]
         elif self.ticks_passed == config.FRAME_TIME*2:
