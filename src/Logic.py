@@ -24,7 +24,7 @@ class Logic():
         self.add_collision_objects()
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.enemies = []
-        self.enemies.append(Guard.Guard(Point(200,200),self.walls))
+        self.enemies.append(Guard.Guard(Point(900,900),self.walls))
         self.player = Player.Player(self.chests,self.collision_objects)
         
 
@@ -52,9 +52,9 @@ class Logic():
     def translate_collision_objects(self,collision_objects):
         walls_as_sections = []
         for rect in collision_objects:
-            walls_as_sections.append(Section(Point(rect.x,rect.y),Point(rect.x,rect.y-rect.height)))
+            walls_as_sections.append(Section(Point(rect.x,rect.y),Point(rect.x,rect.y+rect.height)))
             walls_as_sections.append(Section(Point(rect.x,rect.y),Point(rect.x+rect.width,rect.y)))
-            walls_as_sections.append(Section(Point(rect.x,rect.y-rect.height), Point(rect.x + rect.width, rect.y-rect.height)))
-            walls_as_sections.append(Section(Point(rect.x+rect.width,rect.y), Point(rect.x + rect.width, rect.y-rect.height)))
+            walls_as_sections.append(Section(Point(rect.x,rect.y+rect.height), Point(rect.x + rect.width, rect.y+rect.height)))
+            walls_as_sections.append(Section(Point(rect.x+rect.width,rect.y), Point(rect.x + rect.width, rect.y+rect.height)))
         return walls_as_sections
 

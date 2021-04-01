@@ -19,11 +19,6 @@ class Ui:
         pass
 
     def draw_ui(self, render):
-
-        self.notification.render(render)
-        self.menu.update()
-        self.menu.render(render)
-
         start_time = pygame.time.get_ticks()
         self.uiHelper.createText(str(self.formatTime(start_time)[0]) + ":" + str(self.formatTime(start_time)[1]), {
             'font': self.uiHelper.fonts['text']['font'],
@@ -63,6 +58,12 @@ class Ui:
             'texture' : self.classes['assets']['textures']['hud'][2],
             'render' : render
         })
+
+
+
+        self.menu.update()
+        self.menu.render(render)
+        self.notification.render(render)
         
 
     def say(self, message):

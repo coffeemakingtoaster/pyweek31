@@ -9,38 +9,42 @@ class Guard(Actor.Actor):
         super().__init__()
 
         self.pos = pos
-
+        self.goalPos = Point(300,300)
         self.walls = walls
 
         self.rotation = 0
-
+        self.intersections = []
 
     def update(self):
 
+        for x in range(-60,61,30):
+            self.intersections.append(self.raycast(x,50,self.walls))
         pass
 
     def raycast(self, degree, length, walls):
 
 
 
-        end = Point(300,300)
+        end = Point(self.pos.x+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).x,self.pos.y+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).y)
 
 
-        ray = Section((self.pos.x,self.pos.y),(end.x,end.y))
-        m = (ray.endPoint[0]-ray.startPoint[0])/(ray.endPoint[1]-ray.startPoint[1])
+        ray = Section(Point(self.pos.x,self.pos.y),Point(end.x,end.y))
+        m = (ray.endPoint.x-ray.startPoint.x)/(ray.endPoint.y-ray.startPoint.y)
         intersections = []
+        intersections.append((length,end))
         for wall in walls:
-            m_wall = (wall.endPoint.x -wall.startPoint.x)/(wall.endPoint.y -wall.startPoint.y)
+            m_wall = (wall.endPoint.x -wall.startPoint.x)/(wall.endPoint.y+0.1 -wall.startPoint.y)
             intersection = Point((-ray.startPoint.y+wall.startPoint.y)/(m-m_wall),(ray.startPoint.y+m*(-ray.startPoint.y+wall.startPoint.y)/(m-m_wall)))
-            distance = distance(ray.startPoint,ray.endPoint)
+            distance = self.distance(ray.startPoint,ray.endPoint)
             if distance > length:
                 intersection = Point(999,999)
-            if not (wall.startPoint.x < intersection.x) and (wall.endPoint > intersection.x):
+            if not (wall.startPoint.x <= intersection.x) and (wall.endPoint.x >= intersection.x):
                 intersection = Point(999,999)
             tup = (distance,intersection)
             intersections.append(tup)
-        intersections.sort(key=lambda tup: tup[1])
-        return Point(intersections[0][1],intersections[0][2])
+        intersections.sort(key=lambda tup: tup[0])
+        intersections.pop(1)
+        return Point(intersections[0][1].x,intersections[0][1].y)
 
 
 
@@ -54,11 +58,11 @@ class Guard(Actor.Actor):
         #movement
         return goalPos
 
-    def distance(a,b):
-        return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+    def distance(self,a,b):
+        return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
 
     def addAngleToVector(self,angle,vector):
-        return  Point((cos(math.radians(angle))*vector.x - sin(math.radians(angle))*vector.y),(sin(math.radians(angle))*vector.x +cos(math.radians(angle))*vector.y));
+        return  Point((math.cos(math.radians(angle))*vector.x - math.sin(math.radians(angle))*vector.y),(math.sin(math.radians(angle))*vector.x +math.cos(math.radians(angle))*vector.y));
 
     def normVector(self,x,y):
         if x == 0 and y == 0:

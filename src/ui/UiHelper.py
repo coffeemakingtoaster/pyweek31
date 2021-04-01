@@ -9,17 +9,24 @@ class UiHelper:
         self.fonts = {
             'text': {
                 'font': self.createFont({
-                    'font_size': 24,
+                    'font_size': 16,
                     'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf'),
                 }),
-                'font_height': 30
+                'font_height': 24
+            },
+            'h2': {
+                'font': self.createFont({
+                    'font_size': 20,
+                    'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf'),
+                }),
+                'font_height': 28
             },
             'headline': {
                 'font': self.createFont({
-                    'font_size': 38,
+                    'font_size': 40,
                     'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf'),
                 }),
-                'font_height': 44
+                'font_height': 48
             },
         }
 
