@@ -8,6 +8,7 @@ import time
 from . import pygame_additions
 from . import Logic
 from . import Render
+from . import Keycards
 
 from .helper import SoundHelper
 
@@ -37,6 +38,7 @@ def launch_game():
         'textures': {
             "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png')),
             "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
+            "keycard": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', '0.png'))
             "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
             "hud" : [
                 pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_1.png')),
@@ -71,7 +73,15 @@ def launch_game():
     logic = Logic.Logic(gameMap)
     # logic = Logic.Logic()
 
-    render = Render.Render(logic, assets, gameMap, ui)
+    #Create keycard
+    keycard = Keycards.Keycards(assets)
+    container = keycard.container
+    #TODO in player packen
+    keycard_instances = keycard.create_keycards()
+    #keycard.create_rects()
+
+
+    render = Render.Render(logic, assets, gameMap, ui, keycard)
     ui.say('Game Main loaded!')
     
     last_second_frames = 0
@@ -98,6 +108,8 @@ def launch_game():
         #Sound test
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             soundHelper.play_sfx(assets['sounds']['bark'], 0)
+
+        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
