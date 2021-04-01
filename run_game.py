@@ -12,6 +12,9 @@ MIN_VER = (3, 8)
 
 class Launcher():
     def __init__(self):
+        #MC: Added this to speed up dev (you don't have to click always 'Start')
+        self.launch_game()
+        return
         root.geometry("400x200")
         root.title("pyweek31 - placeholder")
         self.banner = tkinter.Label(root, text = "pygame 31!").pack()

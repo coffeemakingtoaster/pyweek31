@@ -5,7 +5,6 @@ class Notification():
     def __init__(self, ui):
         self.uiHelper = ui.uiHelper
         self.notifications = []
-        self.fontHeight = 20
         self.x = 20
         self.y = WINDOW_HEIGHT - 40
 
@@ -15,11 +14,11 @@ class Notification():
                 return
         print(text, " is printed to the screen as notification!")
 
-        self.notifications.append({
+        self.notifications[:0] = [{
             'message': text,
             'time': props['time'],
             'color': props['color']
-        })
+        }]
         
 
     def render(self, render):
@@ -33,10 +32,10 @@ class Notification():
                 continue
             
             self.uiHelper.createText(notification['message'], {
-                'font': self.uiHelper.fonts['text'],
+                'font': self.uiHelper.fonts['text']['font'],
                 'render': render,
                 'x': self.x,
-                'y': self.y - self.fontHeight * index,
+                'y': self.y - self.uiHelper.fonts['text']['font_height'] * index,
                 'color': notification['color']
             })
             index += 1
