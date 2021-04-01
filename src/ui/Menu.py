@@ -5,7 +5,7 @@ class Menu():
 
     def __init__(self, ui, classes):
         self.menu = {}
-        self.current_menu = 'Main Menu'
+        self.current_menu = 'Pause'
         self.current_option = 0
         self.ui = ui
         self.is_controlling = False
@@ -16,7 +16,21 @@ class Menu():
         self.time_wait_back = 150
         self.time_wait_open = 300
         self.open = False
-        self.optionsToDisplay = 6
+        self.colors = [
+            (255, 0, 5),
+            (255, 242, 140),
+            (220, 220, 220),
+            (158, 158, 158),
+            (91, 91, 91),
+            (17, 0, 102),
+            (144, 203, 251),
+            (231, 76, 60),
+            (44, 62, 80),
+            (0, 0, 0)
+        ]
+        self.primaryColor =  self.colors[2]
+        self.secondaryColor = self.colors[3]
+        self.background = self.colors[4]
 
         # Create a menu
         # self.add_menu(<menu_name>, <[optional]parent_menu_name>, <[optional]custom_display_name>)
@@ -35,21 +49,50 @@ class Menu():
         # <menu_name_you_want_to_go>: The menu name where you want to go
 
 
-        self.add_menu('Main Menu') 
-        self.add_option("Main Menu", "Options", lambda: self.set_menu('Options'))
-        self.add_option("Main Menu", "End", lambda: pygame.quit())
-        
-        self.add_menu('Options', 'Main Menu')
-        self.add_option("Options", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
-        for x in range(100):
-            self.add_option("Options", "opt " + str(x), lambda: print("opt"))
- 
-        self.add_menu('Dev Play Sounds', 'Options')
+        self.add_menu('Pause') 
+        self.add_option("Pause", "Resume", lambda: self.exit_menu())
+        self.add_option("Pause", "Options", lambda: self.set_menu('Options'))
+        self.add_option("Pause", "Developer", lambda: self.set_menu('Developer'))
+        self.add_option("Pause", "End", lambda: pygame.quit())
+
+        self.add_menu('Options', 'Pause')
+        self.add_option("Options", "Appearance", lambda: self.set_menu("Appearance"))
+        self.add_option("Options", "Menu Color", lambda: self.set_menu("Choose Color"))
+
+        self.add_menu('Appearance', 'Options')
+        self.add_option("Appearance", "Dark Theme", lambda: self.dark_theme())
+        self.add_option("Appearance", "Light Theme", lambda: self.light_theme())
+
+        self.add_menu('Choose Color', 'Options')
+        for color in self.colors:
+            self.add_option("Choose Color", str(color), lambda farbe: self.set_menu_color(self.primaryColor, farbe), color)
+
+        self.add_menu('Developer', 'Pause')
+        self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
+        self.add_option("Developer", "DEBUG_DRAW_COLLISION", lambda: self.setTest())
+
+    
+
+        self.add_menu('Dev Play Sounds', 'Developer')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         #print(self.menu)
 
         self.ui.say('Press ESC to open menu')
 
+    def setTest(self):
+        DEBUG_DRAW_COLLISION = True
+        print("DEBUG_DRAW_COLLISION: ", DEBUG_DRAW_COLLISION)
+
+    def light_theme(self):
+        self.primaryColor = self.colors[9]
+        self.background = self.colors[2]
+
+    def dark_theme(self):
+        self.primaryColor = self.colors[2]
+        self.background = self.colors[9]
+
+    def set_menu_color(self, var, color):
+        self.primaryColor = color
 
     def add_menu(self, name, parent = None, custom_display_name = None):
         if custom_display_name is None:
@@ -62,15 +105,16 @@ class Menu():
             'name': custom_display_name
         }
 
-    def add_option(self, menu_name, option_name, callback):
+    def add_option(self, menu_name, option_name, callback, parameter_one = None):
         if menu_name not in self.menu:
             # print(menu_name, " doesn't exist")
             return
         self.menu[menu_name]['options'].append({
             'name': option_name,
-            'callback': callback
+            'callback': callback,
+            'parameter_one': parameter_one
         })
-
+    
     def set_menu(self, menu_name, current_option = None):
         if menu_name not in self.menu:
             print(menu_name, " doesn't exist")
@@ -116,12 +160,13 @@ class Menu():
                         self.current_option += 1
                     self.menu[self.current_menu]['scroller'] = self.current_option
                 elif pygame.key.get_pressed()[pygame.K_RETURN] == True:
-                    self.menu[self.current_menu]['options'][self.current_option]['callback']()
+                    if self.menu[self.current_menu]['options'][self.current_option]['parameter_one'] is not None:
+                        self.menu[self.current_menu]['options'][self.current_option]['callback'](self.menu[self.current_menu]['options'][self.current_option]['parameter_one'])
+                    else:
+                        self.menu[self.current_menu]['options'][self.current_option]['callback']()
                     self.time_when_control = pygame.time.get_ticks() + self.time_wait_use
                 elif self.menu[self.current_menu]['parent'] == None and pygame.key.get_pressed()[pygame.K_ESCAPE] == True:
-                    self.is_waiting = True
-                    self.time_when_control = pygame.time.get_ticks() + self.time_wait_open
-                    self.open = False
+                    self.exit_menu()
                 elif pygame.key.get_pressed()[pygame.K_ESCAPE] == True:
                     self.time_when_control = pygame.time.get_ticks() + self.time_wait_back
                     if self.menu[self.current_menu]['parent'] is not None:
@@ -129,6 +174,11 @@ class Menu():
 
                 #print("Current option is: ", self.current_option, " ", pygame.time.get_ticks())
                 self.is_controlling = False
+    
+    def exit_menu(self):
+        self.is_waiting = True
+        self.time_when_control = pygame.time.get_ticks() + self.time_wait_open
+        self.open = False
 
     def render(self, render):
         if self.open is False:
@@ -139,7 +189,7 @@ class Menu():
             'y': 0,
             'width': WINDOW_WIDHT / 3,
             'height': WINDOW_HEIGHT,
-            'color': (91, 91, 91),
+            'color': self.background,
             'render': render
         })
 
@@ -150,8 +200,8 @@ class Menu():
             'font': self.ui.uiHelper.fonts['headline']['font'],
             'render': render,
             'x': start_menu_options_x,
-            'y': 200 - self.ui.uiHelper.fonts['headline']['font_height'],
-            'color': (220, 220, 220)
+            'y': 100 - self.ui.uiHelper.fonts['headline']['font_height'],
+            'color': self.primaryColor
         })
 
         #self.ui.uiHelper.createRectangle({
@@ -165,15 +215,17 @@ class Menu():
         index = 0
         for option in self.menu[self.current_menu]['options']:
             if index is self.current_option:
-                currentColor = (220, 220, 220)
+                currentColor = self.primaryColor
+            elif self.menu[self.current_menu]['name'] == 'Choose Color':
+                currentColor = self.colors[index]
             else:
-                currentColor = (158, 158, 158)
+                currentColor = self.secondaryColor
 
             self.ui.uiHelper.createText(option['name'], {
                 'font': self.ui.uiHelper.fonts['h2']['font'],
                 'render': render,
                 'x': start_menu_options_x,
-                'y': 300 + self.ui.uiHelper.fonts['h2']['font_height'] * index,
+                'y': 150 + self.ui.uiHelper.fonts['h2']['font_height'] * index,
                 'color': currentColor
             })
 

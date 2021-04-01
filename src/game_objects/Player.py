@@ -1,14 +1,19 @@
 import pygame
+import math
 import time
+
 
 from collections import defaultdict
 
 from ..config import *
 from ..superclasses import Actor
 
+
 class Player(Actor.Actor):
+    
 
     def __init__(self,chests,collision):
+
         super().__init__()
         self.x = 1000    
         self.y = 1000
@@ -87,7 +92,6 @@ class Player(Actor.Actor):
         self.y += move_vector.y
         self.player_hitbox.center = (self.x,self.y)
         
-
         #print("Player ", "x:" + str(self.x), "y: " + str(self.y))
         
     def player_interact(self):
@@ -134,14 +138,12 @@ class Player(Actor.Actor):
         for blocker in self.collision:
             if hitbox.colliderect(blocker):
                 return True
-
-        hitbox.y = self.player_hitbox.y + y 
-        
+        hitbox.y = self.player_hitbox.y + y       
         for blocker in self.collision:
             if hitbox.colliderect(blocker):
-                return True 
-        
+                return True      
         return False       
+
 
     #call on item pickup    
     def add_item_to_inventory(self,item):

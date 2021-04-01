@@ -6,13 +6,17 @@ import math
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap, ui):
+    def __init__(self, logic, assets, gameMap, ui, keycard):
         self.logic = logic
         self.assets = assets
         self.map = gameMap
         self.ui = ui
         self.cnt = 0
+
+        self.keycard = keycard
+
         self.tiles_on_screen = 0
+
 
     def generate_new_frame(self):
         self.frame = pygame.Surface(config.WINDOW_DIMENSIONS)
@@ -65,11 +69,28 @@ class Render():
             print(debug_string  )
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
+
+        
+        for keycard in self.keycard.container:
+            player_asset = self.assets['textures']['max']
+            player_rect = pygame.Rect((self.logic.player.x, self.logic.player.y),(50,50))
+            player_rect.center=(self.logic.player.x, self.logic.player.y)
+            if keycard["collectable"]: 
+                key_x = keycard["x_cord"]
+                key_y = keycard["y_cord"]
+                self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
+            keycard_rect = keycard["rect"]
+        self.keycard.keycard_player_collision(keycard_rect, player_rect)
+
+
+
+        
         #draw player
         player = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['max'], self.logic.player.rotation)
         player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                      
         self.add_asset_to_screen(player)
               
+
     
     def add_asset_to_screen(self,asset, x = None, y = None):
         if not x:
@@ -93,4 +114,4 @@ class Render():
         x = self.cnt
         self.cnt = 0
         return x
-   
+
