@@ -9,12 +9,14 @@ class Guard(Actor.Actor):
         super().__init__()
 
         self.pos = pos
-        self.goalPos = pos
+
+        self.walls = walls
 
         self.rotation = 0
 
 
     def update(self):
+
         pass
 
     def raycast(self, degree, length, walls):
@@ -28,8 +30,8 @@ class Guard(Actor.Actor):
         m = (ray.endPoint[0]-ray.startPoint[0])/(ray.endPoint[1]-ray.startPoint[1])
         intersections = []
         for wall in walls:
-            m_wall = (wall.endPoint[0]-wall.startPoint[0])/(wall.endPoint[1]-wall.startPoint[1])
-            intersection = Point((-ray.startPoint[1]+wall.startPoint[1])/(m-m_wall),(ray.startPoint[1]+m*(-ray.startPoint[1]+wall.startPoint[1])/(m-m_wall)))
+            m_wall = (wall.endPoint.x -wall.startPoint.x)/(wall.endPoint.y -wall.startPoint.y)
+            intersection = Point((-ray.startPoint.y+wall.startPoint.y)/(m-m_wall),(ray.startPoint.y+m*(-ray.startPoint.y+wall.startPoint.y)/(m-m_wall)))
             distance = distance(ray.startPoint,ray.endPoint)
             if distance > length:
                 intersection = Point(999,999)
