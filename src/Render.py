@@ -1,6 +1,7 @@
 import pygame
 from . import config
 from .helper import GraphicsHelper
+from .helper import AnimationHelper
 import pytmx
 import math 
 
@@ -11,11 +12,15 @@ class Render():
         self.assets = assets
         self.map = gameMap
         self.ui = ui
-        self.cnt = 0
-
+        self.tick_cnt = 0    
         self.keycard = keycard
-
+        self.frame_cnt = 0
         self.tiles_on_screen = 0
+        self.enemy_animations = []
+        for enemy in self.logic.enemies:
+            self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['player']))
+        self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'])
+        
 
 
     def generate_new_frame(self):
@@ -23,7 +28,8 @@ class Render():
         self.draw_map()
         self.draw_game_objects()
         self.ui.draw_ui(self)
-        self.cnt+=1
+        self.tick_cnt+=1
+        self.frame_cnt+=1
         self.tiles_on_screen = 0
         return self.frame
 
@@ -52,8 +58,8 @@ class Render():
 
     
     def draw_game_objects(self):
+        enemy_count = 0
         for enemy in self.logic.enemies:
-            enemy_visual = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['enemy'], enemy.rotation)
             debug_string = ""
             last_v_length = 0
             for ray in enemy.intersections:
@@ -64,15 +70,16 @@ class Render():
                 start = (enemy.pos.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.pos.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)
                 end = (ray.x - self.logic.player.x  + config.WINDOW_WIDHT/2, ray.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)          
                 pygame.draw.line(self.frame,(0,0,255),start,end)
+            enemy_visual = GraphicsHelper.render_helper.rotate_image(self.enemy_animations[enemy_count].get_current_asset(True), enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
-            print(debug_string  )
+            print(debug_string)
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
         
         for keycard in self.keycard.container:
-            player_asset = self.assets['textures']['max']
+            player_asset = self.animated_player.get_current_asset(False)
             player_rect = pygame.Rect((self.logic.player.x, self.logic.player.y),(50,50))
             player_rect.center=(self.logic.player.x, self.logic.player.y)
             if keycard["collectable"]: 
@@ -81,13 +88,10 @@ class Render():
                 self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
             keycard_rect = keycard["rect"]
         self.keycard.keycard_player_collision(keycard_rect, player_rect)
-
-
-
-        
-        #draw player
-        player = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['max'], self.logic.player.rotation)
-        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                      
+      
+        #draw player      
+        player = GraphicsHelper.render_helper.rotate_image(self.animated_player.get_current_asset(self.logic.player.has_moved), self.logic.player.rotation)
+        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                     
         self.add_asset_to_screen(player)
               
 
@@ -111,7 +115,7 @@ class Render():
         return True
     
     def get_drawn_frames(self):
-        x = self.cnt
-        self.cnt = 0
+        x = self.frame_cnt
+        self.frame_cnt = 0
         return x
 

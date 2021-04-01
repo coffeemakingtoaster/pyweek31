@@ -26,6 +26,7 @@ class Player(Actor.Actor):
         self.collision = collision
         self.player_hitbox = pygame.Rect((0,0),(50,50))
         self.player_hitbox.center = (0,0)
+        self.has_moved = False
         
     
     def update(self):
@@ -34,6 +35,7 @@ class Player(Actor.Actor):
         self.player_use_item()
         
     def player_movement(self):
+        self.has_moved = True
         new_rotation = -1 
         x_movement = 0
         y_movement = 0      
@@ -70,6 +72,7 @@ class Player(Actor.Actor):
         move_vector = pygame.Vector2()
         move_vector.xy = x_movement,y_movement
         if move_vector.length() == 0:
+            self.has_moved = False
             return
         move_vector.scale_to_length(self.speed)
                           
@@ -88,6 +91,9 @@ class Player(Actor.Actor):
                 self.player_hitbox.y -= move_vector.y
                 move_vector.y = 0
 
+        if move_vector.x == move_vector.y == 0:
+            self.has_moved = False
+        
         self.x += move_vector.x
         self.y += move_vector.y
         self.player_hitbox.center = (self.x,self.y)
