@@ -16,6 +16,7 @@ class Menu():
         self.time_wait_back = 150
         self.time_wait_open = 300
         self.open = False
+        self.optionsToDisplay = 6
 
         # Create a menu
         # self.add_menu(<menu_name>, <[optional]parent_menu_name>, <[optional]custom_display_name>)
@@ -133,31 +134,47 @@ class Menu():
         if self.open is False:
             return
 
+        self.ui.uiHelper.createRectangle({
+            'x': 0,
+            'y': 0,
+            'width': WINDOW_WIDHT / 3,
+            'height': WINDOW_HEIGHT,
+            'color': (91, 91, 91),
+            'render': render
+        })
+
+        start_menu_options_x = WINDOW_WIDHT/30
+
+
         self.ui.uiHelper.createText(self.menu[self.current_menu]['name'], {
             'font': self.ui.uiHelper.fonts['headline']['font'],
             'render': render,
-            'x': 300,
-            'y': 100 - self.ui.uiHelper.fonts['headline']['font_height'],
-            'color': (255, 0, 0)
+            'x': start_menu_options_x,
+            'y': 200 - self.ui.uiHelper.fonts['headline']['font_height'],
+            'color': (220, 220, 220)
         })
 
-        self.ui.uiHelper.createRectangle({
-            'x': 300,
-            'y': 100  + self.ui.uiHelper.fonts['text']['font_height'] * self.current_option,
-            'width': 100,
-            'height': self.ui.uiHelper.fonts['text']['font_height'],
-            'color': (255, 0, 0),
-            'render': render
-        })
+        #self.ui.uiHelper.createRectangle({
+        #    'x': start_menu_options_x,
+        #    'y': 300  + self.ui.uiHelper.fonts['text']['font_height'] * self.current_option,
+        #    'width': 100,
+        #    'height': self.ui.uiHelper.fonts['text']['font_height'],
+        #    'color': (255, 0, 0),
+        #    'render': render
+        #})
         index = 0
         for option in self.menu[self.current_menu]['options']:
-            
+            if index is self.current_option:
+                currentColor = (220, 220, 220)
+            else:
+                currentColor = (158, 158, 158)
+
             self.ui.uiHelper.createText(option['name'], {
-                'font': self.ui.uiHelper.fonts['text']['font'],
+                'font': self.ui.uiHelper.fonts['h2']['font'],
                 'render': render,
-                'x': 300,
-                'y': 100 + self.ui.uiHelper.fonts['text']['font_height'] * index,
-                'color': (255, 255, 255)
+                'x': start_menu_options_x,
+                'y': 300 + self.ui.uiHelper.fonts['h2']['font_height'] * index,
+                'color': currentColor
             })
 
 

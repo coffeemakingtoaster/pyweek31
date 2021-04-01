@@ -1,7 +1,5 @@
 import pygame
 import time
-from threading import Timer
-
 
 from collections import defaultdict
 
@@ -10,16 +8,19 @@ from ..superclasses import Actor
 
 class Player(Actor.Actor):
 
-    def __init__(self,chests):
+    def __init__(self,chests,collision):
         super().__init__()
-        self.x = 0
-        self.y = 0
+        self.x = 1000    
+        self.y = 1000
         self.speed = PLAYER_SPEED
         self.inventory = defaultdict(lambda: 0)
         self.selected_item = None
         self.chests = chests
         self.rotation = 0
         self.coffee_start_time = 0
+        self.collision = collision
+        self.player_hitbox = pygame.Rect((0,0),(50,50))
+        self.player_hitbox.center = (0,0)
         
     
     def update(self):
@@ -63,15 +64,28 @@ class Player(Actor.Actor):
         
         move_vector = pygame.Vector2()
         move_vector.xy = x_movement,y_movement
-            
-        if move_vector.length() > self.speed:
-            #print("normalizing")   
-            move_vector.scale_to_length(self.speed)
-            self.x += move_vector.x
-            self.y += move_vector.y
+        if move_vector.length() == 0:
             return
-        self.x += x_movement
-        self.y += y_movement
+        move_vector.scale_to_length(self.speed)
+                          
+        print("player x:{} y:{}".format(self.x,self.y))
+        print("hitbox x:{} y:{}".format(self.player_hitbox.x - 25 ,self.player_hitbox.y - 25))
+        
+        self.player_hitbox.x += move_vector.x
+        for blocker in self.collision:
+            if self.player_hitbox.colliderect(blocker):
+                self.player_hitbox.x -= move_vector.x
+                move_vector.x = 0
+
+        self.player_hitbox.y += move_vector.y
+        for blocker in self.collision:
+            if self.player_hitbox.colliderect(blocker):
+                self.player_hitbox.y -= move_vector.y
+                move_vector.y = 0
+
+        self.x += move_vector.x
+        self.y += move_vector.y
+        self.player_hitbox.center = (self.x,self.y)
         
 
         #print("Player ", "x:" + str(self.x), "y: " + str(self.y))
@@ -114,7 +128,20 @@ class Player(Actor.Actor):
             self.speed = ITEM_COFFEE_SPEED
             self.coffee_start_time = time.time()        
             
-            
+    def check_collide(self,x,y):
+        hitbox = self.player_hitbox
+        hitbox.x = self.player_hitbox.x + x      
+        for blocker in self.collision:
+            if hitbox.colliderect(blocker):
+                return True
+
+        hitbox.y = self.player_hitbox.y + y 
+        
+        for blocker in self.collision:
+            if hitbox.colliderect(blocker):
+                return True 
+        
+        return False       
 
     #call on item pickup    
     def add_item_to_inventory(self,item):

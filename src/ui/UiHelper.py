@@ -14,12 +14,19 @@ class UiHelper:
                 }),
                 'font_height': 30
             },
-            'headline': {
+            'h2': {
                 'font': self.createFont({
-                    'font_size': 38,
+                    'font_size': 30,
                     'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf'),
                 }),
-                'font_height': 44
+                'font_height': 64
+            },
+            'headline': {
+                'font': self.createFont({
+                    'font_size': 56,
+                    'font_type': os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'font', 'dogicapixel.ttf'),
+                }),
+                'font_height': 88
             },
         }
 
