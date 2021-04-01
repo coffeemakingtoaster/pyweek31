@@ -52,9 +52,9 @@ class Logic():
     def translate_collision_objects(self,collision_objects):
         walls_as_sections = []
         for rect in collision_objects:
-            walls_as_sections.append(Section(Point(rect.x,rect.y),Point(rect.x,rect.y-rect.height)))
+            walls_as_sections.append(Section(Point(rect.x,rect.y),Point(rect.x,rect.y+rect.height)))
             walls_as_sections.append(Section(Point(rect.x,rect.y),Point(rect.x+rect.width,rect.y)))
-            walls_as_sections.append(Section(Point(rect.x,rect.y-rect.height), Point(rect.x + rect.width, rect.y-rect.height)))
-            walls_as_sections.append(Section(Point(rect.x+rect.width,rect.y), Point(rect.x + rect.width, rect.y-rect.height)))
+            walls_as_sections.append(Section(Point(rect.x,rect.y+rect.height), Point(rect.x + rect.width, rect.y+rect.height)))
+            walls_as_sections.append(Section(Point(rect.x+rect.width,rect.y), Point(rect.x + rect.width, rect.y+rect.height)))
         return walls_as_sections
 
