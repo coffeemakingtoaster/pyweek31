@@ -5,6 +5,10 @@ from .game_objects.helper.Point import Point
 from .game_objects.helper.Section import Section
 from .game_objects import Wall
 
+
+
+from . import config
+
 import pytmx
 import pygame
 
@@ -15,14 +19,14 @@ class Logic():
         
         self.map = game_map
         self.collision_objects = []
+
+        
         self.add_collision_objects()
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.enemies = []
         self.enemies.append(Guard.Guard(Point(200,200),self.walls))
-        self.player = Player.Player(self.chests)
-
+        self.player = Player.Player(self.chests,self.collision_objects)
         
-
 
     def update(self):
         self.player.update()
@@ -31,16 +35,17 @@ class Logic():
         pass
 
     def add_collision_objects(self):
+        print("checking for collision_objects")
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
                 # access collision object
                 for collision_object in layer:
                     properties = collision_object.__dict__
-                    if properties['name'] == 'wall':
-                        x = properties['x']
-                        y = properties['y']
-                        width = properties['width']
-                        height = properties['height']
+                    if properties["name"] == "'wall'":
+                        x = properties['x'] * (config.TILE_SIZE/16)
+                        y = properties['y'] * (config.TILE_SIZE/16)
+                        width = properties['width'] * (config.TILE_SIZE/16)
+                        height = properties['height'] * (config.TILE_SIZE/16)
                         wall = pygame.Rect(x, y, width, height)
                         self.collision_objects.append(wall)
 
