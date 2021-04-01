@@ -3,7 +3,7 @@ import pygame
 
 WINDOW_HEIGHT = 480
 WINDOW_WIDHT = 720
-FULLSCREEN = True
+FULLSCREEN = False
 
 
 TILE_SIZE = 50

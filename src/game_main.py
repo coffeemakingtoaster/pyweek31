@@ -22,6 +22,9 @@ def hallo_welt():
 def launch_game():
     pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
     pygame.init()
+
+    clock = pygame.time.Clock()
+
     if FULLSCREEN:
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS, pygame.FULLSCREEN)
     else:
@@ -115,7 +118,7 @@ def launch_game():
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             soundHelper.play_sfx(assets['sounds']['bark'], 0)
 
-        
+        clock.tick(60)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
