@@ -32,13 +32,17 @@ def launch_game():
     #Load assets
     assets = {
         'textures': {
-            "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png')),
+            "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'player', 'player_1.png')),
             "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
             "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
             "hud" : [
                 pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_1.png')),
                 pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_2.png')),
                 pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_3.png'))
+            ],
+            "player" : [
+                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'player', 'player_1.png')),
+                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'player', 'player_2.png'))
             ]
 
         },
