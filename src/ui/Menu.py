@@ -81,7 +81,7 @@ class Menu():
 
         if current_option > len(self.menu[menu_name]['options']) - 1:
             current_option = 0
-            print("The selected option is not there. Seems like something isn't working here. To bad!")
+            print("The selected option is not here. Seems like something isn't working here. To bad!")
         self.current_menu = menu_name
         
         self.current_option = current_option
