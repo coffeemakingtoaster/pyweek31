@@ -25,8 +25,8 @@ class Ui:
         self.menu.render(render)
 
         start_time = pygame.time.get_ticks()
-        self.uiHelper.createText(str(start_time/1000), {
-            'font': self.uiHelper.fonts['text'],
+        self.uiHelper.createText(str(self.formatTime(start_time)[0]) + ":" + str(self.formatTime(start_time)[1]), {
+            'font': self.uiHelper.fonts['text']['font'],
             'render': render,
             'x': WINDOW_WIDHT - 200,
             'y': 50,
@@ -71,6 +71,24 @@ class Ui:
             'color': (255, 255, 255)
         })
 
-    
+    def formatTime(self, time):
+        timeArray = []
 
+        #get seconds
+        total_seconds = time / 1000
 
+        #get minutes
+        minutes = int(total_seconds // 60)
+        if minutes < 10:
+            minutes = str(0) + str(minutes)
+        timeArray.append(minutes)
+
+        #get rest seconds
+        rest_seconds = round(total_seconds % 60, 2)
+        if rest_seconds < 10:
+            rest_seconds = str(0) + str(rest_seconds)
+
+        timeArray.append(rest_seconds)
+        
+
+        return timeArray

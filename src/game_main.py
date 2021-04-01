@@ -22,7 +22,7 @@ def launch_game():
     pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
     pygame.init()
     screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
-    gameMap = pytmx.load_pygame("data/maps/test-map-csv.tmx")
+    gameMap = pytmx.load_pygame("data/maps/test-map.tmx")
     running = True
     button = pygame_additions.button(40,40,100,100)
     button.set_action(hallo_welt)
@@ -83,7 +83,7 @@ def launch_game():
         next_frame = render.generate_new_frame()
         #ui.say("Frames per second: "+str(last_second_frames))
         ui.uiHelper.createText("FPS "+ str(last_second_frames), {
-            'font': ui.uiHelper.fonts['text'],
+            'font': ui.uiHelper.fonts['text']['font'],
             'render': render,
             'x': WINDOW_WIDHT - 200,
             'y': 100,

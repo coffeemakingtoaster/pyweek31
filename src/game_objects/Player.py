@@ -58,8 +58,8 @@ class Player(Actor.Actor):
             y_movement -= self.speed
             if new_rotation == -1:
                 new_rotation = 0 
-        
-        self.rotation = new_rotation
+        if new_rotation != -1:
+            self.rotation = new_rotation
         
         move_vector = pygame.Vector2()
         move_vector.xy = x_movement,y_movement
