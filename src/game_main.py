@@ -38,7 +38,7 @@ def launch_game():
         'textures': {
             "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'max.png')),
             "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
-            "keycard": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', '0.png'))
+            "keycard": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', '0.png')),
             "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
             "hud" : [
                 pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_1.png')),
