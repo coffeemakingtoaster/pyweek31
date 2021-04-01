@@ -70,7 +70,7 @@ class Menu():
             'name': option_name,
             'callback': callback
         })
-
+    #
     def set_menu(self, menu_name, current_option = None):
         if menu_name not in self.menu:
             print(menu_name, " doesn't exist")
