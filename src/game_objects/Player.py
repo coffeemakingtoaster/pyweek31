@@ -1,11 +1,13 @@
 import pygame
+import math
 from collections import defaultdict
 
 from ..config import *
 from ..superclasses import Actor
 
-class Player(Actor.Actor):
 
+class Player(Actor.Actor):
+    
     def __init__(self,chests):
         super().__init__()
         self.x = 0
@@ -29,7 +31,6 @@ class Player(Actor.Actor):
         if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
             self.y -= self.speed 
         
-
         #print("Player ", "x:" + str(self.x), "y: " + str(self.y))
         
     def player_interact(self):
@@ -48,7 +49,7 @@ class Player(Actor.Actor):
                             closest_object["obj"] = chest
                             closest_object["dist"] = delta
             if closest_object["obj"] is not None:
-                self.add_item_to_inventory(closest_object["obj"].open())
+                self.add_item_to_inventory(closest_object["obj"].open()) 
 
     #call on item pickup    
     def add_item_to_inventory(self,item):
@@ -65,4 +66,3 @@ class Player(Actor.Actor):
         else:
             print("item is not in the players inventory")
             raise 
-

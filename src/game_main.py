@@ -64,11 +64,12 @@ def launch_game():
     logic = Logic.Logic(gameMap)
 
     #Create keycard
-    keycard = Keycards.Keycards()
+    keycard = Keycards.Keycards(assets)
     container = keycard.container
-    container.append(keycard.create_keycards())
-    container.append(keycard.create_keycards())
-    container.append(keycard.create_keycards())
+    #TODO in player packen
+    keycard_instances = keycard.create_keycards()
+    #keycard.create_rects()
+
 
     render = Render.Render(logic, assets, gameMap, ui, keycard)
     ui.say('Game Main loaded!')

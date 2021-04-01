@@ -5,11 +5,12 @@ from . import Render
 class Keycards():
 
 
-    def __init__(self):
+    def __init__(self, assets):
         self.x = 40
         self.y = 40
         self.is_picked_up = False
         self.container = []
+        self.assets = assets
     
     #container = []
 
@@ -17,6 +18,17 @@ class Keycards():
     
     
     def create_keycards(self):
-        self.keycard_posx = random.randrange(100, 800)
-        self.keycard_posy = random.randrange(100, 800)
-        return [self.keycard_posx, self.keycard_posy]
+        assets = self.assets
+        for i in range(10):
+            keycard_posx = random.randrange(1000)
+            keycard_posy = random.randrange(1000)
+            keycard_rect = assets['textures']['keycard'].get_rect()
+            keycard_rect.center = (keycard_posx,keycard_posy)
+            self.container.append({"x_cord":keycard_posx, "y_cord":keycard_posy, "collectable":True, "rect":keycard_rect})
+        return self.container
+    
+    def keycard_player_collision(self, keycard_rect, player_rect):
+        for keycard in self.container:
+            if keycard["rect"].colliderect(player_rect):
+                print("collided")
+                keycard["collectable"] = False

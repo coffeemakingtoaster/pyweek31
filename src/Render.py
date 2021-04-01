@@ -38,12 +38,22 @@ class Render():
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
         
         for keycard in self.keycard.container:
-            key_x = keycard[0]
-            key_y = keycard[1]
-            self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
+            player_asset = self.assets['textures']['max']
+            player_rect = pygame.Rect((self.logic.player.x, self.logic.player.y),(50,50))
+            player_rect.center=(self.logic.player.x, self.logic.player.y)
+            if keycard["collectable"]: 
+                key_x = keycard["x_cord"]
+                key_y = keycard["y_cord"]
+                self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
+            keycard_rect = keycard["rect"]
+        self.keycard.keycard_player_collision(keycard_rect, player_rect)
+
         #draw player                        
         self.add_asset_to_screen(self.assets['textures']['max'])
-        
+
+        #draw rect around player
+        player_asset = self.assets['textures']['max']
+        player_rect = player_asset.get_rect
     
     def add_asset_to_screen(self,asset, x = None, y = None):
         if not x:
