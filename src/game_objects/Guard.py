@@ -29,7 +29,7 @@ class Guard(Actor.Actor):
 
 
         ray = Section(Point(self.pos.x,self.pos.y),Point(end.x,end.y))
-        m = (ray.endPoint[0]-ray.startPoint[0])/(ray.endPoint[1]-ray.startPoint[1])
+        m = (ray.endPoint.x-ray.startPoint.x)/(ray.endPoint.y-ray.startPoint.y)
         intersections = []
         intersections.append((length,end))
         for wall in walls:
