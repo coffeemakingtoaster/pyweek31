@@ -28,7 +28,7 @@ class Guard(Actor.Actor):
         end = Point(self.pos.x+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).x,self.pos.y+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).y)
 
 
-        ray = Section((self.pos.x,self.pos.y),(end.x,end.y))
+        ray = Section(Point(self.pos.x,self.pos.y),Point(end.x,end.y))
         m = (ray.endPoint[0]-ray.startPoint[0])/(ray.endPoint[1]-ray.startPoint[1])
         intersections = []
         intersections.append((length,end))
