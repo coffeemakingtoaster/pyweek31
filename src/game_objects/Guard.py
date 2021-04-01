@@ -9,7 +9,7 @@ class Guard(Actor.Actor):
         super().__init__()
 
         self.pos = pos
-        self.goalPos = Point(300,300)
+        self.goalPos = Point(pos.x+50,pos.y+50)
         self.walls = walls
 
         self.rotation = 0
@@ -17,8 +17,11 @@ class Guard(Actor.Actor):
 
     def update(self):
 
-        for x in range(-60,61,30):
-            self.intersections.append(self.raycast(x,50,self.walls))
+        self.intersections = []
+        for x in range(-60,61,999):
+            self.intersections.append(self.raycast(x,100,self.walls))
+            print("X: ")
+            print(self.intersections[-1].x)
         pass
 
     def raycast(self, degree, length, walls):
@@ -26,25 +29,34 @@ class Guard(Actor.Actor):
 
 
         end = Point(self.pos.x+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).x,self.pos.y+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).y)
+        print("Endpoint")
+        print(end.x)
+        print(end.y)
 
-
-        ray = Section(Point(self.pos.x,self.pos.y),Point(end.x,end.y))
-        m = (ray.endPoint.x-ray.startPoint.x)/(ray.endPoint.y-ray.startPoint.y)
+        ray = Section(self.pos, end)
+        m = (ray.endPoint.y-ray.startPoint.y)/(ray.endPoint.x-ray.startPoint.x)
         intersections = []
-        intersections.append((length,end))
+        intersections.append((length, end))
         for wall in walls:
-            m_wall = (wall.endPoint.x -wall.startPoint.x)/(wall.endPoint.y+0.1 -wall.startPoint.y)
-            intersection = Point((-ray.startPoint.y+wall.startPoint.y)/(m-m_wall),(ray.startPoint.y+m*(-ray.startPoint.y+wall.startPoint.y)/(m-m_wall)))
-            distance = self.distance(ray.startPoint,ray.endPoint)
-            if distance > length:
-                intersection = Point(999,999)
-            if not (wall.startPoint.x <= intersection.x) and (wall.endPoint.x >= intersection.x):
-                intersection = Point(999,999)
-            tup = (distance,intersection)
-            intersections.append(tup)
+
+            if wall.endPoint.x == wall.startPoint.x:
+                intersection = Point(wall.endPoint.x,ray.startPoint.y+m*wall.endPoint.x)
+                if intersection.y < wall.endPoint.y and intersection.y > wall.startPoint.y:
+                    distance = self.distance(self.pos,intersection)
+                    intersections.append((distance,intersection))
+            if wall.endPoint.y == wall.startPoint.y:
+                intersection = Point(((wall.endPoint.y-ray.startPoint.y)/m),wall.endPoint.y)
+                if intersection.x < wall.endPoint.x and intersection.x > wall.startPoint.x:
+                    distance = self.distance(self.pos,intersection)
+                    intersections.append((distance,intersection))
+
+
         intersections.sort(key=lambda tup: tup[0])
-        intersections.pop(1)
-        return Point(intersections[0][1].x,intersections[0][1].y)
+        for tuple in intersections:
+            print("Intersection X: " + str(tuple[1].x) + " Y: " + str(tuple[1].y))
+            print(tuple[0])
+        correct_intersection = intersections[0]
+        return Point(correct_intersection[1].x,correct_intersection[1].y)
 
 
 
