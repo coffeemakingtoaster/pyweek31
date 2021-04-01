@@ -18,7 +18,7 @@ class Guard(Actor.Actor):
     def update(self):
 
         for x in range(-60,61,30):
-            self.intersections.append(self.raycast(x,400,self.walls))
+            self.intersections.append(self.raycast(x,50,self.walls))
         pass
 
     def raycast(self, degree, length, walls):
@@ -43,6 +43,7 @@ class Guard(Actor.Actor):
             tup = (distance,intersection)
             intersections.append(tup)
         intersections.sort(key=lambda tup: tup[0])
+        intersections.pop(1)
         return Point(intersections[0][1].x,intersections[0][1].y)
 
 
