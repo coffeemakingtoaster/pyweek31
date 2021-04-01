@@ -3,6 +3,7 @@ import pygame
 import pytmx 
 import os
 import time
+import random
 
 #local imports
 from . import pygame_additions
@@ -99,7 +100,7 @@ def launch_game():
         logic.update()
         next_frame = render.generate_new_frame()
         #ui.say("Frames per second: "+str(last_second_frames))
-        ui.uiHelper.createText("FPS "+ str(last_second_frames), {
+        ui.uiHelper.createText("FPS "+ str(last_second_frames * random.randint(1, 8)), {
             'font': ui.uiHelper.fonts['text']['font'],
             'render': render,
             'x': WINDOW_WIDHT - 200,

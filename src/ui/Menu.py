@@ -69,13 +69,19 @@ class Menu():
 
         self.add_menu('Developer', 'Pause')
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
+        self.add_option("Developer", "DEBUG_DRAW_COLLISION", lambda: self.setTest())
 
+    
 
         self.add_menu('Dev Play Sounds', 'Developer')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         #print(self.menu)
 
         self.ui.say('Press ESC to open menu')
+
+    def setTest(self):
+        DEBUG_DRAW_COLLISION = True
+        print("DEBUG_DRAW_COLLISION: ", DEBUG_DRAW_COLLISION)
 
     def light_theme(self):
         self.primaryColor = self.colors[9]
