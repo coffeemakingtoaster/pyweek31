@@ -26,8 +26,6 @@ class Guard(Actor.Actor):
 
     def raycast(self, degree, length, walls):
 
-
-
         end = Point(self.pos.x+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).x,self.pos.y+self.addAngleToVector(degree,Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).y)
         print("Endpoint")
         print(end.x)
