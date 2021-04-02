@@ -3,6 +3,7 @@ from .helper.Section import *
 from .helper.Point import *
 from pygame.math import Vector2
 import math
+import pygame
 
 class Guard(Actor.Actor):
 
@@ -10,7 +11,11 @@ class Guard(Actor.Actor):
         super().__init__()
 
         self.pos = pos
-        self.goalPos = Point(0 ,0)
+        self.goalPos = Point(0, 0)
+        
+        # TODO: add to movement
+        self.hitbox = pygame.Rect((0,0),(50,50))
+        
         self.walls = walls
         self.player = player
 
