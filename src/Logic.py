@@ -23,9 +23,14 @@ class Logic():
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
+        self.eg_enemy_spawn_point = Point(1000,900)
+        self.eg_enemy_waypoints = []
+
 
         self.map = game_map
         self.collision_objects = []
+        
+        # get all map trigger points
         self.get_map_trigger()
 
 
@@ -35,8 +40,8 @@ class Logic():
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
         self.enemies = []
-        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player,[Point(900 ,900) ,Point(5000,900)]))
-
+        
+        self.enemies.append(Guard.Guard(self.eg_enemy_spawn_point,self.walls,self.player,self.eg_enemy_waypoints))
         
 
         self.coffee = Coffee(self)
@@ -89,6 +94,11 @@ class Logic():
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         # do something with win zone!!! 
+                    elif properties["name"] == "'waypoint'":
+                        self.eg_enemy_spawn_point = properties["points"][0]
+                        for point in properties["points"][1:]:
+                            self.eg_enemy_waypoints.append(point)
+
 
     def translate_collision_objects(self,collision_objects):
         walls_as_sections = []

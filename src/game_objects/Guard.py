@@ -11,7 +11,8 @@ class Guard(Actor.Actor):
     def __init__(self,pos,walls,player,waypoints):
         super().__init__()
 
-        self.pos = pos
+        print(pos, waypoints)
+        self.pos = Point.to_our_point(pos)
         self.goalPos = Point(0, 0)
 
         # TODO: add to movement
@@ -21,7 +22,10 @@ class Guard(Actor.Actor):
         self.goalPosVector = Point(0,0)
         self.walls = walls
         self.player = player
-        self.waypoints = waypoints
+        self.waypoints = []
+        for waypoint in waypoints:
+            self.waypoints.append(Point.to_our_point(waypoint))
+
         self.current_waypoint = 0
 
 
@@ -35,7 +39,7 @@ class Guard(Actor.Actor):
 
         self.move( self.goalPos,self.waypoints)
         self.goalPos = self.waypoints[self.current_waypoint]
-        normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,10)
+        normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,1)
         self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
         self.pos.x += normed_move_vec.x
         self.pos.y += normed_move_vec.y
@@ -126,12 +130,13 @@ class Guard(Actor.Actor):
 
 
     def move(self,goalPos,waypoints):
-            if goalPos.x == self.pos.x and goalPos.y ==  self.pos.y:
-                if self.current_waypoint == len(waypoints)-1:
-                    self.current_waypoint = 0
-                    return
-                self.current_waypoint += 1
+        #print(goalPos.x, self.pos.x, goalPos.y,  self.pos.y)
+        if goalPos.x == self.pos.x and goalPos.y ==  self.pos.y:
+            if self.current_waypoint == len(waypoints)-1:
+                self.current_waypoint = 0
                 return
+            self.current_waypoint += 1
+            #print(self.current_waypoint)
 
 
 
