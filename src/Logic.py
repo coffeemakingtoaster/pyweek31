@@ -25,7 +25,6 @@ class Logic():
         
         self.hiding_spots = []       
         self.add_hiding_spots()
-        self.hiding_spots.append(pygame.Rect((0,0),(1000,1000)))
 
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.player = Player.Player(self.chests, self.collision_objects, self.hiding_spots)
