@@ -78,11 +78,11 @@ class Menu():
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         #print(self.menu)
 
-        self.ui.say('Press ESC to open menu')
+        self.ui.say('ESC to pause game')
 
     def setTest(self):
         DEBUG_DRAW_COLLISION = True
-        print("DEBUG_DRAW_COLLISION: ", DEBUG_DRAW_COLLISION)
+        #print("DEBUG_DRAW_COLLISION: ", DEBUG_DRAW_COLLISION)
 
     def light_theme(self):
         self.primaryColor = self.colors[9]
@@ -118,7 +118,7 @@ class Menu():
     
     def set_menu(self, menu_name, current_option = None):
         if menu_name not in self.menu:
-            print(menu_name, " doesn't exist")
+            self.ui.say(menu_name, " doesn't exist")
             return
 
         if current_option is None:
@@ -126,7 +126,7 @@ class Menu():
 
         if current_option > len(self.menu[menu_name]['options']) - 1:
             current_option = 0
-            print("The selected option is not there. Seems like something isn't working here. To bad!")
+            self.ui.say("The selected option is not there. Seems like something isn't working here. To bad!")
         self.current_menu = menu_name
         
         self.current_option = current_option
@@ -139,10 +139,9 @@ class Menu():
                 self.is_waiting = True
                 self.time_when_control = pygame.time.get_ticks() + self.time_wait_open
                 self.open = True
-                self.ui.say('###MENU CONTROLS###')
-                self.ui.say('Move up and down with ARROW KEYS')
-                self.ui.say('Press ENTER to select an option')
-                self.ui.say('Press ESC to go back')
+                self.ui.say('ARROW KEYS to navigate')
+                self.ui.say('ENTER to select an option')
+                self.ui.say('ESC to go back/close')
             elif self.open is True and (pygame.key.get_pressed()[pygame.K_UP] == True or pygame.key.get_pressed()[pygame.K_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True):
                 self.is_waiting = True
                 self.is_controlling = True

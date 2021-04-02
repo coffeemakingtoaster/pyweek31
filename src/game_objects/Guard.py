@@ -33,8 +33,8 @@ class Guard(Actor.Actor):
 
             for x in range(-40,41,20):
                 self.intersections.append(self.raycast(x,200,self.walls,player_sections))
-                print("X: ")
-                print(self.intersections[-1].x)
+                #print("X: ")
+                #print(self.intersections[-1].x)
         pass
 
     def raycast(self, degree, length, walls, player_sections):
@@ -46,13 +46,13 @@ class Guard(Actor.Actor):
 
         normed_goalPos = self.addAngleToVector(degree,self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,length))
 
-        print(normed_goalPos.x)
-        print(normed_goalPos.y)
+        #print(normed_goalPos.x)
+        #print(normed_goalPos.y)
         end = Point(self.pos.x+normed_goalPos.x,self.pos.y+normed_goalPos.y)
 
-        print("Endpoint")
-        print(end.x)
-        print(end.y)
+        #print("Endpoint")
+        #print(end.x)
+        #print(end.y)
 
         ray = Section(self.pos, end)
         if (ray.endPoint.x-ray.startPoint.x) == 0:
@@ -94,9 +94,9 @@ class Guard(Actor.Actor):
 
 
         intersections.sort(key=lambda tup: tup[0])
-        for tuple in intersections:
-            print("Intersection X: " + str(tuple[1].x) + " Y: " + str(tuple[1].y))
-            print(tuple[0])
+        #for tuple in intersections:
+            #print("Intersection X: " + str(tuple[1].x) + " Y: " + str(tuple[1].y))
+            #print(tuple[0])
         correct_intersection = intersections[0]
         return Point(correct_intersection[1].x,correct_intersection[1].y)
 
