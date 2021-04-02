@@ -56,8 +56,10 @@ class Ui:
         self.notification.render(render)
         
 
-    def say(self, message):
+    def say(self, message, force_display = False):
+
         self.notification.pushNotification(message, {
             'time': 600,
-            'color': (255, 255, 255)
+            'color': (255, 255, 255),
+            'force_display': force_display
         })

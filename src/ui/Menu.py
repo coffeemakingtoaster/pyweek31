@@ -53,14 +53,22 @@ class Menu():
         self.add_menu('Pause') 
         self.add_option("Pause", "Resume", lambda: self.exit_menu())
         self.add_option("Pause", "Options", lambda: self.set_menu('Options'))
+        self.add_option("Pause", "Credits", lambda: self.set_menu('Credits'))
         self.add_option("Pause", "Developer", lambda: self.set_menu('Developer'))
         self.add_option("Pause", "End", lambda: self.kill_game())
 
         self.add_menu('Options', 'Pause')
+        self.add_option("Options", "Sound", lambda: self.set_menu("Sound"))
         self.add_option("Options", "Appearance", lambda: self.set_menu("Appearance"))
         self.add_option("Options", "Menu Color", lambda: self.set_menu("Choose Color"))
 
+        self.add_menu('Sound', 'Options')
+        self.add_option("Sound", "Enable audio", lambda: self.enable_audio())
+        self.add_option("Sound", "Music volume", lambda: self.set_audio(self.classes['soundHelper'].music_channel))
+        self.add_option("Sound", "Effects volume", lambda: self.set_audio(self.classes['soundHelper'].sfx_channel))
+
         self.add_menu('Appearance', 'Options')
+        self.add_option("Appearance", "Since we use now a texture...", lambda: self.ui.say("Okay the texture looks better.."))
         self.add_option("Appearance", "Dark Theme", lambda: self.dark_theme())
         self.add_option("Appearance", "Light Theme", lambda: self.light_theme())
 
@@ -68,17 +76,42 @@ class Menu():
         for color in self.colors:
             self.add_option("Choose Color", str(color), lambda farbe: self.set_menu_color(self.primaryColor, farbe), color)
 
+        self.add_menu('Credits', 'Pause')
+        self.add_option("Credits", "A dog", lambda: self.ui.say('Wufff wuffff'))
+        self.add_option("Credits", "Git expert", lambda: self.ui.say('Schau mal mein Monitor!'))
+        self.add_option("Credits", "Graphic Designer", lambda: self.ui.say('Red line with transparent ink?'))
+        self.add_option("Credits", "ARISCH Drinking alpha", lambda: self.ui.say('Kocht auch sehr lecker und sorgt sich um das Teams'))
+        self.add_option("Credits", "Notepad++ Coder", lambda: self.ui.say('Muss mit Git expert in einem Zimmer schlafen uff'))
+        self.add_option("Credits", "Best coder of the world", lambda: self.ui.say("Codet die komplexe UI (beste am Spiel)"))
+
         self.add_menu('Developer', 'Pause')
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
         self.add_option("Developer", "DEBUG_DRAW_COLLISION", lambda: self.setTest())
-
-    
 
         self.add_menu('Dev Play Sounds', 'Developer')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         #print(self.menu)
 
         self.ui.say('ESC to pause game')
+
+    def enable_audio(self):
+        if self.classes['soundHelper'].music_channel.get_volume() > 0 or self.classes['soundHelper'].sfx_channel.get_volume() > 0:
+            self.classes['soundHelper'].music_channel.set_volume(0.0)
+            self.classes['soundHelper'].sfx_channel.set_volume(0.0)
+            self.ui.say('Audio disabled', True)
+        else: 
+            self.classes['soundHelper'].music_channel.set_volume(DEFAULT_MUSIC_VOLUME)
+            self.classes['soundHelper'].sfx_channel.set_volume(DEFAULT_AUDIO_VOLUME)
+            self.ui.say('Audio enabled', True)
+
+    def set_audio(self, which):
+        current_level = which.get_volume()
+        if current_level >= 1:
+            current_level = 0
+        else:
+            current_level += 0.1
+        which.set_volume(current_level)
+        self.ui.say('Volume set to ' + str(which.get_volume()), True)
 
     def kill_game(self):
         pygame.quit()
@@ -135,6 +168,11 @@ class Menu():
         self.current_option = current_option
 
     def update(self):
+        if self.open:
+            self.ui.notification.x = 380
+        else:
+            self.ui.notification.x = 20
+
         if self.time_when_control is not None and pygame.time.get_ticks() > self.time_when_control:
             self.is_waiting = False
         if self.is_controlling is False and self.is_waiting is False:
