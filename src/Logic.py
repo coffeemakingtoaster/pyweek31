@@ -4,8 +4,9 @@ from .game_objects import Guard
 from .game_objects.helper.Point import Point
 from .game_objects.helper.Section import Section
 from .game_objects import Wall
-
-
+from .game_objects.items.Coffee import Coffee
+from .game_objects.items.Coin import Coin
+from .game_objects.items.Donut import Donut
 
 from . import config
 
@@ -25,8 +26,10 @@ class Logic():
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.enemies = []
         self.enemies.append(Guard.Guard(Point(900,900),self.walls))
-        self.player = Player.Player(self.chests,self.collision_objects)
-        
+        self.player = Player.Player(self, self.chests,self.collision_objects)
+        self.coffee = Coffee(self)
+        self.coin = Coin(self)
+        self.donut = Donut(self)        
 
     def update(self):
         self.player.update()

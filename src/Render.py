@@ -66,7 +66,7 @@ class Render():
                 pygame.draw.line(self.frame,(0,0,255),start,end)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
-            print(debug_string  )
+            # print(debug_string  )
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
