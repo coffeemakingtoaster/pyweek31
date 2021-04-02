@@ -11,7 +11,7 @@ class Guard(Actor.Actor):
     def __init__(self,pos,walls,player,waypoints):
         super().__init__()
 
-        print(pos, waypoints)
+        #print(pos, waypoints)
         self.pos = Point.to_our_point(pos)
         self.goalPos = Point(0, 0)
 
