@@ -87,12 +87,21 @@ class Menu():
         self.add_menu('Developer', 'Pause')
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
         self.add_option("Developer", "DEBUG_DRAW_COLLISION", lambda: self.setTest())
+        self.add_option("Developer", "DEV_CUT_SCENE", lambda: self.debug_cut_scene())
 
         self.add_menu('Dev Play Sounds', 'Developer')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         #print(self.menu)
 
         self.ui.say('ESC to pause game')
+
+    def debug_cut_scene(self):
+        self.ui.cut_scene.createCutScene([
+            ['Message 1', {'color': (255, 0, 0)}],
+            ['Message 2', {'color': (255, 255, 255)}],
+            ['Message 3', {}],
+        ])
+
 
     def enable_audio(self):
         if self.classes['soundHelper'].music_channel.get_volume() > 0 or self.classes['soundHelper'].sfx_channel.get_volume() > 0:

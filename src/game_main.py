@@ -111,15 +111,13 @@ def launch_game():
         screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
 
-        #Sound test
-        if pygame.key.get_pressed()[pygame.K_SPACE]:
-            soundHelper.play_sfx(assets['sounds']['bark'], 0)
-
         clock.tick(60)
 
         pygame.display.flip()
 
         if ui.menu.open:
             game_state.set_game_state('pause')
+        elif ui.cut_scene.is_active:
+            game_state.set_game_state('cut_scene')
         else:
             game_state.set_game_state('play')

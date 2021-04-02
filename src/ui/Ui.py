@@ -4,6 +4,7 @@ from .UiHelper import *
 from .. import config
 from .Notification import *
 from .Menu import *
+from .CutScene import *
 
 class Ui:
 
@@ -11,6 +12,7 @@ class Ui:
         self.uiHelper = UiHelper()
         self.notification = Notification(self)
         self.menu = Menu(self, classes)
+        self.cut_scene = CutScene(self)
         self.classes = classes
 
 
@@ -52,6 +54,9 @@ class Ui:
 
 
         self.menu.update()
+        self.cut_scene.update()
+        
+        self.cut_scene.render(render)
         self.menu.render(render)
         self.notification.render(render)
         

@@ -10,7 +10,7 @@ class AnimatedGameObject():
         self.game_state = game_state
     
     def get_current_asset(self, needs_update):
-        if needs_update and self.game_state.is_play():
+        if needs_update and (self.game_state.is_play() or self.game_state.is_cutscene()):
              self.ticks_passed +=1
         if self.ticks_passed < config.FRAME_TIME:          
             return self.assets[0]
