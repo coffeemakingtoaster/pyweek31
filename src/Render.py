@@ -83,9 +83,13 @@ class Render():
                 self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
         
       
-        #draw player      
-        player = GraphicsHelper.render_helper.rotate_image(self.animated_player.get_current_asset(self.logic.player.has_moved), self.logic.player.rotation)
-        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                     
+        #draw player
+        player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
+        if self.logic.player.is_hidden:  
+               player_asset.set_alpha(128)
+        player = GraphicsHelper.render_helper.rotate_image(player_asset, self.logic.player.rotation)
+        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))
+        8                         
         self.add_asset_to_screen(player)
               
 

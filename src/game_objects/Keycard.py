@@ -14,15 +14,9 @@ class Keycards():
         self.container = []
         self.create_keycards()
     
-    #container = []
-
-    #asset for keycard
-    
     
     def create_keycards(self):
         for i in range(3):
-            #keycard_posx = random.randrange(1000)
-            #keycard_posy = random.randrange(1000)
             keycard_pos = random.choice(self.keycard_spawns)
             keycard_posx = keycard_pos["x_spawn"]
             keycard_posy = keycard_pos["y_spawn"]
