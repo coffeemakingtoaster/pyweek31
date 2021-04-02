@@ -14,7 +14,20 @@ class CutScene():
 
         self.time_for_next_click = 0
         self.time_wait = 1000
-            
+
+        #
+        # Create Cut Scene
+        #
+        # You can view an exmaple in Menu.py at:
+        # def debug_cut_scene(self):
+        #     self.ui.cut_scene.createCutScene([
+        #         ['Message 1', {'color': (255, 0, 0)}],
+        #         ['Message 2', {'color': (255, 255, 255)}],
+        #         ['Message 3', {}],
+        #     ])
+        # The seconds parameter has to be at least placed with an empty object. (if someone knows how to fix that: DO it! )
+        #
+
     def createCutScene(self, messages):
         self.is_active = True
         for message, props in messages:
@@ -29,7 +42,6 @@ class CutScene():
             'color': props['color']
         })
         
-
     def update(self):
         if self.is_active is not True:
             return
