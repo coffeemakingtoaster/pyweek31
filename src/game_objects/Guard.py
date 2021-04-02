@@ -1,6 +1,7 @@
 from ..superclasses import Actor
 from .helper.Section import *
 from .helper.Point import *
+from pygame.math import Vector2
 import math
 
 class Guard(Actor.Actor):
@@ -9,7 +10,7 @@ class Guard(Actor.Actor):
         super().__init__()
 
         self.pos = pos
-        self.goalPos = Point(pos.x,pos.y+10)
+        self.goalPos = Point(0 ,0)
         self.walls = walls
         self.player = player
 
@@ -19,22 +20,23 @@ class Guard(Actor.Actor):
 
     def update(self):
 
+        self.rotation += 5
+        rad_rot = self.angle_to_rad(self.rotation)
+        self.goalPos = Point(-math.sin(rad_rot),-math.cos(rad_rot))
 
-        player_sections = [Section(Point(self.player.player_hitbox.x, self.player.player_hitbox.y),
-                                   Point(self.player.player_hitbox.x + self.player.player_hitbox.width,self.player.player_hitbox.y)),
-                           Section(Point(self.player.player_hitbox.x, self.player.player_hitbox.y),
-                                   Point(self.player.player_hitbox.x,self.player.player_hitbox.y + self.player.player_hitbox.height)),
-                           Section(Point(self.player.player_hitbox.x, self.player.player_hitbox.y + self.player.player_hitbox.height),
-                                   Point(self.player.player_hitbox.x + self.player.player_hitbox.width,self.player.player_hitbox.y + self.player.player_hitbox.height)),
-                           Section(Point(self.player.player_hitbox.x + self.player.player_hitbox.width, self.player.player_hitbox.y),
-                                   Point(self.player.player_hitbox.x + self.player.player_hitbox.width,self.player.player_hitbox.y + self.player.player_hitbox.height))]
+        player_sections = [Section(Point(self.player.player_hitbox.x ,self.player.player_hitbox.y) ,
+                                   Point(self.player.player_hitbox.x + self.player.player_hitbox.width ,self.player.player_hitbox.y)),
+                           Section(Point(self.player.player_hitbox.x ,self.player.player_hitbox.y) ,
+                                   Point(self.player.player_hitbox.x ,self.player.player_hitbox.y + self.player.player_hitbox.height)),
+                           Section(Point(self.player.player_hitbox.x ,self.player.player_hitbox.y + self.player.player_hitbox.height),
+                                   Point(self.player.player_hitbox.x + self.player.player_hitbox.width ,self.player.player_hitbox.y + self.player.player_hitbox.height)),
+                           Section(Point(self.player.player_hitbox.x + self.player.player_hitbox.width ,self.player.player_hitbox.y),
+                                   Point(self.player.player_hitbox.x + self.player.player_hitbox.width ,self.player.player_hitbox.y + self.player.player_hitbox.height))]
         self.intersections = []
         if self.distance(self.pos,Point(self.player.x,self.player.y)) < 600:
 
-            for x in range(-40,41,20):
+            for x in range(-40,41,2):
                 self.intersections.append(self.raycast(x,200,self.walls,player_sections))
-                print("X: ")
-                print(self.intersections[-1].x)
         pass
 
     def raycast(self, degree, length, walls, player_sections):
@@ -44,15 +46,13 @@ class Guard(Actor.Actor):
         #      self.pos.y+self.addAngleToVector(degree,
         #      Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).y)
 
-        normed_goalPos = self.addAngleToVector(degree,self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,length))
+        normed_goalPos = self.addAngleToVector(degree,self.normVector(self.goalPos.x,self.goalPos.y,length))
 
-        print(normed_goalPos.x)
-        print(normed_goalPos.y)
+
+
         end = Point(self.pos.x+normed_goalPos.x,self.pos.y+normed_goalPos.y)
 
-        print("Endpoint")
-        print(end.x)
-        print(end.y)
+
 
         ray = Section(self.pos, end)
         if (ray.endPoint.x-ray.startPoint.x) == 0:
@@ -95,10 +95,8 @@ class Guard(Actor.Actor):
 
         intersections.sort(key=lambda tup: tup[0])
         for tuple in intersections:
-            print("Intersection X: " + str(tuple[1].x) + " Y: " + str(tuple[1].y))
-            print(tuple[0])
-        correct_intersection = intersections[0]
-        return Point(correct_intersection[1].x,correct_intersection[1].y)
+            correct_intersection = intersections[0]
+            return Point(correct_intersection[1].x,correct_intersection[1].y)
 
 
 
@@ -124,4 +122,7 @@ class Guard(Actor.Actor):
             return Point(0,0)
         normFactor = length* math.sqrt(1/(x*x+y*y))
         return Point(normFactor*x,normFactor*y)
+
+    def angle_to_rad(self,angle):
+        return angle/180 * math.pi
 

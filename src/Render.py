@@ -7,7 +7,7 @@ import math
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap, ui):
+    def __init__(self, logic, assets, gameMap, ui, game_state):
         self.logic = logic
         self.assets = assets
         self.map = gameMap
@@ -17,8 +17,8 @@ class Render():
         self.tiles_on_screen = 0
         self.enemy_animations = []
         for enemy in self.logic.enemies:
-            self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies']))
-        self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'])
+            self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies'], game_state))
+        self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'], game_state)
         
 
 

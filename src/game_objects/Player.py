@@ -115,9 +115,9 @@ class Player(Actor.Actor):
                 delta = (self.x - chest.x)**2
                 if (delta) <=10000:
                     delta += (self.y - chest.y)**2
-                    print("valid chest found")
+                    #print("valid chest found")
                     if (self.y - chest.y)**2 <=10000:
-                        print("valid chest found 2")
+                        #print("valid chest found 2")
                         if delta<closest_object["dist"]:
                             closest_object["obj"] = chest
                             closest_object["dist"] = delta
@@ -141,23 +141,24 @@ class Player(Actor.Actor):
         self.x = spot["obj"].centerx + 25
         self.y = spot["obj"].centery + 25
         self.player_hitbox.center = (self.x, self.y)
+
                 
     def player_use_item(self):
         used_item = None
         
         if  time.time() - self.coffee_start_time > ITEM_COFFEE_DURATION and self.speed==ITEM_COFFEE_SPEED:
             self.speed = PLAYER_SPEED
-            print("coffee has worn off")
+            #print("coffee has worn off")
         if pygame.key.get_pressed()[HOTKEY_1] == True:
             used_item = "coffee"
             
         if used_item is None:
             return
         
-        print(self.inventory["coffee"])
+        #print(self.inventory["coffee"])
         if used_item == "coffee" and self.inventory["coffee"]>0 and not self.speed==ITEM_COFFEE_SPEED:
-            print(self.inventory["coffee"])
-            print("Now using {}".format(used_item))           
+            #print(self.inventory["coffee"])
+            #print("Now using {}".format(used_item))           
             self.inventory["coffee"] -=1
             self.speed = ITEM_COFFEE_SPEED
             self.coffee_start_time = time.time()        
@@ -189,5 +190,5 @@ class Player(Actor.Actor):
         if self.inventory["item"]>0:
             self.selected_item = item
         else:
-            print("item is not in the players inventory")
+            #print("item is not in the players inventory")
             raise 
