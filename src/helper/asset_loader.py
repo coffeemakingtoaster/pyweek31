@@ -32,5 +32,8 @@ class Assetloader():
                 "player" : [
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'player', 'player_1.png')),
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'player', 'player_2.png'))
-            ]
+                ],
+                "ui": {
+                    "menu_background": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'wall', 'wall_full_back_high_res.png'))
+                }
             } 

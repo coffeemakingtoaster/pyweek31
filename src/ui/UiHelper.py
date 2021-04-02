@@ -42,5 +42,10 @@ class UiHelper:
         pygame.draw.rect(props['render'].frame, props['color'], pygame.Rect(props['x'], props['y'], props['width'], props['height'])) 
     
     def createSprite(self, props):
-        props['texture'] = pygame.transform.scale(props['texture'], (config.TILE_SIZE, config.TILE_SIZE))  
+        if 'width' not in props:
+            props['width'] = config.TILE_SIZE
+
+        if 'height' not in props:
+            props['height'] = config.TILE_SIZE
+        props['texture'] = pygame.transform.scale(props['texture'], (props['width'] , props['height'] ))  
         props['render'].frame.blit(props['texture'], (props['x'], props['y']))
