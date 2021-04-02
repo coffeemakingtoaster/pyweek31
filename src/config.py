@@ -22,6 +22,9 @@ PLAYER_INTERACT = pygame.K_e
 
 
 HOTKEY_1 = pygame.K_1
+HOTKEY_2 = pygame.K_2
+HOTKEY_3 = pygame.K_3
+HOTKEY_4 = pygame.K_4
 
 #TODO: This maybe in a data container for controls? ??? 
 
@@ -35,14 +38,18 @@ ITEM_DONUT_CHANCE = 0.3
 ITEM_COFFEE_CHANCE = 0.4
 ITEM_JAMMER_CHANCE = 0.1
 
+ITEM_COIN_DETECTION_RADIUS = 10
 
-
+ITEM_DONUT_DURATION = 10
 
 ITEM_COFFEE_DURATION = 10
 ITEM_COFFEE_SPEED = 15
 
 
 DEBUG_DRAW_COLLISION = False
+
+# Cut Scenes
+SKIP_INTRO = True
 
 # Audio
 DEFAULT_MUSIC_VOLUME = 0.3

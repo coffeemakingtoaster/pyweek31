@@ -14,15 +14,9 @@ class Keycards():
         self.container = []
         self.create_keycards()
     
-    #container = []
-
-    #asset for keycard
-    
     
     def create_keycards(self):
         for i in range(3):
-            #keycard_posx = random.randrange(1000)
-            #keycard_posy = random.randrange(1000)
             keycard_pos = random.choice(self.keycard_spawns)
             keycard_posx = keycard_pos["x_spawn"]
             keycard_posy = keycard_pos["y_spawn"]
@@ -33,16 +27,18 @@ class Keycards():
     
     def keycard_player_collision(self, player_rect):
         if self.collect_counter <= 2:
-            #print(self.collect_counter)
+            # print(self.collect_counter)
             for keycard in self.container:
+                # print("schleife")
                 if keycard["rect"].colliderect(player_rect):
                     if keycard["collectable"] == True:
-                        #print("collided")
+                        # print("collided")
+
                         keycard["collectable"] = False
                         self.collect_counter += 1
-                        print(self.collect_counter)
+                        # print(self.collect_counter)
         elif self.collect_counter >= 3:
-                self.winning()
+            self.winning()
 
     def winning(self):
         pass

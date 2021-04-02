@@ -11,6 +11,11 @@ class Guard(Actor.Actor):
         super().__init__()
 
         self.pos = pos
+        self.goalPos = Point(0, 0)
+
+        # TODO: add to movement
+        self.hitbox = pygame.Rect((0,0),(50,50))
+
         self.goalPos = waypoints[0]
         self.goalPosVector = Point(0,0)
         self.walls = walls
@@ -125,6 +130,7 @@ class Guard(Actor.Actor):
                     return
                 self.current_waypoint += 1
                 return
+
 
 
     def distance(self,a,b):

@@ -2,6 +2,7 @@
 # load
 # play
 # pause
+# cutscene
 # quit
 
 class GameStateManager(): 
@@ -13,3 +14,6 @@ class GameStateManager():
 
     def is_play(self):
         return self.game_state == "play"
+
+    def is_cutscene(self):
+        return self.game_state == "cutscene"
