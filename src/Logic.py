@@ -25,9 +25,10 @@ class Logic():
         
         self.add_collision_objects()
         self.walls = self.translate_collision_objects(self.collision_objects)
+        self.player = Player.Player(self.chests, self.collision_objects)
         self.enemies = []
-        self.enemies.append(Guard.Guard(Point(1000,900),self.walls))
-        self.player = Player.Player(self.chests,self.collision_objects)
+        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player))
+
         
 
     def update(self):
