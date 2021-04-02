@@ -13,7 +13,7 @@ from . import Keycard
 class Player(Actor.Actor):
     
 
-    def __init__(self,chests,collision):
+    def __init__(self,chests,collision,hiding_spots):
 
         super().__init__()
         self.x = 1000    
@@ -28,12 +28,18 @@ class Player(Actor.Actor):
         self.player_hitbox = pygame.Rect((0,0),(50,50))
         self.player_hitbox.center = (0,0)
         self.has_moved = False
+        self.hiding_spots = hiding_spots
+        self.is_hidden = False
         
     
     def update(self):
-        self.player_movement()
-        self.player_interact()
-        self.player_use_item()
+        if not self.is_hidden:
+            self.player_movement()
+            self.player_interact()
+            self.player_use_item()
+        else:
+            if pygame.key.get_pressed()[PLAYER_INTERACT] == True:
+                self.is_hidden = False
         
     def player_movement(self):
         self.has_moved = True
@@ -103,8 +109,8 @@ class Player(Actor.Actor):
         
     def player_interact(self):
         if pygame.key.get_pressed()[PLAYER_INTERACT] == True:
-            #print("checking")
-            closest_object = {"obj":None, "dist":10000}
+            print("checking")
+            closest_object = {"obj":None, "dist":10000, "type":None}
             for chest in self.chests:
                 delta = (self.x - chest.x)**2
                 if (delta) <=10000:
@@ -115,9 +121,27 @@ class Player(Actor.Actor):
                         if delta<closest_object["dist"]:
                             closest_object["obj"] = chest
                             closest_object["dist"] = delta
+                            closest_object["type"] = "chest"
+            for spot in self.hiding_spots:
+                if self.player_hitbox.colliderect(spot):
+                    closest_object["obj"] = spot
+                    closest_object["dist"] = None
+                    closest_object["type"] = "hiding spot"
+                    break
+                
             if closest_object["obj"] is not None:
-                self.add_item_to_inventory(closest_object["obj"].open())
-                #print(self.inventory)
+                if closest_object["type"] == "chest":
+                    self.add_item_to_inventory(closest_object["obj"].open())
+                elif closest_object["type"] == "hiding spot":
+                    self.hide_player(closest_object)
+                print(self.inventory)
+    
+    def hide_player(self, spot):
+        self.is_hidden = True   
+        self.x = spot["obj"].centerx + 25
+        self.y = spot["obj"].centery + 25
+        self.player_hitbox.center = (self.x, self.y)
+
                 
     def player_use_item(self):
         used_item = None

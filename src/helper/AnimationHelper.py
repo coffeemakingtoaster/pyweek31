@@ -1,11 +1,11 @@
 from .. import config
 
-
+from random import randint
 class AnimatedGameObject():
     def __init__(self, x, y, assets, game_state):
         self.x = 0
         self.y = 0
-        self.ticks_passed = 0
+        self.ticks_passed = randint(0,(config.FRAME_TIME*2)-1)
         self.assets = assets
         self.game_state = game_state
     
