@@ -63,7 +63,7 @@ class Menu():
         self.add_option("Options", "Menu Color", lambda: self.set_menu("Choose Color"))
 
         self.add_menu('Sound', 'Options')
-        self.add_option("Sound", "Enable audio", lambda: self.ui.say(".-."))
+        self.add_option("Sound", "Enable audio", lambda: self.enable_audio())
         self.add_option("Sound", "Music volume", lambda: self.ui.say(".-."))
         self.add_option("Sound", "Effects volume", lambda: self.ui.say(".-."))
 
@@ -88,13 +88,21 @@ class Menu():
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
         self.add_option("Developer", "DEBUG_DRAW_COLLISION", lambda: self.setTest())
 
-    
-
         self.add_menu('Dev Play Sounds', 'Developer')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         #print(self.menu)
 
         self.ui.say('ESC to pause game')
+
+    def enable_audio(self):
+        if self.classes['soundHelper'].music_channel.get_volume() > 0 or self.classes['soundHelper'].sfx_channel.get_volume() > 0:
+            self.classes['soundHelper'].music_channel.set_volume(0.0)
+            self.classes['soundHelper'].sfx_channel.set_volume(0.0)
+            self.ui.say('Audio disabled', True)
+        else: 
+            self.classes['soundHelper'].music_channel.set_volume(DEFAULT_MUSIC_VOLUME)
+            self.classes['soundHelper'].sfx_channel.set_volume(DEFAULT_AUDIO_VOLUME)
+            self.ui.say('Audio enabled', True)
 
     def kill_game(self):
         pygame.quit()
@@ -151,6 +159,11 @@ class Menu():
         self.current_option = current_option
 
     def update(self):
+        if self.open:
+            self.ui.notification.x = 380
+        else:
+            self.ui.notification.x = 20
+
         if self.time_when_control is not None and pygame.time.get_ticks() > self.time_when_control:
             self.is_waiting = False
         if self.is_controlling is False and self.is_waiting is False:
