@@ -32,6 +32,7 @@ class Player(Actor.Actor):
         self.keypress_time = 0
         self.keypress_wait = 200
         
+        self.inventory["coffee"] = 9999999
         self.inventory["jammer"] = 9999999
 
         self.has_moved = False
@@ -157,7 +158,8 @@ class Player(Actor.Actor):
         self.use_jammer()
         
     def use_coffee(self):
-        if pygame.key.get_pressed()[HOTKEY_1] == True and self.inventory["coffee"] > 0:
+        if pygame.key.get_pressed()[HOTKEY_1] == True and self.inventory["coffee"] > 0 and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
             self.inventory["coffee"] -= 1
             self.logic.coffee.drink()
     

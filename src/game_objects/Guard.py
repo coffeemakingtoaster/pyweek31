@@ -1,6 +1,7 @@
 from ..superclasses import Actor
 from .helper.Section import *
 from .helper.Point import *
+from ..config import *
 from pygame.math import Vector2
 import math
 import pygame
@@ -20,7 +21,9 @@ class Guard(Actor.Actor):
         self.player = player
 
         self.rotation = 0
-        self.intersections = []
+        self.intersections = []#
+        
+        self.ray_length = GUARD_SIGHT_LENGTH
 
 
     def update(self):
@@ -41,7 +44,7 @@ class Guard(Actor.Actor):
         if self.distance(self.pos,Point(self.player.x,self.player.y)) < 600:
 
             for x in range(-40,41,2):
-                self.intersections.append(self.raycast(x,200,self.walls,player_sections))
+                self.intersections.append(self.raycast(x, self.ray_length, self.walls, player_sections))
         pass
 
     def raycast(self, degree, length, walls, player_sections):

@@ -1,5 +1,6 @@
 from ...config import *
 from ...superclasses import Item
+import time, threading
 
 class Jammer(Item.Item):
     def __init__(self, logic):
@@ -9,4 +10,10 @@ class Jammer(Item.Item):
     def activate(self):
         x = self.logic.player.x
         y = self.logic.player.y
-        print(x, y)
+        for guard in self.logic.enemies:
+            guard.ray_length = ITEM_JAMMER_RAY_LENGTH
+        threading.Timer(self.duration, self.reset).start()
+          
+    def reset(self):
+        for guard in self.logic.enemies:
+            guard.ray_length = GUARD_SIGHT_LENGTH
