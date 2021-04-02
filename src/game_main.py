@@ -3,6 +3,7 @@ import pygame
 import pytmx 
 import os
 import time
+import sys
 
 #local imports
 from . import pygame_additions
@@ -35,8 +36,8 @@ def launch_game():
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
     gameMap = pytmx.load_pygame("data/maps/test-map.tmx")
     running = True
-    button = pygame_additions.button(40,40,100,100)
-    button.set_action(hallo_welt)
+    #button = pygame_additions.button(40,40,100,100)
+    #button.set_action(hallo_welt)
     #button.draw(screen)
     pygame.display.flip()
 
@@ -70,6 +71,15 @@ def launch_game():
     game_state.set_game_state('play')
     
     while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_state.set_game_state('quit')
+                running = False
+                pygame.display.quit()
+                sys.exit()
+            #if event.type == pygame.MOUSEBUTTONDOWN:
+            #    button.handle_input(event.pos)               
+
         if time.time() - start_time > 1 :
             start_time = time.time()
             last_second_frames = render.get_drawn_frames()
@@ -107,11 +117,6 @@ def launch_game():
 
         clock.tick(60)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                button.handle_input(event.pos)               
         pygame.display.flip()
 
         if ui.menu.open:
