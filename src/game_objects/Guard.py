@@ -58,7 +58,7 @@ class Guard(Actor.Actor):
                                    Point(self.player.player_hitbox.x + self.player.player_hitbox.width ,self.player.player_hitbox.y + self.player.player_hitbox.height))]
         self.intersections = []
         if self.distance(self.pos,Point(self.player.x,self.player.y)) < 600:
-            for x in range(-40,41,2):
+            for x in range(-40,41,20):
                 self.intersections.append(self.raycast(x, self.ray_length, self.walls, player_sections))
         pass
 

@@ -23,8 +23,8 @@ class Logic():
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
-        self.eg_enemy_spawn_point = Point(1000,900)
-        self.eg_enemy_waypoints = []
+        
+        self.enemy_waypoints = []
 
 
         self.map = game_map
@@ -40,8 +40,11 @@ class Logic():
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
         self.enemies = []
-        
-        self.enemies.append(Guard.Guard(self.eg_enemy_spawn_point,self.walls,self.player,self.eg_enemy_waypoints))
+
+        for enemy_waypoint in self.enemy_waypoints:
+            print(enemy_waypoint['waypoints'])
+            self.enemies.append(Guard.Guard(enemy_waypoint['spawn_point'], self.walls, self.player, enemy_waypoint['waypoints']))
+
         
 
         self.coffee = Coffee(self)
@@ -95,9 +98,16 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         # do something with win zone!!! 
                     elif properties["name"] == "'waypoint'":
-                        self.eg_enemy_spawn_point = properties["points"][0]
+                        enemy_waypoints = []
+                        enemy_spawn_point = properties["points"][0]
                         for point in properties["points"][1:]:
-                            self.eg_enemy_waypoints.append(point)
+                            enemy_waypoints.append(point)
+                        self.enemy_waypoints.append({
+                            'spawn_point': enemy_spawn_point,
+                            'waypoints': enemy_waypoints
+                        })
+                        
+
 
 
     def translate_collision_objects(self,collision_objects):
