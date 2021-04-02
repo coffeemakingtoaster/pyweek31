@@ -53,20 +53,36 @@ class Menu():
         self.add_menu('Pause') 
         self.add_option("Pause", "Resume", lambda: self.exit_menu())
         self.add_option("Pause", "Options", lambda: self.set_menu('Options'))
+        self.add_option("Pause", "Credits", lambda: self.set_menu('Credits'))
         self.add_option("Pause", "Developer", lambda: self.set_menu('Developer'))
         self.add_option("Pause", "End", lambda: self.kill_game())
 
         self.add_menu('Options', 'Pause')
+        self.add_option("Options", "Sound", lambda: self.set_menu("Sound"))
         self.add_option("Options", "Appearance", lambda: self.set_menu("Appearance"))
         self.add_option("Options", "Menu Color", lambda: self.set_menu("Choose Color"))
 
+        self.add_menu('Sound', 'Options')
+        self.add_option("Sound", "Enable audio", lambda: self.ui.say(".-."))
+        self.add_option("Sound", "Music volume", lambda: self.ui.say(".-."))
+        self.add_option("Sound", "Effects volume", lambda: self.ui.say(".-."))
+
         self.add_menu('Appearance', 'Options')
+        self.add_option("Appearance", "Since we use now a texture...", lambda: self.ui.say("Okay the texture looks better.."))
         self.add_option("Appearance", "Dark Theme", lambda: self.dark_theme())
         self.add_option("Appearance", "Light Theme", lambda: self.light_theme())
 
         self.add_menu('Choose Color', 'Options')
         for color in self.colors:
             self.add_option("Choose Color", str(color), lambda farbe: self.set_menu_color(self.primaryColor, farbe), color)
+
+        self.add_menu('Credits', 'Pause')
+        self.add_option("Credits", "A dog", lambda: self.ui.say('Wufff wuffff'))
+        self.add_option("Credits", "Git expert", lambda: self.ui.say('Schau mal mein Monitor!'))
+        self.add_option("Credits", "Graphic Designer", lambda: self.ui.say('Red line with transparent ink?'))
+        self.add_option("Credits", "ARISCH Drinking alpha", lambda: self.ui.say('Kocht auch sehr lecker und sorgt sich um das Teams'))
+        self.add_option("Credits", "Notepad++ Coder", lambda: self.ui.say('Muss mit Git expert in einem Zimmer schlafen uff'))
+        self.add_option("Credits", "Best coder of the world", lambda: self.ui.say("Codet die komplexe UI (beste am Spiel)"))
 
         self.add_menu('Developer', 'Pause')
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
