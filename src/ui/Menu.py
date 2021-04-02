@@ -77,12 +77,12 @@ class Menu():
             self.add_option("Choose Color", str(color), lambda farbe: self.set_menu_color(self.primaryColor, farbe), color)
 
         self.add_menu('Credits', 'Pause')
-        self.add_option("Credits", "A dog", lambda: self.ui.say('Wufff wuffff'))
-        self.add_option("Credits", "Git expert", lambda: self.ui.say('Schau mal mein Monitor!'))
-        self.add_option("Credits", "Graphic Designer", lambda: self.ui.say('Red line with transparent ink?'))
-        self.add_option("Credits", "ARISCH Drinking alpha", lambda: self.ui.say('Kocht auch sehr lecker und sorgt sich um das Teams'))
-        self.add_option("Credits", "Notepad++ Coder", lambda: self.ui.say('Muss mit Git expert in einem Zimmer schlafen uff'))
-        self.add_option("Credits", "Best coder of the world", lambda: self.ui.say("Codet die komplexe UI (beste am Spiel)"))
+        self.add_option("Credits", "A dog", lambda: self.ui.say('Wufff wuffff', True))
+        self.add_option("Credits", "Git expert", lambda: self.ui.say('Schau mal mein Monitor!', True))
+        self.add_option("Credits", "Graphic Designer", lambda: self.ui.say('Red line with transparent ink?', True))
+        self.add_option("Credits", "ARISCH Drinking alpha", lambda: self.ui.say('Kocht auch sehr lecker und sorgt sich um das Teams', True))
+        self.add_option("Credits", "Notepad++ Coder", lambda: self.ui.say('Muss mit Git expert in einem Zimmer schlafen uff', True))
+        self.add_option("Credits", "Best coder of the world", lambda: self.ui.say("Codet die komplexe UI (beste am Spiel)", True))
 
         self.add_menu('Developer', 'Pause')
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
@@ -111,7 +111,7 @@ class Menu():
         else:
             current_level += 0.1
         which.set_volume(current_level)
-        self.ui.say('Volume set to ' + str(which.get_volume()), True)
+        self.ui.say('Set to ' + str(which.get_volume()), True)
 
     def kill_game(self):
         pygame.quit()
