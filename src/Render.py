@@ -7,13 +7,12 @@ import math
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap, ui, keycard):
+    def __init__(self, logic, assets, gameMap, ui):
         self.logic = logic
         self.assets = assets
         self.map = gameMap
-        self.ui = ui
-        self.tick_cnt = 0    
-        self.keycard = keycard
+        self.ui = ui 
+        self.keycard = self.logic.keycards
         self.frame_cnt = 0
         self.tiles_on_screen = 0
         self.enemy_animations = []
@@ -28,7 +27,6 @@ class Render():
         self.draw_map()
         self.draw_game_objects()
         self.ui.draw_ui(self)
-        self.tick_cnt+=1
         self.frame_cnt+=1
         self.tiles_on_screen = 0
         return self.frame
@@ -79,15 +77,11 @@ class Render():
 
         
         for keycard in self.keycard.container:
-            player_asset = self.animated_player.get_current_asset(False)
-            player_rect = pygame.Rect((self.logic.player.x, self.logic.player.y),(50,50))
-            player_rect.center=(self.logic.player.x, self.logic.player.y)
             if keycard["collectable"]: 
                 key_x = keycard["x_cord"]
                 key_y = keycard["y_cord"]
                 self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
-            keycard_rect = keycard["rect"]
-        self.keycard.keycard_player_collision(keycard_rect, player_rect)
+        
       
         #draw player      
         player = GraphicsHelper.render_helper.rotate_image(self.animated_player.get_current_asset(self.logic.player.has_moved), self.logic.player.rotation)

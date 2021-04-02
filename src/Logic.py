@@ -4,6 +4,7 @@ from .game_objects import Guard
 from .game_objects.helper.Point import Point
 from .game_objects.helper.Section import Section
 from .game_objects import Wall
+from .game_objects import Keycard
 
 
 
@@ -16,6 +17,7 @@ class Logic():
     def __init__(self, game_map):
         self.chests = []
         self.chests.append(Chest.Chest())
+        self.keycards = Keycard.Keycards()
         
         self.map = game_map
         self.collision_objects = []
@@ -30,6 +32,9 @@ class Logic():
 
     def update(self):
         self.player.update()
+        for keycard in self.keycards.container:
+            keycard_rect = keycard["rect"]
+            self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
             enemy.update()
         pass
