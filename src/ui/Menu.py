@@ -64,8 +64,8 @@ class Menu():
 
         self.add_menu('Sound', 'Options')
         self.add_option("Sound", "Enable audio", lambda: self.enable_audio())
-        self.add_option("Sound", "Music volume", lambda: self.ui.say(".-."))
-        self.add_option("Sound", "Effects volume", lambda: self.ui.say(".-."))
+        self.add_option("Sound", "Music volume", lambda: self.set_audio(self.classes['soundHelper'].music_channel))
+        self.add_option("Sound", "Effects volume", lambda: self.set_audio(self.classes['soundHelper'].sfx_channel))
 
         self.add_menu('Appearance', 'Options')
         self.add_option("Appearance", "Since we use now a texture...", lambda: self.ui.say("Okay the texture looks better.."))
@@ -103,6 +103,15 @@ class Menu():
             self.classes['soundHelper'].music_channel.set_volume(DEFAULT_MUSIC_VOLUME)
             self.classes['soundHelper'].sfx_channel.set_volume(DEFAULT_AUDIO_VOLUME)
             self.ui.say('Audio enabled', True)
+
+    def set_audio(self, which):
+        current_level = which.get_volume()
+        if current_level >= 1:
+            current_level = 0
+        else:
+            current_level += 0.1
+        which.set_volume(current_level)
+        self.ui.say('Volume set to ' + str(which.get_volume()), True)
 
     def kill_game(self):
         pygame.quit()
