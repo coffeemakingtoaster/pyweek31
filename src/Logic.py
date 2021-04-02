@@ -4,9 +4,10 @@ from .game_objects import Guard
 from .game_objects.helper.Point import Point
 from .game_objects.helper.Section import Section
 from .game_objects import Wall
+from .game_objects.items.Coffee import Coffee
+from .game_objects.items.Coin import Coin
+from .game_objects.items.Donut import Donut
 from .game_objects import Keycard
-
-
 
 from . import config
 
@@ -21,14 +22,22 @@ class Logic():
         
         self.map = game_map
         self.collision_objects = []
-
-        
         self.add_collision_objects()
-        self.walls = self.translate_collision_objects(self.collision_objects)
-        self.enemies = []
-        self.enemies.append(Guard.Guard(Point(900,900),self.walls))
-        self.player = Player.Player(self.chests,self.collision_objects)
         
+        self.hiding_spots = []       
+        self.add_hiding_spots()
+
+        self.walls = self.translate_collision_objects(self.collision_objects)
+        self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
+        self.enemies = []
+
+        self.coffee = Coffee(self)
+        self.coin = Coin(self)
+        self.donut = Donut(self)        
+        
+        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player))
+        self.enemies.append(Guard.Guard(Point(1000,800),self.walls,self.player))
+        self.enemies.append(Guard.Guard(Point(1000,700),self.walls,self.player))
 
     def update(self):
         self.player.update()
@@ -39,8 +48,24 @@ class Logic():
             enemy.update()
         pass
 
+    def add_hiding_spots(self):
+        print("checking for hiding spots")
+        for layer in self.map.visible_layers:
+            if isinstance(layer, pytmx.TiledObjectGroup):
+                # access collision object
+                for collision_object in layer:
+                    properties = collision_object.__dict__
+                    if properties["name"] == "'hiding spot'":
+                        x = properties['x'] * (config.TILE_SIZE/16)
+                        y = properties['y'] * (config.TILE_SIZE/16)
+                        width = properties['width'] * (config.TILE_SIZE/16)
+                        height = properties['height'] * (config.TILE_SIZE/16)
+                        spot = pygame.Rect(x, y, width, height)
+                        self.hiding_spots.append(spot)
+
+
     def add_collision_objects(self):
-        print("checking for collision_objects")
+        #print("checking for collision_objects")
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
                 # access collision object

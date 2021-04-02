@@ -7,12 +7,13 @@ class Notification():
         self.notifications = []
         self.x = 20
         self.y = WINDOW_HEIGHT - 40
+        self.is_active = False
 
     def pushNotification(self, text, props):
-        for notification in self.notifications:
-            if notification['message'] == text:
-                return
-        print(text, " is printed to the screen as notification!")
+        if props['force_display'] == False:
+            for notification in self.notifications:
+                if notification['message'] == text:
+                    return
 
         self.notifications[:0] = [{
             'message': text,
@@ -22,6 +23,9 @@ class Notification():
         
 
     def render(self, render):
+        if self.is_active is not True:
+            return
+            
         index = 0
         for notification in self.notifications:
             if notification['time'] > 0:
@@ -30,7 +34,7 @@ class Notification():
                 notification['time'] = 0
                 self.notifications.remove(notification)
                 continue
-            
+
             self.uiHelper.createText(notification['message'], {
                 'font': self.uiHelper.fonts['text']['font'],
                 'render': render,

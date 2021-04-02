@@ -4,6 +4,7 @@ from .UiHelper import *
 from .. import config
 from .Notification import *
 from .Menu import *
+from .CutScene import *
 
 class Ui:
 
@@ -11,23 +12,14 @@ class Ui:
         self.uiHelper = UiHelper()
         self.notification = Notification(self)
         self.menu = Menu(self, classes)
+        self.cut_scene = CutScene(self)
         self.classes = classes
-        self.say('Ui loaded!')
 
 
     def update(self):
         pass
 
     def draw_ui(self, render):
-        start_time = pygame.time.get_ticks()
-        self.uiHelper.createText(str(self.formatTime(start_time)[0]) + ":" + str(self.formatTime(start_time)[1]), {
-            'font': self.uiHelper.fonts['text']['font'],
-            'render': render,
-            'x': WINDOW_WIDHT - 200,
-            'y': 50,
-            'color': (255, 255, 255)
-        })
-
         """
         self.uiHelper.createRectangle({
             'x': 20,
@@ -62,34 +54,17 @@ class Ui:
 
 
         self.menu.update()
+        self.cut_scene.update()
+        
+        self.cut_scene.render(render)
         self.menu.render(render)
         self.notification.render(render)
         
 
-    def say(self, message):
+    def say(self, message, force_display = False):
+
         self.notification.pushNotification(message, {
             'time': 600,
-            'color': (255, 255, 255)
+            'color': (255, 255, 255),
+            'force_display': force_display
         })
-
-    def formatTime(self, time):
-        timeArray = []
-
-        #get seconds
-        total_seconds = time / 1000
-
-        #get minutes
-        minutes = int(total_seconds // 60)
-        if minutes < 10:
-            minutes = str(0) + str(minutes)
-        timeArray.append(minutes)
-
-        #get rest seconds
-        rest_seconds = round(total_seconds % 60, 2)
-        if rest_seconds < 10:
-            rest_seconds = str(0) + str(rest_seconds)
-
-        timeArray.append(rest_seconds)
-        
-
-        return timeArray

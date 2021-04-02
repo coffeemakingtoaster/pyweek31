@@ -7,7 +7,7 @@ import math
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap, ui):
+    def __init__(self, logic, assets, gameMap, ui, game_state):
         self.logic = logic
         self.assets = assets
         self.map = gameMap
@@ -17,8 +17,8 @@ class Render():
         self.tiles_on_screen = 0
         self.enemy_animations = []
         for enemy in self.logic.enemies:
-            self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies']))
-        self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'])
+            self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies'], game_state))
+        self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'], game_state)
         
 
 
@@ -71,7 +71,9 @@ class Render():
             enemy_visual = GraphicsHelper.render_helper.rotate_image(self.enemy_animations[enemy_count].get_current_asset(True), enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
+            
             #print(debug_string)
+
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
@@ -83,9 +85,13 @@ class Render():
                 self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
         
       
-        #draw player      
-        player = GraphicsHelper.render_helper.rotate_image(self.animated_player.get_current_asset(self.logic.player.has_moved), self.logic.player.rotation)
-        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                     
+        #draw player
+        player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
+        if self.logic.player.is_hidden:  
+               player_asset.set_alpha(128)
+        player = GraphicsHelper.render_helper.rotate_image(player_asset, self.logic.player.rotation)
+        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))
+        8                         
         self.add_asset_to_screen(player)
               
 

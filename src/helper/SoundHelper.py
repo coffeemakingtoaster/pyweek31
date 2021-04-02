@@ -1,12 +1,13 @@
 from pygame import mixer
 from random import randrange
+from ..config import *
 
 class SoundHelper():
     def __init__(self):
         self.music_channel = mixer.Channel(0)
-        self.music_channel.set_volume(0.3)
+        self.music_channel.set_volume(DEFAULT_MUSIC_VOLUME)
         self.sfx_channel = mixer.Channel(1)
-        self.sfx_channel.set_volume(0.3)
+        self.sfx_channel.set_volume(DEFAULT_AUDIO_VOLUME)
         self.cache = []
 
         #Can be set to false for example in settings menu
