@@ -32,7 +32,8 @@ class Player(Actor.Actor):
         self.keypress_time = 0
         self.keypress_wait = 200
         
-        self.inventory["donut"] = 1
+        self.inventory["coffee"] = 9999999
+        self.inventory["jammer"] = 9999999
 
         self.has_moved = False
         self.hiding_spots = hiding_spots
@@ -151,10 +152,18 @@ class Player(Actor.Actor):
 
                 
     def player_use_item(self):
-        if pygame.key.get_pressed()[HOTKEY_1] == True and self.inventory["coffee"] > 0:
+        self.use_coffee()
+        self.use_coin()
+        self.use_donut()
+        self.use_jammer()
+        
+    def use_coffee(self):
+        if pygame.key.get_pressed()[HOTKEY_1] == True and self.inventory["coffee"] > 0 and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
             self.inventory["coffee"] -= 1
             self.logic.coffee.drink()
-        
+    
+    def use_coin(self):
         if pygame.key.get_pressed()[HOTKEY_2] == True and pygame.time.get_ticks() > self.keypress_time:
             self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
             if self.coinmode == False and self.inventory["coin"] > 0:
@@ -168,9 +177,16 @@ class Player(Actor.Actor):
             self.logic.coin.throw(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
             self.coinmode = False
             
+    def use_donut(self):
         if pygame.key.get_pressed()[HOTKEY_3] == True and self.inventory["donut"] > 0:
             pass
             
+    def use_jammer(self):
+        if pygame.key.get_pressed()[HOTKEY_4] == True and self.inventory["jammer"] > 0 and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
+            self.inventory["jammer"] -= 1
+            self.logic.jammer.activate()
+    
     def check_collide(self,x,y):
         hitbox = self.player_hitbox
         hitbox.x = self.player_hitbox.x + x      

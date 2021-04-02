@@ -7,6 +7,7 @@ from .game_objects import Wall
 from .game_objects.items.Coffee import Coffee
 from .game_objects.items.Coin import Coin
 from .game_objects.items.Donut import Donut
+from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
 
 from . import config
@@ -36,9 +37,8 @@ class Logic():
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
-        self.donut = Donut(self)
-
-
+        self.donut = Donut(self)        
+        self.jammer = Jammer(self)        
 
     def update(self):
         self.player.update()
