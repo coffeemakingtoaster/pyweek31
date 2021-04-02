@@ -47,6 +47,8 @@ class Logic():
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
             enemy.update()
+ 
+        self.donut.snap_trap()
         pass
 
     def add_hiding_spots(self):

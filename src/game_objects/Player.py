@@ -34,6 +34,7 @@ class Player(Actor.Actor):
         
         self.inventory["coffee"] = 9999999
         self.inventory["jammer"] = 9999999
+        self.inventory["donut"] = 9999999
 
         self.has_moved = False
         self.hiding_spots = hiding_spots
@@ -178,8 +179,10 @@ class Player(Actor.Actor):
             self.coinmode = False
             
     def use_donut(self):
-        if pygame.key.get_pressed()[HOTKEY_3] == True and self.inventory["donut"] > 0:
-            pass
+        if pygame.key.get_pressed()[HOTKEY_3] == True and self.inventory["donut"] > 0 and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
+            self.inventory["donut"] -= 1
+            self.logic.donut.place(self.x, self.y)
             
     def use_jammer(self):
         if pygame.key.get_pressed()[HOTKEY_4] == True and self.inventory["jammer"] > 0 and pygame.time.get_ticks() > self.keypress_time:

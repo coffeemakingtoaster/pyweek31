@@ -15,7 +15,7 @@ class Guard(Actor.Actor):
         self.goalPos = Point(0, 0)
 
         # TODO: add to movement
-        self.hitbox = pygame.Rect((0,0),(50,50))
+        self.hitbox = pygame.Rect(self.pos.x, self.pos.y, 50, 50)
 
         self.goalPos = waypoints[0]
         self.goalPosVector = Point(0,0)
@@ -23,7 +23,7 @@ class Guard(Actor.Actor):
         self.player = player
         self.waypoints = waypoints
         self.current_waypoint = 0
-
+        self.is_moving = True
 
         self.rotation = 0
         self.intersections = []
@@ -37,9 +37,11 @@ class Guard(Actor.Actor):
         self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,10)
         self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
-        self.pos.x += normed_move_vec.x
-        self.pos.y += normed_move_vec.y
-
+        if self.is_moving == True:
+            self.pos.x += normed_move_vec.x
+            self.pos.y += normed_move_vec.y
+            self.hitbox.x += normed_move_vec.x
+            self.hitbox.y += normed_move_vec.y
 
         #rad_rot = self.angle_to_rad(self.rotation)
         #self.goalPosVector = Point(-math.sin(rad_rot),-math.cos(rad_rot))
@@ -117,13 +119,8 @@ class Guard(Actor.Actor):
             correct_intersection = intersections[0]
             return Point(correct_intersection[1].x,correct_intersection[1].y)
 
-
-
-
-
-
-
-
+    def check_vision(self):
+        return True
 
     def move(self,goalPos,waypoints):
             if goalPos.x == self.pos.x and goalPos.y ==  self.pos.y:
