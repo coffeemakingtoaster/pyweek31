@@ -41,7 +41,7 @@ class Logic():
         pass
 
     def add_collision_objects(self):
-        print("checking for collision_objects")
+        #print("checking for collision_objects")
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
                 # access collision object

@@ -12,7 +12,7 @@ class Notification():
         for notification in self.notifications:
             if notification['message'] == text:
                 return
-        print(text, " is printed to the screen as notification!")
+        #print(text, " is printed to the screen as notification!")
 
         self.notifications[:0] = [{
             'message': text,
