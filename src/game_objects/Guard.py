@@ -31,7 +31,7 @@ class Guard(Actor.Actor):
         self.intersections = []
         if self.distance(self.pos,Point(self.player.x,self.player.y)) < 600:
 
-            for x in range(-40,41,1):
+            for x in range(-40,41,20):
                 self.intersections.append(self.raycast(x,200,self.walls,player_sections))
                 print("X: ")
                 print(self.intersections[-1].x)
