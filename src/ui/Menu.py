@@ -8,6 +8,7 @@ class Menu():
         self.current_menu = 'Pause'
         self.current_option = 0
         self.ui = ui
+        self.classes = classes
         self.is_controlling = False
         self.is_waiting = False
         self.time_when_control = None
@@ -19,7 +20,7 @@ class Menu():
         self.colors = [
             (255, 0, 5),
             (255, 242, 140),
-            (220, 220, 220),
+            (255, 255, 255),
             (158, 158, 158),
             (91, 91, 91),
             (17, 0, 102),
@@ -191,6 +192,15 @@ class Menu():
             'height': WINDOW_HEIGHT,
             'color': self.background,
             'render': render
+        })
+
+        self.ui.uiHelper.createSprite({
+            'x': 0,
+            'y': 0,
+            'width': WINDOW_WIDHT,
+            'height': WINDOW_HEIGHT,
+            'texture' : self.classes['assets']['textures']['ui']['menu_background'],
+            'render' : render
         })
 
         start_menu_options_x = WINDOW_WIDHT/30
