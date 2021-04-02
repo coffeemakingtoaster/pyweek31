@@ -28,10 +28,9 @@ class Logic():
         self.add_hiding_spots()
 
         self.walls = self.translate_collision_objects(self.collision_objects)
-        self.player = Player.Player(self.chests, self.collision_objects, self.hiding_spots)
+        self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
         self.enemies = []
 
-        self.player = Player.Player(self, self.chests,self.collision_objects)
         self.coffee = Coffee(self)
         self.coin = Coin(self)
         self.donut = Donut(self)        
