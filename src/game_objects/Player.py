@@ -15,8 +15,8 @@ class Player(Actor.Actor):
     def __init__(self, logic, chests, collision, hiding_spots):
         super().__init__()
         self.logic = logic
-        self.x = 1000    
-        self.y = 1000
+        self.x = logic.player_spawn_point[0]
+        self.y = logic.player_spawn_point[1]
         self.speed = PLAYER_SPEED
         self.inventory = defaultdict(lambda: 0)
         self.selected_item = None

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="57">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="64">
  <tileset firstgid="1" source="prison_inside.tsx"/>
  <tileset firstgid="18" source="gras.tsx"/>
  <layer id="1" name="background" width="128" height="64">
@@ -138,10 +138,14 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,25,24,25,23,23,22,24
 </data>
  </layer>
- <objectgroup id="2" name="collision">
+ <objectgroup id="2" name="trigger">
   <object id="53" name="'wall'" x="96" y="64" width="16" height="896"/>
   <object id="54" name="'wall'" x="112" y="64" width="1840" height="16"/>
   <object id="55" name="'wall'" x="112" y="944" width="1840" height="16"/>
   <object id="56" name="'wall'" x="1936" y="80" width="16" height="864"/>
+  <object id="62" name="'spawnpoint'" x="240" y="336">
+   <point/>
+  </object>
+  <object id="63" name="'win_zone'" x="1776" y="432" width="128" height="128"/>
  </objectgroup>
 </map>

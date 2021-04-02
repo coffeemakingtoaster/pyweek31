@@ -21,9 +21,13 @@ class Logic():
         self.chests.append(Chest.Chest())
         self.keycards = Keycard.Keycards()
         
+        # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
+        self.player_spawn_point = (1000, 1000)
+
         self.map = game_map
         self.collision_objects = []
-        self.add_collision_objects()
+        self.get_map_trigger()
+
 
         self.hiding_spots = []
         self.add_hiding_spots()
@@ -64,14 +68,12 @@ class Logic():
                         spot = pygame.Rect(x, y, width, height)
                         self.hiding_spots.append(spot)
 
-
-    def add_collision_objects(self):
-        #print("checking for collision_objects")
+    def get_map_trigger(self):
+        #print("checking for map triggers")
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
-                # access collision object
-                for collision_object in layer:
-                    properties = collision_object.__dict__
+                for trigger_object in layer:
+                    properties = trigger_object.__dict__
                     if properties["name"] == "'wall'":
                         x = properties['x'] * (config.TILE_SIZE/16)
                         y = properties['y'] * (config.TILE_SIZE/16)
@@ -79,6 +81,14 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         wall = pygame.Rect(x, y, width, height)
                         self.collision_objects.append(wall)
+                    elif properties["name"] == "'spawnpoint'":
+                        self.player_spawn_point = (properties['x'] * (config.TILE_SIZE/16), properties['y'] * (config.TILE_SIZE/16))
+                    elif properties["name"] == "'win_zone'":
+                        x = properties['x'] * (config.TILE_SIZE/16)
+                        y = properties['y'] * (config.TILE_SIZE/16)
+                        width = properties['width'] * (config.TILE_SIZE/16)
+                        height = properties['height'] * (config.TILE_SIZE/16)
+                        # do something with win zone!!! 
 
     def translate_collision_objects(self,collision_objects):
         walls_as_sections = []
