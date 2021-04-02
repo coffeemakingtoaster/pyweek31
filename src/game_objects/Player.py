@@ -7,6 +7,7 @@ from collections import defaultdict
 
 from ..config import *
 from ..superclasses import Actor
+from . import Keycard
 
 
 class Player(Actor.Actor):
@@ -150,6 +151,7 @@ class Player(Actor.Actor):
                 return True      
         return False       
 
+        
 
     #call on item pickup    
     def add_item_to_inventory(self,item):

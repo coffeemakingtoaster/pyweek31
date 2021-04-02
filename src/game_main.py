@@ -8,7 +8,7 @@ import time
 from . import pygame_additions
 from . import Logic
 from . import Render
-from . import Keycards
+from .game_objects import Keycard
 
 from .helper import SoundHelper
 
@@ -79,17 +79,9 @@ def launch_game():
 
     #Create logic
     logic = Logic.Logic(gameMap)
-    # logic = Logic.Logic()
-
-    #Create keycard
-    keycard = Keycards.Keycards(assets)
-    container = keycard.container
-    #TODO in player packen
-    keycard_instances = keycard.create_keycards()
-    #keycard.create_rects()
 
 
-    render = Render.Render(logic, assets, gameMap, ui, keycard)
+    render = Render.Render(logic, assets, gameMap, ui)
     ui.say('Game Main loaded!')
     
     last_second_frames = 0
@@ -103,8 +95,7 @@ def launch_game():
         logic.update()
         next_frame = render.generate_new_frame()
         #ui.say("Frames per second: "+str(last_second_frames))
-        if last_second_frames < 60:
-            last_second_frames = 60
+
         ui.uiHelper.createText("FPS "+ str(last_second_frames), {
             'font': ui.uiHelper.fonts['text']['font'],
             'render': render,
