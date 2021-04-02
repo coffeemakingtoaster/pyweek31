@@ -8,9 +8,10 @@ import time
 from . import pygame_additions
 from . import Logic
 from . import Render
-from . import Keycards
+from .game_objects import Keycard
 
 from .helper import SoundHelper
+from .helper import asset_loader
 
 from .ui.Ui import *
 
@@ -37,39 +38,14 @@ def launch_game():
     pygame.display.flip()
 
     #Load assets
-    assets = {
-        'textures': {
-            "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'player', 'player_1.png')),
-            "enemy" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'enemy.png')),
-            "keycard": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', '0.png')),
-            "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
-            "hud" : [
-                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_1.png')),
-                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_2.png')),
-                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'hud_3.png'))
-            ],
-            "player" : [
-                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'player', 'player_1.png')),
-                pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'player', 'player_2.png'))
-            ]
-
-        },
-        'sounds': {
-            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'background_music.mp3')),
-            "bark" : [
-                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'pew_sfx.mp3')),
-                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'bark.mp3')),
-                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', 'data', 'assets', 'testing', 'bark_2.mp3'))
-            ]
-        }
-    }
-
+    assets = asset_loader.Assetloader().assets
     #Load sound
     soundHelper = SoundHelper.SoundHelper()
 
     #Play background music
     soundHelper.play_music(assets['sounds']['background'], -1)
 
+    
     #Load User Interface
     ui = Ui({
         'assets': assets,
@@ -78,17 +54,9 @@ def launch_game():
 
     #Create logic
     logic = Logic.Logic(gameMap)
-    # logic = Logic.Logic()
-
-    #Create keycard
-    keycard = Keycards.Keycards(assets)
-    container = keycard.container
-    #TODO in player packen
-    keycard_instances = keycard.create_keycards()
-    #keycard.create_rects()
 
 
-    render = Render.Render(logic, assets, gameMap, ui, keycard)
+    render = Render.Render(logic, assets, gameMap, ui)
     ui.say('Game Main loaded!')
     
     last_second_frames = 0
@@ -102,8 +70,8 @@ def launch_game():
         logic.update()
         next_frame = render.generate_new_frame()
         #ui.say("Frames per second: "+str(last_second_frames))
-        #if last_second_frames < 60:
-        #    last_second_frames = 60
+
+
         ui.uiHelper.createText("FPS "+ str(last_second_frames), {
             'font': ui.uiHelper.fonts['text']['font'],
             'render': render,
