@@ -34,7 +34,7 @@ def launch_game():
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS, pygame.FULLSCREEN)
     else:
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
-    gameMap = pytmx.load_pygame("data/maps/test-map.tmx")
+    gameMap = pytmx.load_pygame("data/maps/map_test_126.tmx")
     running = True
     #button = pygame_additions.button(40,40,100,100)
     #button.set_action(hallo_welt)
@@ -79,12 +79,13 @@ def launch_game():
     # <color>: color of your text
     # WARNING: props must be at least an empty object (if someone knows how to fix that: DO it! )
 
-    ui.cut_scene.createCutScene([
-        ['Ahh where I am?', { 'color': (255, 0, 0), 'time': 100}],
-        ['Where is my thomy mayonnaise?', {'color': (255, 255, 0), 'time': 900}],
-        ['Maybe the one dog ate it...', {'color': (255, 0, 255)}],
-        ['hehehehehe', {}],
-    ])
+    if(not SKIP_INTRO):
+        ui.cut_scene.createCutScene([
+            ['Ahh where I am?', { 'color': (255, 0, 0), 'time': 100}],
+            ['Where is my thomy mayonnaise?', {'color': (255, 255, 0), 'time': 900}],
+            ['Maybe the one dog ate it...', {'color': (255, 0, 255)}],
+            ['hehehehehe', {}],
+        ])
     
     while running:
         for event in pygame.event.get():
