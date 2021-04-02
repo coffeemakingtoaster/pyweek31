@@ -25,6 +25,7 @@ class CutScene():
 
     def createCutScene(self, messages):
         self.is_active = True
+        self.ui.notification.is_active = False
 
         if 'time' in messages[0][1]:
             self.time_for_next_click = pygame.time.get_ticks() + messages[0][1]['time']
@@ -64,6 +65,7 @@ class CutScene():
     def render(self, render):
         if len(self.cut_scenes) == 0:
             self.is_active = False
+            self.ui.notification.is_active = True
 
         if self.is_active is not True:
             return

@@ -189,9 +189,9 @@ class Menu():
                 self.is_waiting = True
                 self.time_when_control = pygame.time.get_ticks() + self.time_wait_open
                 self.open = True
-                self.ui.say('ARROW KEYS to navigate')
-                self.ui.say('ENTER to select an option')
-                self.ui.say('ESC to go back/close')
+                self.ui.say('ARROW KEYS to navigate', False, 300)
+                self.ui.say('ENTER to select an option', False, 300)
+                self.ui.say('ESC to go back/close', False, 300)
             elif self.open is True and (pygame.key.get_pressed()[pygame.K_UP] == True or pygame.key.get_pressed()[pygame.K_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True):
                 self.is_waiting = True
                 self.is_controlling = True

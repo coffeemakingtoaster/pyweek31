@@ -55,16 +55,16 @@ class Ui:
 
         self.menu.update()
         self.cut_scene.update()
-        
+
         self.cut_scene.render(render)
         self.menu.render(render)
         self.notification.render(render)
         
 
-    def say(self, message, force_display = False):
+    def say(self, message, force_display = False, time = 130):
 
         self.notification.pushNotification(message, {
-            'time': 600,
+            'time': time,
             'color': (255, 255, 255),
             'force_display': force_display
         })
