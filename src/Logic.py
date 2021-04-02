@@ -4,9 +4,10 @@ from .game_objects import Guard
 from .game_objects.helper.Point import Point
 from .game_objects.helper.Section import Section
 from .game_objects import Wall
+from .game_objects.items.Coffee import Coffee
+from .game_objects.items.Coin import Coin
+from .game_objects.items.Donut import Donut
 from .game_objects import Keycard
-
-
 
 from . import config
 
@@ -27,13 +28,16 @@ class Logic():
         self.add_hiding_spots()
 
         self.walls = self.translate_collision_objects(self.collision_objects)
-        self.player = Player.Player(self.chests, self.collision_objects, self.hiding_spots)
+        self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
         self.enemies = []
+
+        self.coffee = Coffee(self)
+        self.coin = Coin(self)
+        self.donut = Donut(self)        
+        
         self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player))
         self.enemies.append(Guard.Guard(Point(1000,800),self.walls,self.player))
         self.enemies.append(Guard.Guard(Point(1000,700),self.walls,self.player))
-
-        
 
     def update(self):
         self.player.update()
