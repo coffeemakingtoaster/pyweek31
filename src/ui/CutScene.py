@@ -79,7 +79,7 @@ class CutScene():
                 'render': render,
                 'x': WINDOW_WIDHT - 200,
                 'y': WINDOW_HEIGHT - self.blackbar_height - 30,
-                'color': (0, 0, 0)
+                'color': (255, 255, 255)
             })
 
     def render_text(self, render):
