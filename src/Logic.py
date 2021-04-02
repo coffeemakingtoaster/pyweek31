@@ -23,21 +23,22 @@ class Logic():
         self.map = game_map
         self.collision_objects = []
         self.add_collision_objects()
-        
-        self.hiding_spots = []       
+
+        self.hiding_spots = []
         self.add_hiding_spots()
 
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
         self.enemies = []
+        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player,[Point(900 ,900) ,Point(5000,900)]))
+
+        
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
-        self.donut = Donut(self)        
-        
-        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player))
-        self.enemies.append(Guard.Guard(Point(1000,800),self.walls,self.player))
-        self.enemies.append(Guard.Guard(Point(1000,700),self.walls,self.player))
+        self.donut = Donut(self)
+
+
 
     def update(self):
         self.player.update()

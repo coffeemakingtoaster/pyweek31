@@ -7,17 +7,22 @@ import pygame
 
 class Guard(Actor.Actor):
 
-    def __init__(self,pos,walls,player):
+    def __init__(self,pos,walls,player,waypoints):
         super().__init__()
 
         self.pos = pos
         self.goalPos = Point(0, 0)
-        
+
         # TODO: add to movement
         self.hitbox = pygame.Rect((0,0),(50,50))
-        
+
+        self.goalPos = waypoints[0]
+        self.goalPosVector = Point(0,0)
         self.walls = walls
         self.player = player
+        self.waypoints = waypoints
+        self.current_waypoint = 0
+
 
         self.rotation = 0
         self.intersections = []
@@ -25,9 +30,16 @@ class Guard(Actor.Actor):
 
     def update(self):
 
-        self.rotation += 5
-        rad_rot = self.angle_to_rad(self.rotation)
-        self.goalPos = Point(-math.sin(rad_rot),-math.cos(rad_rot))
+        self.move( self.goalPos,self.waypoints)
+        self.goalPos = self.waypoints[self.current_waypoint]
+        normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,10)
+        self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
+        self.pos.x += normed_move_vec.x
+        self.pos.y += normed_move_vec.y
+
+
+        #rad_rot = self.angle_to_rad(self.rotation)
+        #self.goalPosVector = Point(-math.sin(rad_rot),-math.cos(rad_rot))
 
         player_sections = [Section(Point(self.player.player_hitbox.x ,self.player.player_hitbox.y) ,
                                    Point(self.player.player_hitbox.x + self.player.player_hitbox.width ,self.player.player_hitbox.y)),
@@ -40,7 +52,7 @@ class Guard(Actor.Actor):
         self.intersections = []
         if self.distance(self.pos,Point(self.player.x,self.player.y)) < 600:
 
-            for x in range(-40,41,2):
+            for x in range(-40,41,3):
                 self.intersections.append(self.raycast(x,200,self.walls,player_sections))
         pass
 
@@ -51,7 +63,7 @@ class Guard(Actor.Actor):
         #      self.pos.y+self.addAngleToVector(degree,
         #      Point(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y)).y)
 
-        normed_goalPos = self.addAngleToVector(degree,self.normVector(self.goalPos.x,self.goalPos.y,length))
+        normed_goalPos = self.addAngleToVector(degree,self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,length))
 
 
 
@@ -111,9 +123,15 @@ class Guard(Actor.Actor):
 
 
 
-    def move(self):
+    def move(self,goalPos,waypoints):
+            if goalPos.x == self.pos.x and goalPos.y ==  self.pos.y:
+                if self.current_waypoint == len(waypoints)-1:
+                    self.current_waypoint = 0
+                    return
+                self.current_waypoint += 1
+                return
 
-        return goalPos
+
 
     def distance(self,a,b):
         return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
@@ -130,4 +148,7 @@ class Guard(Actor.Actor):
 
     def angle_to_rad(self,angle):
         return angle/180 * math.pi
+
+    def vector_to_angle(self,x,y):
+        return pygame.math.Vector2(x, y).angle_to((0, -1))
 
