@@ -41,13 +41,11 @@ class Logic():
     def update(self):
         self.player.update()
         if self.doors.update(self.player, self.enemies):
-            print("collision length before update: {}".format(len(self.walls)))
             self.collision_objects = []
             self.add_collision_objects()
             self.collision_objects = self.doors.add_closed_doors(self.collision_objects)
             self.walls = []
             self.walls = self.translate_collision_objects(self.collision_objects)
-            print("collision length after update: {}".format(len(self.walls)))
         for keycard in self.keycards.container:
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
