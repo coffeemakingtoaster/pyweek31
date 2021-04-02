@@ -3,6 +3,7 @@ from .helper.Section import *
 from .helper.Point import *
 from pygame.math import Vector2
 import math
+import pygame
 
 class Guard(Actor.Actor):
 
@@ -13,13 +14,13 @@ class Guard(Actor.Actor):
         self.goalPos = Point(0 ,0)
         self.walls = walls
         self.player = player
+        
+        self.hitbox = pygame.Rect((0,0),(50,50))
 
         self.rotation = 0
         self.intersections = []
-
-
-    def update(self):
-
+    
+    def update(self,walls):
         self.rotation += 5
         rad_rot = self.angle_to_rad(self.rotation)
         self.goalPos = Point(-math.sin(rad_rot),-math.cos(rad_rot))
@@ -36,7 +37,7 @@ class Guard(Actor.Actor):
         if self.distance(self.pos,Point(self.player.x,self.player.y)) < 600:
 
             for x in range(-40,41,2):
-                self.intersections.append(self.raycast(x,200,self.walls,player_sections))
+                self.intersections.append(self.raycast(x,200,walls,player_sections))
         pass
 
     def raycast(self, degree, length, walls, player_sections):

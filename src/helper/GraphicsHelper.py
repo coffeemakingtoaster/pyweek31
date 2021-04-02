@@ -18,7 +18,7 @@ class frame_handler():
         
 class render_helper():
     def rotate_image(image, angle):
-        orig_rect = image.get_rect()
+        orig_rect = image.get_rect()      
         rot_image = pygame.transform.rotate(image, angle)
         rot_rect = orig_rect.copy()
         rot_rect.center = rot_image.get_rect().center
@@ -26,6 +26,6 @@ class render_helper():
         return rot_image
     
     def convert_to_screen_cords(player,x,y):
-        x = x - player.x  + config.WINDOW_WIDHT/2
+        x = x - player.x + config.WINDOW_WIDHT/2
         y = y - player.y + config.WINDOW_HEIGHT/2
         return (x,y)

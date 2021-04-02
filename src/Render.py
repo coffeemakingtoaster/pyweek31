@@ -75,6 +75,14 @@ class Render():
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
+        for door in self.logic.doors.door_list: 
+            rotation = door.default_rotation           
+            if door.is_open:
+                print("door is open")
+                rotation = rotation + 90          
+            door_visual = GraphicsHelper.render_helper.rotate_image(self.assets['textures']['door'], rotation)
+            door_visual = pygame.transform.scale(door_visual,(config.TILE_SIZE,config.TILE_SIZE))
+            self.add_asset_to_screen(door_visual,door.x, door.y) 
         
         for keycard in self.keycard.container:
             if keycard["collectable"]: 
