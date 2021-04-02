@@ -116,7 +116,7 @@ class Player(Actor.Actor):
         
     def player_interact(self):
         if pygame.key.get_pressed()[PLAYER_INTERACT] == True:
-            print("checking")
+            #print("checking")
             closest_object = {"obj":None, "dist":10000, "type":None}
             for chest in self.chests:
                 delta = (self.x - chest.x)**2

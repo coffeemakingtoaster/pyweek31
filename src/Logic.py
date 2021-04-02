@@ -49,7 +49,7 @@ class Logic():
         pass
 
     def add_hiding_spots(self):
-        print("checking for hiding spots")
+        #print("checking for hiding spots")
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
                 # access collision object
