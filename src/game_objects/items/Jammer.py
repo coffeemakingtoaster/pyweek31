@@ -8,6 +8,7 @@ class Jammer(Item.Item):
         self.duration = ITEM_JAMMER_DURATION
     
     def activate(self):
+        self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["jammer"], 1)
         x = self.logic.player.x
         y = self.logic.player.y
         for guard in self.logic.enemies:
