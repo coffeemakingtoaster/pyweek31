@@ -26,7 +26,6 @@ class Door_Container(InteractiveObject.InteractiveObject):
                         height = properties['height'] * (config.TILE_SIZE/16)
                         door = self.door_object(properties['rotation'],x,y)
                         self.door_list.append(door)   
-        self.door_list.append(self.door_object(90,1000,1000))
     
     def update(self, player, guards):
         return_bool = False
