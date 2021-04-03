@@ -59,7 +59,7 @@ class Guard(Actor.Actor):
         self.walls = walls
         self.move(self.goalPos, self.waypoints)
 
-        print(len(self.waypoints), "current_waypoint: " , self.current_waypoint)
+        #print(len(self.waypoints), "current_waypoint: " , self.current_waypoint)
         # for x in range(len(waypoints)- 1):
             # if self.current_waypoint > len(waypoints):
                 # self.current_waypoint -= 1
@@ -164,13 +164,13 @@ class Guard(Actor.Actor):
         if self.logic.coin.x - 10 <= self.pos.x <= self.logic.coin.x + 10 and self.logic.coin.y - 10 <= self.pos.y <= self.logic.coin.y + 10:
             self.logic.coin.is_active = False
             self.logic.coin.is_rendered = False
-            print("reached coin")
+            #print("reached coin")
             
         if self.logic.coin.is_active == False and self.off_patrol_position.x - 10 <= self.pos.x <= self.off_patrol_position.x + 10 and self.off_patrol_position.y - 10 <= self.pos.y <= self.off_patrol_position.y + 10:
             self.waypoints = self.original_waypoints.copy()
             self.off_patrol_position = Point(-1, -1)
             self.current_waypoint = self.former_current_waypoint
-            print("reached off patrol point", len(self.waypoints), len(self.original_waypoints))
+            #print("reached off patrol point", len(self.waypoints), len(self.original_waypoints))
             
         elif goalPos.x + self.waypoint_variance > self.pos.x > goalPos.x - self.waypoint_variance and goalPos.y + self.waypoint_variance > self.pos.y > goalPos.y - self.waypoint_variance:
             if self.guard_waypoints_logic == 'circle':
