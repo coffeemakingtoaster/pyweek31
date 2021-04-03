@@ -106,6 +106,9 @@ class Logic():
                         y = properties['y'] * (config.TILE_SIZE/16)
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
+                        win_collide = pygame.Rect(x, y, width, height)
+                        if win_collide.colliderect(self.player.player_hitbox):
+                            collide_winning_zone()
                         # do something with win zone!!! 
                     elif properties["name"] == "waypoint":
                         enemy_waypoints = []
@@ -133,7 +136,6 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.hiding_spots.append(spot)
-
                     elif properties["name"] == "chest":
                         x = properties['x'] * (config.TILE_SIZE/16)
                         y = properties['y'] * (config.TILE_SIZE/16)
@@ -141,6 +143,10 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.chests.append(Chest.Chest(spot))
+                
+    def collide_winning_zone():
+        if win_collide.colliderect(self.player.player_hitbox):
+            print("yey")
 
     def refresh_walls(self):
         for layer in self.map.visible_layers:
