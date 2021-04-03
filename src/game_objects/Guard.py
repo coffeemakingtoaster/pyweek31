@@ -108,6 +108,7 @@ class Guard(Actor.Actor):
         if m == 0:
             m = 0.01
 
+        #free society
         intersections = [(length, end,"none")]
         y_axis_section = ray.startPoint.y - m * ray.startPoint.x
         for wall in walls:
