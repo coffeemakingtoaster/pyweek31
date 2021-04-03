@@ -22,6 +22,7 @@ from . import config
 def hallo_welt():
     print("Hello World! This is a test print! We should remove this!")
 
+
 def launch_game():
     pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
     pygame.init()
@@ -49,6 +50,7 @@ def launch_game():
     #Play background music
     soundHelper.play_music(assets['sounds']['background'], -1)
 
+    time_since_last_atmo = 0
     
     #Load User Interface
     ui = Ui({
@@ -57,9 +59,9 @@ def launch_game():
     })
 
     #Create logic
-    logic = Logic.Logic(gameMap)
+    logic = Logic.Logic(gameMap, soundHelper, assets,game_state)
 
-    render = Render.Render(logic, assets, gameMap, ui, game_state)
+    render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
     
     last_second_frames = 0
     
@@ -81,13 +83,24 @@ def launch_game():
 
     if(not SKIP_INTRO):
         ui.cut_scene.createCutScene([
-            ['Ahh where I am?', { 'color': (255, 0, 0), 'time': 100}],
-            ['Where is my thomy mayonnaise?', {'color': (255, 255, 0), 'time': 900}],
+            ['Ahh where I am?', { 'color': (255, 0, 0)}],
+            ['Where is my thomy mayonnaise?', {'color': (255, 255, 0)}],
             ['Maybe the one dog ate it...', {'color': (255, 0, 255)}],
             ['hehehehehe', {}],
         ])
     
     while running:
+        if game_state.is_reset():
+            logic = Logic.Logic(gameMap)
+            render = Render.Render(logic, assets, gameMap, ui, game_state)
+            ticks_while_game_state_is_play_after_tick_start = 0 #longest variable in game heheh
+            ticks_of_last_frame = 0
+            start_ticks = True # Set this to true and the ticker will start heheheheh (can be set later e.g.: when the player does his first move)
+            game_state.set_game_state('cutscene')
+        
+        if time.time() - time_since_last_atmo > 40:
+            soundHelper.play_atmo_sound(assets["sounds"]["atmo"])
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_state.set_game_state('quit')
@@ -132,10 +145,13 @@ def launch_game():
         clock.tick(60)
 
         pygame.display.flip()
-
+        
         if ui.menu.open:
             game_state.set_game_state('pause')
         elif ui.cut_scene.is_active:
             game_state.set_game_state('cut_scene')
         else:
             game_state.set_game_state('play')
+            
+        if pygame.key.get_pressed()[config.PLAYER_RESET] == True:
+            game_state.set_game_state('reset')

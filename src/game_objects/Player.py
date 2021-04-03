@@ -14,6 +14,7 @@ class Player(Actor.Actor):
 
     def __init__(self, logic, chests, collision, hiding_spots):
         super().__init__()
+        pygame.mouse.set_cursor(pygame.cursors.arrow)
         self.logic = logic
         self.x = logic.player_spawn_point[0]
         self.y = logic.player_spawn_point[1]
@@ -26,6 +27,7 @@ class Player(Actor.Actor):
         self.collision = collision
         self.player_hitbox = pygame.Rect((0,0),(45,45))
         self.player_hitbox.center = (0,0)
+        self.time_since_hidden = 0
 
         self.coinmode = False
         
@@ -34,6 +36,8 @@ class Player(Actor.Actor):
         
         self.inventory["coffee"] = 9999999
         self.inventory["jammer"] = 9999999
+        self.inventory["donut"] = 9999999
+        self.inventory["coin"] = 9999999
 
         self.has_moved = False
         self.hiding_spots = hiding_spots
@@ -46,8 +50,9 @@ class Player(Actor.Actor):
             self.player_interact()
             self.player_use_item()
         else:
-            if pygame.key.get_pressed()[PLAYER_INTERACT] == True:
+            if pygame.key.get_pressed()[PLAYER_INTERACT] == True and time.time() - self.time_since_hidden > 1:
                 self.is_hidden = False
+                self.time_since_hidden = time.time()
         
     def player_movement(self):
         self.has_moved = True
@@ -91,8 +96,8 @@ class Player(Actor.Actor):
             return
         move_vector.scale_to_length(self.speed)
 
-        print("player x:{} y:{}".format(self.x,self.y))
-        print("hitbox x:{} y:{}".format(self.player_hitbox.x - 25 ,self.player_hitbox.y - 25))
+        #print("player x:{} y:{}".format(self.x,self.y))
+        #print("hitbox x:{} y:{}".format(self.player_hitbox.x - 25 ,self.player_hitbox.y - 25))
         
         self.player_hitbox.x += move_vector.x
         for blocker in self.collision:
@@ -131,7 +136,8 @@ class Player(Actor.Actor):
                             closest_object["dist"] = delta
                             closest_object["type"] = "chest"
             for spot in self.hiding_spots:
-                if self.player_hitbox.colliderect(spot):
+                if self.player_hitbox.colliderect(spot) and time.time() - self.time_since_hidden > 0.5:
+                    self.time_since_hidden = time.time()
                     closest_object["obj"] = spot
                     closest_object["dist"] = None
                     closest_object["type"] = "hiding spot"
@@ -146,8 +152,8 @@ class Player(Actor.Actor):
     
     def hide_player(self, spot):
         self.is_hidden = True   
-        self.x = spot["obj"].centerx + 25
-        self.y = spot["obj"].centery + 25
+        self.x = spot["obj"].centerx 
+        self.y = spot["obj"].centery 
         self.player_hitbox.center = (self.x, self.y)
 
                 
@@ -166,20 +172,23 @@ class Player(Actor.Actor):
     def use_coin(self):
         if pygame.key.get_pressed()[HOTKEY_2] == True and pygame.time.get_ticks() > self.keypress_time:
             self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
-            if self.coinmode == False and self.inventory["coin"] > 0:
+            if self.coinmode == False and self.inventory["coin"] > 0 and not self.logic.coin.is_active:
                 self.coinmode = True
             elif self.coinmode == True:
                 self.coinmode = False
             
         if self.coinmode == True and pygame.mouse.get_pressed()[0] == True and self.inventory["coin"] > 0:
             self.inventory["coin"] -= 1
-            print(pygame.mouse.get_pos())
-            self.logic.coin.throw(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
+            pointer_x = self.x - WINDOW_WIDHT / 2 + pygame.mouse.get_pos()[0]
+            pointer_y = self.y - WINDOW_HEIGHT / 2 + pygame.mouse.get_pos()[1]
+            self.logic.coin.throw(pointer_x, pointer_y)
             self.coinmode = False
             
     def use_donut(self):
-        if pygame.key.get_pressed()[HOTKEY_3] == True and self.inventory["donut"] > 0:
-            pass
+        if pygame.key.get_pressed()[HOTKEY_3] == True and self.inventory["donut"] > 0 and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
+            self.inventory["donut"] -= 1
+            self.logic.donut.place(self.x, self.y)
             
     def use_jammer(self):
         if pygame.key.get_pressed()[HOTKEY_4] == True and self.inventory["jammer"] > 0 and pygame.time.get_ticks() > self.keypress_time:

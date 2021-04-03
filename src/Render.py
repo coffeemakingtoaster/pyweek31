@@ -7,7 +7,8 @@ import math
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap, ui, game_state):
+    def __init__(self, logic, assets, gameMap, ui, game_state, soundHelper):
+        self.soundHelper = soundHelper
         self.logic = logic
         self.assets = assets
         self.map = gameMap
@@ -16,12 +17,14 @@ class Render():
         self.frame_cnt = 0
         self.tiles_on_screen = 0
         self.enemy_animations = []
+        self.door_animations = []
         for enemy in self.logic.enemies:
             self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies'], game_state))
         self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'], game_state)
         self.animated_eyecandy = []
         for mouse in self.logic.mice:
             self.animated_eyecandy.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['mice'], game_state, 10))
+
 
 
     def generate_new_frame(self): 
@@ -31,6 +34,10 @@ class Render():
         self.ui.draw_ui(self)
         self.frame_cnt+=1
         self.tiles_on_screen = 0
+        if self.logic.player.coinmode:
+            pygame.mouse.set_cursor(pygame.cursors.broken_x)
+        else:
+            pygame.mouse.set_cursor(pygame.cursors.arrow)
         return self.frame
 
     def draw_map(self):            
@@ -58,6 +65,13 @@ class Render():
 
     
     def draw_game_objects(self):
+        if self.logic.donut.is_placed:
+            for donut in self.logic.donut.placed_traps:
+                self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["donut"],(25,25)), donut.x, donut.y)
+        
+        if self.logic.coin.is_active:
+            self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["coin"],(25,25)), self.logic.coin.x, self.logic.coin.y)
+        
         mouse_count = 0
         for mouse in self.logic.mice:
             mouse_sprite = GraphicsHelper.render_helper.rotate_image(self.animated_eyecandy[mouse_count].get_current_asset(True), mouse.rotation)
@@ -76,33 +90,46 @@ class Render():
                 start = (enemy.pos.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.pos.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)
                 end = (ray.x - self.logic.player.x  + config.WINDOW_WIDHT/2, ray.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)          
                 pygame.draw.line(self.frame,(0,0,255),start,end)
+                pygame.draw.line(self.frame,(255,0,0),start,(enemy.hitbox.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.hitbox.y - self.logic.player.y  + config.WINDOW_HEIGHT/2))
             enemy_visual = GraphicsHelper.render_helper.rotate_image(self.enemy_animations[enemy_count].get_current_asset(True), enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
             
             #print(debug_string)
+        #TODO: Display empty chests as such (coffee)
+        #for chest in self.logic.chests:
+        #    self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
-        for chest in self.logic.chests:
-            self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
-
-        
+        for door in self.logic.doors.door_list:
+            if door.rotation % 180 == 0:
+                kind = "door"
+            else:
+                kind = "door_rot"
+            if door.is_changing:
+                door_visual = self.assets['textures']["doors"][kind][1]
+                self.soundHelper.play_sfx(self.assets["sounds"]["door"],1)     
+            else:
+                door_visual = self.assets['textures']["doors"][kind][0]
+            if door.is_open and not door.is_changing:
+                break
+            door_visual = pygame.transform.scale(door_visual,(door.hitbox.width,door.hitbox.height))  
+            self.add_asset_to_screen(door_visual, door.x, door.y) 
+                    
         for keycard in self.keycard.container:
             if keycard["collectable"]: 
                 key_x = keycard["x_cord"]
                 key_y = keycard["y_cord"]
-                self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y)
+                keycard_visual = self.assets['textures']['keycards'][keycard["color"]]
+                self.add_asset_to_screen(pygame.transform.scale(keycard_visual,(int(config.TILE_SIZE/2),int(config.TILE_SIZE/2))), key_x, key_y) 
         
-      
         #draw player
         player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
         if self.logic.player.is_hidden:  
                player_asset.set_alpha(128)
         player = GraphicsHelper.render_helper.rotate_image(player_asset, self.logic.player.rotation)
-        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))
-        8                         
+        player = pygame.transform.scale(player,(config.TILE_SIZE,config.TILE_SIZE))                 
         self.add_asset_to_screen(player)
               
-
     
     def add_asset_to_screen(self,asset, x = None, y = None):
         if not x:
