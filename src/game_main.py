@@ -99,7 +99,7 @@ def launch_game():
     
     while running:
         if game_state.is_reset():
-            logic = Logic.Logic(gameMap, soundHelper, assets,game_state)
+            logic = Logic.Logic(gameMap, soundHelper, assets, game_state, ui)
             render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
             ticks_while_game_state_is_play_after_tick_start = 0 #longest variable in game heheh
             ticks_of_last_frame = 0
