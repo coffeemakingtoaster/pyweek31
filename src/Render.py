@@ -107,7 +107,8 @@ class Render():
             if keycard["collectable"]: 
                 key_x = keycard["x_cord"]
                 key_y = keycard["y_cord"]
-                self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y) 
+                keycard_visual = self.assets['textures']['keycards'][keycard["color"]]
+                self.add_asset_to_screen(pygame.transform.scale(keycard_visual,(int(config.TILE_SIZE/2),int(config.TILE_SIZE/2))), key_x, key_y) 
         
         #draw player
         player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
