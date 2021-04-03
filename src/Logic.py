@@ -69,7 +69,7 @@ class Logic():
     def update(self):
         self.player.update()
         if self.player.has_moved:
-            self.soundHelper.play_sfx(self.assets["sounds"]["actor"],1)
+            self.soundHelper.play_sfx(self.assets["sounds"]["actor"]["footsteps"]["concrete"],1)
         if self.doors.update(self.player, self.enemies):
             self.collision_objects = []
             self.walls = []
