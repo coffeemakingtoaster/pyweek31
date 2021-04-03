@@ -51,12 +51,7 @@ class Logic():
         self.coffee = Coffee(self)
         self.coin = Coin(self)
         self.donut = Donut(self)        
-        
-        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player))
-        self.enemies.append(Guard.Guard(Point(1000,800),self.walls,self.player))
-        self.enemies.append(Guard.Guard(Point(1000,700),self.walls,self.player))
-        
-        
+
         self.mice = []
         self.mice.append(Mice.Mouse())
         self.mice.append(Mice.Mouse())
