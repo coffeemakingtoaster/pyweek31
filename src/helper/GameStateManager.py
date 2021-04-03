@@ -29,3 +29,6 @@ class GameStateManager():
     
     def is_over(self):
         return self.game_state == "over"
+    
+    def is_checkpointReached(self):
+        return self.game_state == "checkpoint"
