@@ -63,8 +63,8 @@ class Guard(Actor.Actor):
         if self.is_moving == True:
             self.pos.x += normed_move_vec.x
             self.pos.y += normed_move_vec.y
-            self.hitbox.x += normed_move_vec.x
-            self.hitbox.y += normed_move_vec.y
+            self.hitbox.x = self.pos.x
+            self.hitbox.y = self.pos.y
 
         #rad_rot = self.angle_to_rad(self.rotation)
         #self.goalPosVector = Point(-math.sin(rad_rot),-math.cos(rad_rot))
