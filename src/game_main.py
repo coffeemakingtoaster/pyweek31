@@ -59,7 +59,7 @@ def launch_game():
     })
 
     #Create logic
-    logic = Logic.Logic(gameMap, soundHelper, assets, game_state)
+    logic = Logic.Logic(gameMap, soundHelper, assets, game_state, ui)
 
     render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
     
@@ -81,12 +81,20 @@ def launch_game():
     # <color>: color of your text
     # WARNING: props must be at least an empty object (if someone knows how to fix that: DO it! )
 
-    if(not SKIP_INTRO):
+    if(not SKIP_INTRO or not SKIP_DIALOGS):
+        # ui.cut_scene.createCutScene([
+            # ['Ahh where I am?', { 'color': (255, 0, 0)}],
+            # ['Where is my thomy mayonnaise?', {'color': (255, 255, 0)}],
+            # ['Maybe the one dog ate it...', {'color': (255, 0, 255)}],
+            # ['hehehehehe', {}],
+        # ])
         ui.cut_scene.createCutScene([
-            ['Ahh where I am?', { 'color': (255, 0, 0)}],
-            ['Where is my thomy mayonnaise?', {'color': (255, 255, 0)}],
-            ['Maybe the one dog ate it...', {'color': (255, 0, 255)}],
-            ['hehehehehe', {}],
+            ['Ahhhh… my head hurts.', {}],
+            ['Bitchass bastards took away my beloved badge. ', {}],
+            ['Suckers didn’t stop at my special sunglasses...', {}],
+            ['The ones from Sander’s Supermarket Sunday Sale.', {}],
+            ['But they missed the car keys in my butt crack hehehehe.', {}],
+            ['But first I need to get out of here!', {}]
         ])
     
     while running:
