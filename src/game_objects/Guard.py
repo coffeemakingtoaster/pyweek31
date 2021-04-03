@@ -36,8 +36,8 @@ class Guard(Actor.Actor):
         self.ray_length = GUARD_SIGHT_LENGTH
 
 
-    def update(self):
-
+    def update(self, walls):
+        self.walls = walls
         self.move( self.goalPos,self.waypoints)
         self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,1)

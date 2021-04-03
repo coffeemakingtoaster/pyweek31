@@ -106,7 +106,6 @@ class Render():
                 key_x = keycard["x_cord"]
                 key_y = keycard["y_cord"]
                 self.add_asset_to_screen(self.assets['textures']['keycard'], key_x, key_y) 
-        self.add_asset_to_screen(self.animated_mouse.get_current_asset(True), 1200, 1000)
         
         #draw player
         player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
