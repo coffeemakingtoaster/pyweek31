@@ -96,8 +96,7 @@ class Render():
                     last_v_length = v.length()
                 start = (enemy.pos.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.pos.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)
                 end = (ray.x - self.logic.player.x  + config.WINDOW_WIDHT/2, ray.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)          
-                pygame.draw.line(self.frame,(255,255,0),start,end)
-
+                pygame.draw.line(self.frame,(0,255,0),start,end)
                 pygame.draw.line(self.frame,(255,0,0),start,(enemy.hitbox.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.hitbox.y - self.logic.player.y  + config.WINDOW_HEIGHT/2))
             enemy_visual = GraphicsHelper.render_helper.rotate_image(self.enemy_animations[enemy_count].get_current_asset(True), enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
