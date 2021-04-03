@@ -8,10 +8,17 @@ import pygame
 
 class Guard(Actor.Actor):
 
-    def __init__(self,pos,walls,player,waypoints):
+    def __init__(self,pos,walls,player,waypoints, props):
         super().__init__()
 
-        self.guard_speed = 5
+        # verify props
+        if props['speed'] == "default":
+            props['speed'] = 2
+
+        if props['type'] == "default":
+            props['type'] = 'line'
+
+        self.guard_speed = props['speed']
 
         #print(pos, waypoints)
         self.pos = Point.to_our_point(pos)
@@ -26,12 +33,13 @@ class Guard(Actor.Actor):
         self.player = player
 
         self.waypoints = []
+        self.guard_waypoints_logic = props['type'] # line or circle (line moves 1 -> 2 -> 3 -> 2 -> 1 ...) | (circle moves 1 -> 2 -> 3 -> 1 -> 2 -> 3 ...)
+        self.guard_waypoint_direction_back = True
+
         self.waypoint_variance = 3
         for waypoint in waypoints:
             self.waypoints.append(Point.to_our_point(waypoint))
-
         self.current_waypoint = 0
-
 
         self.rotation = 0
         self.intersections = []
@@ -135,15 +143,20 @@ class Guard(Actor.Actor):
 
 
     def move(self,goalPos,waypoints):
-        #print(goalPos.x, self.pos.x, goalPos.y,  self.pos.y)
         if goalPos.x + self.waypoint_variance > self.pos.x > goalPos.x - self.waypoint_variance and goalPos.y + self.waypoint_variance > self.pos.y > goalPos.y - self.waypoint_variance:
-            if self.current_waypoint == len(waypoints)-1:
-                self.current_waypoint = 0
-                return
-            self.current_waypoint += 1
-            #print(self.current_waypoint)
-
-
+            if self.guard_waypoints_logic == 'circle':
+                if self.current_waypoint == len(waypoints) - 1:
+                    self.current_waypoint = 0
+                    return
+                self.current_waypoint += 1
+            elif self.guard_waypoints_logic == 'line':
+                if self.current_waypoint == len(waypoints) - 1 or self.current_waypoint == 0:
+                    self.guard_waypoint_direction_back = not self.guard_waypoint_direction_back
+                if self.guard_waypoint_direction_back: 
+                    self.current_waypoint -= 1
+                else:
+                    self.current_waypoint += 1
+            #print("self.current_waypoint", self.current_waypoint, "self.guard_waypoints_logic", self.guard_waypoints_logic)
 
     def distance(self,a,b):
         return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
