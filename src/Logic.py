@@ -7,6 +7,7 @@ from .game_objects import Wall
 from .game_objects.items.Coffee import Coffee
 from .game_objects.items.Coin import Coin
 from .game_objects.items.Donut import Donut
+from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
 from . import Mice
 
@@ -22,16 +23,30 @@ class Logic():
         self.chests.append(Chest.Chest())
         self.keycards = Keycard.Keycards()
         
+        # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
+        self.player_spawn_point = (1000, 1000)
+        
+        self.enemy_waypoints = []
+
+
         self.map = game_map
         self.collision_objects = []
-        self.add_collision_objects()
         
-        self.hiding_spots = []       
+        # get all map trigger points
+        self.get_map_trigger()
+
+
+        self.hiding_spots = []
         self.add_hiding_spots()
 
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
         self.enemies = []
+
+        for enemy_waypoint in self.enemy_waypoints:
+            self.enemies.append(Guard.Guard(enemy_waypoint['spawn_point'], self.walls, self.player, enemy_waypoint['waypoints']))
+
+        
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
@@ -45,12 +60,8 @@ class Logic():
         self.mice = []
         self.mice.append(Mice.Mouse())
         self.mice.append(Mice.Mouse())
-        self.mice.append(Mice.Mouse())
-        self.mice.append(Mice.Mouse())
-        self.mice.append(Mice.Mouse())
-        self.mice.append(Mice.Mouse())
-        self.mice.append(Mice.Mouse())
         
+        self.jammer = Jammer(self)        
 
     def update(self):
         self.player.update()
@@ -78,14 +89,12 @@ class Logic():
                         spot = pygame.Rect(x, y, width, height)
                         self.hiding_spots.append(spot)
 
-
-    def add_collision_objects(self):
-        #print("checking for collision_objects")
+    def get_map_trigger(self):
+        #print("checking for map triggers")
         for layer in self.map.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
-                # access collision object
-                for collision_object in layer:
-                    properties = collision_object.__dict__
+                for trigger_object in layer:
+                    properties = trigger_object.__dict__
                     if properties["name"] == "'wall'":
                         x = properties['x'] * (config.TILE_SIZE/16)
                         y = properties['y'] * (config.TILE_SIZE/16)
@@ -93,6 +102,26 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         wall = pygame.Rect(x, y, width, height)
                         self.collision_objects.append(wall)
+                    elif properties["name"] == "'spawnpoint'":
+                        self.player_spawn_point = (properties['x'] * (config.TILE_SIZE/16), properties['y'] * (config.TILE_SIZE/16))
+                    elif properties["name"] == "'win_zone'":
+                        x = properties['x'] * (config.TILE_SIZE/16)
+                        y = properties['y'] * (config.TILE_SIZE/16)
+                        width = properties['width'] * (config.TILE_SIZE/16)
+                        height = properties['height'] * (config.TILE_SIZE/16)
+                        # do something with win zone!!! 
+                    elif properties["name"] == "'waypoint'":
+                        enemy_waypoints = []
+                        enemy_spawn_point = properties["points"][0]
+                        for point in properties["points"][1:]:
+                            enemy_waypoints.append(point)
+                        self.enemy_waypoints.append({
+                            'spawn_point': enemy_spawn_point,
+                            'waypoints': enemy_waypoints
+                        })
+                        
+
+
 
     def translate_collision_objects(self,collision_objects):
         walls_as_sections = []
