@@ -236,17 +236,17 @@ class Menu():
                 self.ui.say('ARROW KEYS to navigate', False, 300)
                 self.ui.say('ENTER to select an option', False, 300)
                 self.ui.say('ESC to go back/close', False, 300)
-            elif self.open is True and (pygame.key.get_pressed()[pygame.K_UP] == True or pygame.key.get_pressed()[pygame.K_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True):
+            elif self.open is True and (pygame.key.get_pressed()[PLAYER_MOVE_UP] == True or pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True):
                 self.is_waiting = True
                 self.is_controlling = True
-                if pygame.key.get_pressed()[pygame.K_UP] == True:
+                if pygame.key.get_pressed()[PLAYER_MOVE_UP] == True:
                     self.time_when_control = pygame.time.get_ticks() + self.time_wait
                     if self.current_option < 1:
                         self.current_option += len(self.menu[self.current_menu]['options']) - 1
                     else:
                         self.current_option -= 1 
                     self.menu[self.current_menu]['scroller'] = self.current_option
-                elif pygame.key.get_pressed()[pygame.K_DOWN] == True:
+                elif pygame.key.get_pressed()[PLAYER_MOVE_DOWN] == True:
                     self.time_when_control = pygame.time.get_ticks() + self.time_wait
                     if self.current_option > len(self.menu[self.current_menu]['options']) - 2:
                        self.current_option = 0

@@ -3,11 +3,18 @@ import pygame
 
 class Mouse():
     def __init__(self):
-        self.moving_areas = [{"x": (986, 1466), "y":(543, 663)}, {"x":(376, 1715), "y":(1373, 1472)}, {"x":(378, 476), "y":(1579, 2273)}, {"x":(3030, 3511), "y":(1932, 2073)}, {"x":(4291, 6021), "y":(2173, 2223)},{"x": (1000, 1000), "y":(1000, 1500)}]
+        self.moving_areas = [
+            {"x": (986, 1466), "y":(543, 663)},
+            {"x": (376, 1715), "y":(1373, 1472)}, 
+            {"x": (378, 476), "y":(1579, 2273)}, 
+            {"x": (3030, 3511), "y":(1932, 2073)}, 
+            {"x": (4291, 6021), "y":(2173, 2223)},
+            {"x": (1000, 1000), "y":(1000, 1500)}
+        ]
         self.area_index = random.randint(0,len(self.moving_areas)-1)
         target = self.moving_areas[self.area_index]      
-        x1,x2 = target["x"]
-        y1,y2 = target["y"]
+        x1, x2 = target["x"]
+        y1, y2 = target["y"]
         self.target = (x2,y2)
         self.start = (x1,y1)
         self.x = x1

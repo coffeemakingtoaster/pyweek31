@@ -9,7 +9,8 @@ class Keycards():
     keycard_colors = ["blue", "red", "green"]
     
 
-    def __init__(self, ui):
+    def __init__(self, ui, spawn_rects):
+        self.spawn_rects = spawn_rects
         self.ui = ui
         self.x = 40
         self.y = 40
@@ -23,15 +24,11 @@ class Keycards():
     
     def create_keycards(self):
         for i in range(3):
-            keycard_pos = random.choice(self.keycard_spawns)
-            #keycard_posx = keycard_pos["x_spawn"]
-            #keycard_posy = keycard_pos["y_spawn"]
-            keycard_posx = 1000
-            keycard_posy = 1000
-            keycard_rect = pygame.Rect((0,0),(30,30))
-            #keycard_rect.center = (keycard_posx,keycard_posy)
-            keycard_rect.center = (1000,1000)
-            self.container.append({"x_cord":keycard_posx, "y_cord":keycard_posy, "collectable":True, "rect":keycard_rect, "color":self.keycard_colors[i]})
+            keycard_cords = random.choice(self.spawn_rects)
+            print(keycard_cords.x)
+            self.spawn_rects.remove(keycard_cords)
+            keycard_rect = pygame.Rect(keycard_cords.x,keycard_cords.y,30,30)
+            self.container.append({"x_cord":keycard_rect.x, "y_cord":keycard_rect.y, "collectable":True, "rect":keycard_rect, "color":self.keycard_colors[i]})
         
     
     def keycard_player_collision(self, player_rect):
@@ -44,7 +41,7 @@ class Keycards():
                         # print("collided")
                         keycard["collectable"] = False
                         self.collect_counter += 1
-                        
+                        self.ui.hud.player_keycards.append(keycard["color"])
                         #dialog stuff
                         if self.collect_counter == 1:
                             if not SKIP_DIALOGS:
