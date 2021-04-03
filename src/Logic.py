@@ -11,6 +11,7 @@ from .game_objects.items.Donut import Donut
 from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
 from .game_objects import Mice
+from .game_objects import Car
 
 from . import config
 
@@ -20,7 +21,7 @@ import pygame
 class Logic():
 
     def __init__(self, game_map, soundHelper, assets, game_state, ui):
-
+    
         self.game_state = game_state
         
         self.assets = assets
@@ -66,9 +67,12 @@ class Logic():
         self.mice.append(Mice.Mouse())
         self.mice.append(Mice.Mouse())
         
-        self.jammer = Jammer(self)        
+        self.jammer = Jammer(self)
+        self.car = Car.Car(self.win_collide)        
 
     def update(self):
+        if self.game_state.is_victory():
+            self.car.update()
         self.player.update()
         if self.player.has_moved:
             self.soundHelper.play_sfx(self.assets["sounds"]["actor"]["footsteps"]["concrete"],1)

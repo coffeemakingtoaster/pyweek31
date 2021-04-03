@@ -4,6 +4,7 @@ from .helper import GraphicsHelper
 from .helper import AnimationHelper
 import pytmx
 import math 
+import random
 
 class Render(): 
 
@@ -13,11 +14,14 @@ class Render():
         self.assets = assets
         self.map = gameMap
         self.ui = ui 
+        self.game_state = game_state
         self.keycard = self.logic.keycards
         self.frame_cnt = 0
         self.tiles_on_screen = 0
         self.enemy_animations = []
         self.door_animations = []
+        self.car_visual = random.choice(self.assets["textures"]["cars"])
+        self.car_visual = pygame.transform.scale(self.car_visual,(int(self.logic.car.rect.width * 3.125), int(self.logic.car.rect.height * 3.125)))
         for enemy in self.logic.enemies:
             self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies'], game_state))
         self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'], game_state)
@@ -123,6 +127,10 @@ class Render():
                 self.add_asset_to_screen(pygame.transform.scale(keycard_visual,(int(config.TILE_SIZE/2),int(config.TILE_SIZE/2))), key_x, key_y) 
         
         #draw player
+        
+        self.add_asset_to_screen(self.car_visual, key_x, key_y)
+        if self.game_state.is_victory():
+            return
         player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
         if self.logic.player.is_hidden:  
                player_asset.set_alpha(128)
