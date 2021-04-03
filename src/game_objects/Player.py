@@ -24,7 +24,7 @@ class Player(Actor.Actor):
         self.rotation = 0
         self.coffee_start_time = 0
         self.collision = collision
-        self.player_hitbox = pygame.Rect((0,0),(45,45))
+        self.player_hitbox = pygame.Rect((0,0),(35,35))
         self.player_hitbox.center = (0,0)
         self.time_since_hidden = 0
 
