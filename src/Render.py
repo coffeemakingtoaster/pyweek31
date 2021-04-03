@@ -61,6 +61,13 @@ class Render():
 
     
     def draw_game_objects(self):
+        if self.logic.donut.is_placed:
+            for donut in self.logic.donut.placed_traps:
+                self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["donut"],(25,25)), donut.x, donut.y)
+        
+        if self.logic.coin.is_active:
+            self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["coin"],(25,25)), self.logic.coin.x - int(config.TILE_SIZE/4), self.coin.donut - int(config.TILE_SIZE/4))
+        
         mouse_count = 0
         for mouse in self.logic.mice:
             mouse_sprite = GraphicsHelper.render_helper.rotate_image(self.animated_eyecandy[mouse_count].get_current_asset(True), mouse.rotation)
@@ -79,14 +86,15 @@ class Render():
                 start = (enemy.pos.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.pos.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)
                 end = (ray.x - self.logic.player.x  + config.WINDOW_WIDHT/2, ray.y - self.logic.player.y  + config.WINDOW_HEIGHT/2)          
                 pygame.draw.line(self.frame,(0,0,255),start,end)
+                pygame.draw.line(self.frame,(255,0,0),start,(enemy.hitbox.x - self.logic.player.x  + config.WINDOW_WIDHT/2, enemy.hitbox.y - self.logic.player.y  + config.WINDOW_HEIGHT/2))
             enemy_visual = GraphicsHelper.render_helper.rotate_image(self.enemy_animations[enemy_count].get_current_asset(True), enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
             
             #print(debug_string)
-
-        for chest in self.logic.chests:
-            self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
+        #TODO: Display empty chests as such (coffee)
+        #for chest in self.logic.chests:
+        #    self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
         for door in self.logic.doors.door_list:
             if door.rotation % 180 == 0:

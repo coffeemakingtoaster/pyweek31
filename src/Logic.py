@@ -26,7 +26,6 @@ class Logic():
         self.soundHelper = soundHelper
         
         self.chests = []
-        self.chests.append(Chest.Chest())
         self.keycards = Keycard.Keycards()
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
@@ -139,6 +138,7 @@ class Logic():
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
+                        self.chests.append(Chest.Chest(spot))
 
     def refresh_walls(self):
         for layer in self.map.visible_layers:
