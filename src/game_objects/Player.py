@@ -10,8 +10,6 @@ from ..ui.Ui import *
 
 class Player(Actor.Actor):
     
-
-
     def __init__(self, logic, chests, collision, hiding_spots, ui):
         super().__init__()
         pygame.mouse.set_cursor(pygame.cursors.arrow)
@@ -35,10 +33,10 @@ class Player(Actor.Actor):
         self.keypress_time = 0
         self.keypress_wait = 200
         
-        self.inventory["coffee"] = 10
-        self.inventory["jammer"] = 3
-        self.inventory["donut"] = 7
-        self.inventory["coin"] = 4
+        self.inventory["coffee"] = 1
+        self.inventory["jammer"] = 0
+        self.inventory["donut"] = 1
+        self.inventory["coin"] = 0
 
         self.has_moved = False
         self.hiding_spots = hiding_spots
