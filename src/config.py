@@ -57,6 +57,7 @@ DEBUG_DRAW_COLLISION = False
 
 # Cut Scenes
 SKIP_INTRO = True
+SKIP_DIALOGS = False
 
 # Audio
 DEFAULT_MUSIC_VOLUME = 0.3

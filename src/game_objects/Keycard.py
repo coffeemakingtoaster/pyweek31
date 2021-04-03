@@ -8,7 +8,8 @@ class Keycards():
     keycard_colors = ["blue", "red", "green"]
     collect_counter = 0
 
-    def __init__(self):
+    def __init__(self, ui):
+        self.ui = ui
         self.x = 40
         self.y = 40
         self.is_picked_up = False
@@ -37,8 +38,24 @@ class Keycards():
 
                         keycard["collectable"] = False
                         self.collect_counter += 1
+                        
+                        #dialog stuff
+                        if self.collect_counter == 1:
+                            self.ui.cut_scene.createCutScene([
+                                ['These corrupt cops left key cards laying around.', {}],
+                                ['Luckily I ain’t no white girl, this card’s dirty as hell.', {}],
+                                ['Guess the dog played with this one.', {}],
+                                ['Can’t remember his name tho...', {}],
+                                ['...think it was something with Y…', {}]
+                            ])                            
                         # print(self.collect_counter)
         elif self.collect_counter >= 3:
+            self.ui.cut_scene.createCutScene([
+                ['This trip was easier than handling git!', {}],
+                ['Who built this prison? A bunch of drunk students?!', {}],
+                ['Now I need to find the exit without being raped by aliens...', {}],
+                ['...although...heh', {}]
+            ])
             self.winning()
 
     def winning(self):

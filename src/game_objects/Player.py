@@ -5,17 +5,18 @@ from collections import defaultdict
 
 from ..config import *
 from ..superclasses import Actor
-from . import Keycard
+from ..ui.Ui import *
 
 
 class Player(Actor.Actor):
     
 
 
-    def __init__(self, logic, chests, collision, hiding_spots):
+    def __init__(self, logic, chests, collision, hiding_spots, ui):
         super().__init__()
         pygame.mouse.set_cursor(pygame.cursors.arrow)
         self.logic = logic
+        self.ui = ui
         self.x = logic.player_spawn_point[0]
         self.y = logic.player_spawn_point[1]
         self.speed = PLAYER_SPEED
@@ -42,6 +43,8 @@ class Player(Actor.Actor):
         self.has_moved = False
         self.hiding_spots = hiding_spots
         self.is_hidden = False
+        
+        self.is_first_chest_interaction = True
         
     
     def update(self):
@@ -146,6 +149,14 @@ class Player(Actor.Actor):
             if closest_object["obj"] is not None:
                 if closest_object["type"] == "chest":
                     self.add_item_to_inventory(closest_object["obj"].open())
+                    # dialog stuff
+                    if self.is_first_chest_interaction:
+                        self.ui.cut_scene.createCutScene([
+                            ['Man I wish this was a thomy mayonnaise.', {}],
+                            ['Day would be saved.', {}],
+                            ['But this one might come in handy as well.', {}]
+                        ])
+                        self.is_first_chest_interaction = False
                 elif closest_object["type"] == "hiding spot":
                     self.hide_player(closest_object)
                 print(self.inventory)

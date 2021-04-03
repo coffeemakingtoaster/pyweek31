@@ -13,7 +13,7 @@ class CutScene():
         self.is_active = False
 
         self.time_for_next_click = 0
-        self.time_wait = 1000
+        self.time_wait = 500
 
     # cut_scene.createCutScene([<message>, {'time': <time>, 'color': <color>}])
     # <message>: text to display
