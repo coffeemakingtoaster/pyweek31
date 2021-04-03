@@ -20,6 +20,7 @@ class Coin(Item.Item):
         self.y = center_y
         self.is_rendered = True
         guard_in_range = False
+        print('A coint was placed at ' + str(self.x) + ' ' + str(self.y))
 
         if not self.is_active:
             self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["coin"], 0)
