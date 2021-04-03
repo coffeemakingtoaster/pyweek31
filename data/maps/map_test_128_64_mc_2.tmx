@@ -279,7 +279,7 @@
    <polyline points="0,0 0,16 0,176"/>
   </object>
   <object id="230" name="waypoint" type="line" x="1696" y="832">
-   <polyline points="0,0 0,-32 -48,-32 -48,-64 -128,-48 -176,-64 -224,-48 -272,-64"/>
+   <polyline points="0,64 0,-16 -64,-16 -64,-48 -128,-48 -176,-64 -224,-48 -272,-64"/>
   </object>
   <object id="231" name="'wall'" x="1360" y="656" width="96" height="16"/>
   <object id="233" name="'wall'" x="1392" y="688" width="16" height="16"/>
