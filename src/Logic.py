@@ -74,6 +74,7 @@ class Logic():
                
     def update_credits(self):
         if self.car.rect.y > 2000:
+            self.game_state.set_game_state('kriha')
             return
         self.car.update()
         
