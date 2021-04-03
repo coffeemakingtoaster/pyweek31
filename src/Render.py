@@ -20,6 +20,7 @@ class Render():
         self.tiles_on_screen = 0
         self.enemy_animations = []
         self.door_animations = []
+        self.cursor = 1
         self.car_visual = random.choice(self.assets["textures"]["cars"])
         self.car_visual = pygame.transform.scale(self.car_visual,(int(self.logic.car.rect.width), int(self.logic.car.rect.height)))
         for enemy in self.logic.enemies:
@@ -38,10 +39,12 @@ class Render():
         self.ui.draw_ui(self)
         self.frame_cnt+=1
         self.tiles_on_screen = 0
-        if self.logic.player.coinmode:
+        if self.logic.player.coinmode and self.cursor == 1:
             pygame.mouse.set_cursor(pygame.cursors.broken_x)
-        else:
+            self.cursor = 0
+        elif self.cursor == 0 and not self.logic.player.coinmode:
             pygame.mouse.set_cursor(pygame.cursors.arrow)
+            self.cursor = 1
         return self.frame
 
     def draw_map(self):            
