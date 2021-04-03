@@ -22,7 +22,7 @@ class Coin(Item.Item):
         guard_in_range = False
 
         if not self.is_active:
-            self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["coin"],0)
+            self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["coin"], 0)
         for guard in self.logic.enemies:
             if self.is_in_range(guard, center_x, center_y):
                 if guard.check_vision_to_point(Point(center_x, center_y)):

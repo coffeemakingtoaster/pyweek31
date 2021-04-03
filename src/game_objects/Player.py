@@ -38,8 +38,8 @@ class Player(Actor.Actor):
         self.inventory["coffee"] = 10
         self.inventory["jammer"] = 3
         self.inventory["donut"] = 7
-        self.inventory["coin"] = 4
-
+        self.inventory["coin"] = 99
+        
         self.has_moved = False
         self.hiding_spots = hiding_spots
         self.is_hidden = False

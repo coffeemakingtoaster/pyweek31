@@ -8,7 +8,7 @@ import pygame
 
 class Guard(Actor.Actor):
 
-    def __init__(self, pos,walls,player,waypoints, props, game_state):
+    def __init__(self, pos, walls, player, waypoints, props, game_state):
         super().__init__()
 
         # verify props
@@ -33,14 +33,14 @@ class Guard(Actor.Actor):
         self.player = player
 
         self.waypoints = []
+        self.original_waypoints = []
         self.guard_waypoints_logic = props['type'] # line or circle (line moves 1 -> 2 -> 3 -> 2 -> 1 ...) | (circle moves 1 -> 2 -> 3 -> 1 -> 2 -> 3 ...)
         self.guard_waypoint_direction_back = True
 
         self.waypoint_variance = 3
         for waypoint in waypoints:
             self.waypoints.append(Point.to_our_point(waypoint))
-
-        self.original_waypoints = self.waypoints
+            self.original_waypoints.append(Point.to_our_point(waypoint))
 
         self.current_waypoint = 0
         self.is_moving = True
@@ -58,14 +58,19 @@ class Guard(Actor.Actor):
     def update(self, walls):
         self.walls = walls
         self.move(self.goalPos, self.waypoints)
-        # print(self.waypoints, " crrent_waypoint: " ,self.current_waypoint)
+
+        print(len(self.waypoints), "current_waypoint: " , self.current_waypoint)
         # for x in range(len(waypoints)- 1):
             # if self.current_waypoint > len(waypoints):
                 # self.current_waypoint -= 1
                 
+        if self.current_waypoint < 0 or self.current_waypoint > len(self.waypoints) - 1:
+            self.current_waypoint = 0
         self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y, self.guard_speed)
         self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
+        
+        # blocks player for donut item
         if self.is_moving == True:
             self.pos.x += normed_move_vec.x
             self.pos.y += normed_move_vec.y
@@ -157,22 +162,17 @@ class Guard(Actor.Actor):
 
     def move(self,goalPos,waypoints):
         if self.logic.coin.x - 10 <= self.pos.x <= self.logic.coin.x + 10 and self.logic.coin.y - 10 <= self.pos.y <= self.logic.coin.y + 10:
-            self.waypoints.pop(self.current_waypoint)
             self.logic.coin.is_active = False
             self.logic.coin.is_rendered = False
-            # self.current_waypoint -= 1
             print("reached coin")
             
         if self.logic.coin.is_active == False and self.off_patrol_position.x - 10 <= self.pos.x <= self.off_patrol_position.x + 10 and self.off_patrol_position.y - 10 <= self.pos.y <= self.off_patrol_position.y + 10:
-            # print(self.waypoints)
-            self.waypoints.pop(self.current_waypoint)
-            # print(self.waypoints)
-            self.waypoints = self.original_waypoints
+            self.waypoints = self.original_waypoints.copy()
             self.off_patrol_position = Point(-1, -1)
             self.current_waypoint = self.former_current_waypoint
-            print("reached off patrol point")
+            print("reached off patrol point", len(self.waypoints), len(self.original_waypoints))
             
-        if goalPos.x + self.waypoint_variance > self.pos.x > goalPos.x - self.waypoint_variance and goalPos.y + self.waypoint_variance > self.pos.y > goalPos.y - self.waypoint_variance:
+        elif goalPos.x + self.waypoint_variance > self.pos.x > goalPos.x - self.waypoint_variance and goalPos.y + self.waypoint_variance > self.pos.y > goalPos.y - self.waypoint_variance:
             if self.guard_waypoints_logic == 'circle':
                 if self.current_waypoint >= len(waypoints) - 1:
                     self.current_waypoint = 0
