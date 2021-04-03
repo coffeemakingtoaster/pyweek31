@@ -1,6 +1,7 @@
 from .game_objects import Chest
 from .game_objects import Player
 from .game_objects import Guard
+from .game_objects import Door
 from .game_objects.helper.Point import Point
 from .game_objects.helper.Section import Section
 from .game_objects import Wall
@@ -38,6 +39,8 @@ class Logic():
 
         self.hiding_spots = []
         self.add_hiding_spots()
+        
+        self.doors = Door.Door_Container(self.map)
 
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
@@ -60,15 +63,24 @@ class Logic():
 
     def update(self):
         self.player.update()
+        if self.doors.update(self.player, self.enemies):
+            self.collision_objects = []
+            self.add_collision_objects()
+            self.collision_objects = self.doors.add_closed_doors(self.collision_objects)
+            self.walls = []
+            self.walls = self.translate_collision_objects(self.collision_objects)
         for keycard in self.keycards.container:
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
-            enemy.update()
+            enemy.update(self.walls)       
         for mouse in self.mice:
             mouse.update()
+
         pass
 
+    
+            
     def add_hiding_spots(self):
         #print("checking for hiding spots")
         for layer in self.map.visible_layers:
