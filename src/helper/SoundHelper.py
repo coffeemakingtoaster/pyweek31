@@ -50,11 +50,13 @@ class SoundHelper():
             if isinstance(sfx, list): 
                 self.sfx2_channel.play(random.choice(sfx), loopsCount)
             else:
-                self.sfx_channel.play(sfx, loopsCount)
+                self.sfx2_channel.play(sfx, loopsCount)
                 
     def play_gamestate_sfx(self, sfx, loopsCount):
         if self.allowSFX and not self.gamestate_channel.get_busy():
             if isinstance(sfx, list): 
+                if len(self.cache) == 0:
+                    self.cache = sfx[:]
                 self.gamestate_channel.play(random.choice(sfx), loopsCount)
             else:
                 self.gamestate_channel.play(sfx, loopsCount)
