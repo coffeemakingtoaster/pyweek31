@@ -88,7 +88,7 @@ class CutScene():
         self.uiHelper.createText(self.cut_scenes[0]['message'], {
             'font': self.uiHelper.fonts['text']['font'],
             'render': render,
-            'x': 40,
+            'x': 20,
             'y': WINDOW_HEIGHT - self.blackbar_height / 2 - self.uiHelper.fonts['text']['font_height'] / 2,
             'color': self.cut_scenes[0]['color']
         })

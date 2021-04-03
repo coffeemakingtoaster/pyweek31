@@ -88,6 +88,11 @@ class Menu():
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
         self.add_option("Developer", "DEBUG_DRAW_COLLISION", lambda: self.setTest())
         self.add_option("Developer", "DEV_CUT_SCENE", lambda: self.debug_cut_scene())
+        self.add_option("Developer", "INTRO_SCENE", lambda: self.create_cut_scene_intro())
+        self.add_option("Developer", "FIRST_ITEM", lambda: self.create_cut_scene_firstitem())
+        self.add_option("Developer", "FIRST_KEY_CARD", lambda: self.create_cut_scene_firstkeycard())
+        self.add_option("Developer", "THIRD_KEY_CARD", lambda: self.create_cut_scene_thirdkeycard())
+        self.add_option("Developer", "OUTRO", lambda: self.create_cut_scene_outro())
 
         self.add_menu('Dev Play Sounds', 'Developer')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
@@ -101,7 +106,46 @@ class Menu():
             ['Message 2', {'color': (255, 255, 255)}],
             ['Message 3', {}],
         ])
+    
+    def create_cut_scene_intro(self):
+        self.ui.cut_scene.createCutScene([
+            ['Ahhhh… my head hurts.', {}],
+            ['Bitchass bastards took away my beloved badge. ', {}],
+            ['Suckers didn’t stop at my special sunglasses...', {}],
+            ['The ones from Sander’s Supermarket Sunday Sale.', {}],
+            ['But they missed the car keys in my butt crack hehehehe.', {}],
+            ['But first I need to get out of here!', {}]
+        ])
 
+    def create_cut_scene_firstitem(self):
+        self.ui.cut_scene.createCutScene([
+            ['Man I wish this was a thomy mayonnaise.', {}],
+            ['Day would be saved.', {}],
+            ['But this one might come in handy as well.', {}]
+        ])
+        
+    def create_cut_scene_firstkeycard(self):
+        self.ui.cut_scene.createCutScene([
+            ['These corrupt cops left key cards laying around.', {}],
+            ['Luckily I ain’t no white girl, this card’s dirty as hell.', {}],
+            ['Guess the dog played with this one.', {}],
+            ['Can’t remember his name tho...', {}],
+            ['...think it was something with Y…', {}]
+        ])
+        
+    def create_cut_scene_thirdkeycard(self):
+        self.ui.cut_scene.createCutScene([
+            ['This trip was easier than handling git!', {}],
+            ['Who built this prison? A bunch of drunk students?!', {}],
+            ['Now I need to find the exit without being raped by aliens...', {}],
+            ['...although...heh', {}]
+        ])
+    
+    def create_cut_scene_outro(self):
+        self.ui.cut_scene.createCutScene([
+            ['Off I go, first stop - grandpa Nuknuk’s bar!', {}],
+            ['Cool Cop is back on the road again!', {}]
+        ])
 
     def enable_audio(self):
         if self.classes['soundHelper'].music_channel.get_volume() > 0 or self.classes['soundHelper'].sfx_channel.get_volume() > 0:
