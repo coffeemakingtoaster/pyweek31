@@ -19,7 +19,7 @@ import pygame
 
 class Logic():
 
-    def __init__(self, game_map, soundHelper, assets ,game_state):
+    def __init__(self, game_map, soundHelper, assets, game_state):
 
         self.game_state = game_state
         
@@ -55,7 +55,7 @@ class Logic():
                 'type': enemy_waypoint['type'],
                 'speed': enemy_waypoint['speed'],
                 'logic': self
-            },game_state))
+            }, game_state))
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
@@ -79,11 +79,14 @@ class Logic():
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
-            enemy.update(self.walls)       
+            if enemy.update(self.walls):
+                self.game_state.set_game_state('over')     
         for mouse in self.mice:
             mouse.update()
-
         self.donut.snap_trap()
+        if self.win_collide.colliderect(self.player.player_hitbox):
+            self.game_state.set_game_state("victory")
+            collide_winning_zone()
         pass
                     
     def get_map_trigger(self):
@@ -106,6 +109,7 @@ class Logic():
                         y = properties['y'] * (config.TILE_SIZE/16)
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
+                        self.win_collide = pygame.Rect(x, y, width, height)
                         # do something with win zone!!! 
                     elif properties["name"] == "waypoint":
                         enemy_waypoints = []
@@ -133,7 +137,6 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.hiding_spots.append(spot)
-
                     elif properties["name"] == "chest":
                         x = properties['x'] * (config.TILE_SIZE/16)
                         y = properties['y'] * (config.TILE_SIZE/16)
@@ -141,6 +144,10 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.chests.append(Chest.Chest(spot))
+                
+    def collide_winning_zone():
+        if win_collide.colliderect(self.player.player_hitbox):
+            print("yey")
 
     def refresh_walls(self):
         for layer in self.map.visible_layers:
