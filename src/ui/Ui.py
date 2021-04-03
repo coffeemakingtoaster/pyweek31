@@ -5,6 +5,7 @@ from .. import config
 from .Notification import *
 from .Menu import *
 from .CutScene import *
+from .Hud import *
 
 class Ui:
 
@@ -13,6 +14,7 @@ class Ui:
         self.notification = Notification(self)
         self.menu = Menu(self, classes)
         self.cut_scene = CutScene(self)
+        self.hud = Hud(self, classes)
         self.classes = classes
 
 
@@ -55,11 +57,13 @@ class Ui:
 
         self.menu.update()
         self.cut_scene.update()
+        self.hud.update()
 
+        self.hud.render(render)
         self.cut_scene.render(render)
         self.menu.render(render)
         self.notification.render(render)
-        
+
 
     def say(self, message, force_display = False, time = 130):
 
