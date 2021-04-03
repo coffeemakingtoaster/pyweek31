@@ -32,7 +32,9 @@ class Assetloader():
                 "max" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'player', 'player_1.png')),
                 "enemies" : [pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'guard', 'guard1.png')),
                          pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'guard', 'guard2.png'))],
-                "keycard": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'testing', '0.png')),
+                "keycards": {"blue": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'blue.png')),
+                             "green": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'green.png')),
+                             "red": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'red.png'))},
                 "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
                 "hud" : [
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'testing', 'hud_1.png')),

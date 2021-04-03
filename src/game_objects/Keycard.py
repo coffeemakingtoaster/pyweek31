@@ -5,6 +5,7 @@ from .. import Render
 class Keycards():
 
     keycard_spawns = [{"x_spawn":1568, "y_spawn":2275}, {"x_spawn":949, "y_spawn":1194}, {"x_spawn":1881, "y_spawn":652}, {"x_spawn":1880, "y_spawn":1530}, {"x_spawn":573, "y_spawn":630}]
+    keycard_colors = ["blue", "red", "green"]
     collect_counter = 0
 
     def __init__(self):
@@ -22,7 +23,7 @@ class Keycards():
             keycard_posy = keycard_pos["y_spawn"]
             keycard_rect = pygame.Rect((0,0),(30,30))
             keycard_rect.center = (keycard_posx,keycard_posy)
-            self.container.append({"x_cord":keycard_posx, "y_cord":keycard_posy, "collectable":True, "rect":keycard_rect})
+            self.container.append({"x_cord":keycard_posx, "y_cord":keycard_posy, "collectable":True, "rect":keycard_rect, "color":self.keycard_colors[i]})
         
     
     def keycard_player_collision(self, player_rect):
