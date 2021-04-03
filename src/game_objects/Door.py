@@ -26,7 +26,7 @@ class Door_Container(InteractiveObject.InteractiveObject):
                         height = properties['height'] * (config.TILE_SIZE/16)
                         door = self.door_object(properties['rotation'],x,y)
                         self.door_list.append(door)   
-        self.door_list.append(self.door_object(90,850,1100))    
+        self.door_list.append(self.door_object(0,850,1100))
     
     def update(self, player, guards):
         return_bool = False
@@ -88,7 +88,7 @@ class Door_Container(InteractiveObject.InteractiveObject):
             self.is_open = True       
             if self.default_rotation == 180 or self.default_rotation == 0:
                 x,y = self.hitbox.bottomleft
-                self.hitbox.center = ((x + config.TILE_SIZE/2,y - (4*(config.TILE_SIZE/16))/2)) 
+                self.hitbox.center = ((x + config.TILE_SIZE/2,y - (4*(config.TILE_SIZE/16))/2))
                 height,width = self.old_hitbox_dimensions
                 self.hitbox.width = width
                 self.hitbox.height = height 
