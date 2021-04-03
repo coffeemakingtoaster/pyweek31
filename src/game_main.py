@@ -90,7 +90,7 @@ def launch_game():
         ])
     
     while running:
-        print(game_state.game_state)
+        #print(game_state.game_state)
         
         if game_state.is_reset():
             logic = Logic.Logic(gameMap, soundHelper, assets,game_state)
