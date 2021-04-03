@@ -19,5 +19,7 @@ class Chest(InteractiveObject):
         pass
 
     def open(self):
-        #self.is_empty = True
+        if self.is_empty:
+            return None
+        self.is_empty = True
         return choices(population=self.possible_items,weights=self.probabilities)[0]
