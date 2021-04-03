@@ -11,6 +11,7 @@ from .game_objects.items.Donut import Donut
 from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
 from .game_objects import Mice
+from .game_objects import Car
 
 from . import config
 
@@ -20,10 +21,11 @@ import pygame
 class Logic():
 
     def __init__(self, game_map, soundHelper, assets, game_state, ui):
-
+    
         self.game_state = game_state
         
         self.assets = assets
+        self.cut_scene_called = False
         
         self.soundHelper = soundHelper
         self.ui = ui
@@ -71,8 +73,14 @@ class Logic():
         self.mice.append(Mice.Mouse())
         self.mice.append(Mice.Mouse())
         
-        self.jammer = Jammer(self)        
-
+        self.jammer = Jammer(self)
+               
+    def update_credits(self):
+        if self.car.rect.y > 2000:
+            return
+        self.car.update()
+        
+    
     def update(self):
         self.player.update()
         if self.player.has_moved:
@@ -94,6 +102,13 @@ class Logic():
         if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
             print("victory")
             self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
+            # dialog stuff
+            if not config.SKIP_DIALOGS and not self.cut_scene_called:
+                self.ui.cut_scene.createCutScene([
+                    ['Off I go, first stop - grandpa Nuknuk’s bar!', {}],
+                    ['Cool Cop is back on the road again!', {}]
+                ])
+                self.cut_scene_called = True
             self.game_state.set_game_state("victory")
         pass
                     
@@ -118,7 +133,7 @@ class Logic():
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         self.win_collide = pygame.Rect(x, y, width, height)
-                        # do something with win zone!!! 
+                        self.car = Car.Car(x, y, width, height) 
                     elif properties["name"] == "waypoint":
                         enemy_waypoints = []
                         enemy_spawn_point = properties["points"][0]

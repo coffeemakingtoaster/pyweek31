@@ -59,6 +59,10 @@ class Guard(Actor.Actor):
         self.walls = walls
         self.move(self.goalPos, self.waypoints)
         # print(self.waypoints, " crrent_waypoint: " ,self.current_waypoint)
+        # for x in range(len(waypoints)- 1):
+            # if self.current_waypoint > len(waypoints):
+                # self.current_waypoint -= 1
+                
         self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y, self.guard_speed)
         self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
@@ -108,6 +112,7 @@ class Guard(Actor.Actor):
         if m == 0:
             m = 0.01
 
+        #free society
         intersections = [(length, end,"none")]
         y_axis_section = ray.startPoint.y - m * ray.startPoint.x
         for wall in walls:
@@ -154,6 +159,7 @@ class Guard(Actor.Actor):
         if self.logic.coin.x - 10 <= self.pos.x <= self.logic.coin.x + 10 and self.logic.coin.y - 10 <= self.pos.y <= self.logic.coin.y + 10:
             self.waypoints.pop(self.current_waypoint)
             self.logic.coin.is_active = False
+            self.logic.coin.is_rendered = False
             # self.current_waypoint -= 1
             print("reached coin")
             
@@ -168,12 +174,12 @@ class Guard(Actor.Actor):
             
         if goalPos.x + self.waypoint_variance > self.pos.x > goalPos.x - self.waypoint_variance and goalPos.y + self.waypoint_variance > self.pos.y > goalPos.y - self.waypoint_variance:
             if self.guard_waypoints_logic == 'circle':
-                if self.current_waypoint == len(waypoints) - 1:
+                if self.current_waypoint >= len(waypoints) - 1:
                     self.current_waypoint = 0
                     return
                 self.current_waypoint += 1
             elif self.guard_waypoints_logic == 'line':
-                if self.current_waypoint == len(waypoints) - 1 or self.current_waypoint == 0:
+                if self.current_waypoint >= len(waypoints) - 1 or self.current_waypoint == 0:
                     self.guard_waypoint_direction_back = not self.guard_waypoint_direction_back
                 if self.guard_waypoint_direction_back: 
                     self.current_waypoint -= 1

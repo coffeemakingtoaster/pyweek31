@@ -84,7 +84,11 @@ class Assetloader():
                     "donut": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'donut.png')),
                     "coin": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'coin.png')),
                     "coffee": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'coffee.png')),
-                    "jammer": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'jammer.png')),
-                }
-                
+                    "jammer": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'jammer.png'))
+                },
+                "cars":[
+                    pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'car', 'green.png')),
+                    pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'car', 'blue.png')),
+                    pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'car', 'pink.png')) 
+                ]         
             } 

@@ -55,7 +55,7 @@ def launch_game():
     #Load User Interface
     ui = Ui({
         'assets': assets,
-        'soundHelper': soundHelper
+        'soundHelper': soundHelper, 
     })
 
     #Create logic
@@ -125,6 +125,9 @@ def launch_game():
         if game_state.is_play():
             logic.update()
         next_frame = render.generate_new_frame()
+        
+        if game_state.is_victory():
+            logic.update_credits()
         
         if game_state.is_play() and start_ticks:
             ticks_while_game_state_is_play_after_tick_start += pygame.time.get_ticks() - ticks_of_last_frame
