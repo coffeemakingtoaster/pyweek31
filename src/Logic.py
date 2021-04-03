@@ -25,6 +25,7 @@ class Logic():
         self.game_state = game_state
         
         self.assets = assets
+        self.cut_scene_called = False
         
         self.soundHelper = soundHelper
         self.ui = ui
@@ -96,6 +97,13 @@ class Logic():
         if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
             print("victory")
             self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
+            # dialog stuff
+            if not config.SKIP_DIALOGS and not self.cut_scene_called:
+                self.ui.cut_scene.createCutScene([
+                    ['Off I go, first stop - grandpa Nuknuk’s bar!', {}],
+                    ['Cool Cop is back on the road again!', {}]
+                ])
+                self.cut_scene_called = True
             self.game_state.set_game_state("victory")
         pass
                     
