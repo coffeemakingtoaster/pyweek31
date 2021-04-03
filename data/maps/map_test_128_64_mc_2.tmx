@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="356">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="365">
  <tileset firstgid="1" source="prison_inside.tsx"/>
  <tileset firstgid="18" source="gras.tsx"/>
  <tileset firstgid="29" source="prison.tsx"/>
@@ -179,33 +179,6 @@
   <object id="145" name="'wall'" x="464" y="192" width="16" height="64"/>
   <object id="147" name="mouse" x="480" y="400" width="96" height="64"/>
   <object id="148" name="mouse" x="496" y="480" width="80" height="64"/>
-  <object id="149" name="keycard_spawnpoint" x="176" y="512">
-   <point/>
-  </object>
-  <object id="150" name="keycard_spawnpoint" x="208" y="512">
-   <point/>
-  </object>
-  <object id="151" name="keycard_spawnpoint" x="240" y="512">
-   <point/>
-  </object>
-  <object id="152" name="keycard_spawnpoint" x="240" y="544">
-   <point/>
-  </object>
-  <object id="153" name="keycard_spawnpoint" x="208" y="544">
-   <point/>
-  </object>
-  <object id="154" name="keycard_spawnpoint" x="176" y="544">
-   <point/>
-  </object>
-  <object id="155" name="keycard_spawnpoint" x="176" y="576">
-   <point/>
-  </object>
-  <object id="156" name="keycard_spawnpoint" x="208" y="576">
-   <point/>
-  </object>
-  <object id="157" name="keycard_spawnpoint" x="240" y="576">
-   <point/>
-  </object>
   <object id="161" name="'wall'" x="1120" y="80" width="16" height="672"/>
   <object id="162" name="'wall'" x="1136" y="736" width="480" height="16"/>
   <object id="163" name="'wall'" x="1456" y="752" width="16" height="16"/>

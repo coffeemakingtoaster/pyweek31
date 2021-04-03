@@ -70,3 +70,6 @@ class SoundHelper():
     def play_music(self, music, loopsCount):
         if not self.music_channel.get_busy() and self.allowMusic:
             self.music_channel.play(music, loopsCount)
+
+    def play_win_music(self, music):
+        self.music_channel.play(music, 0)
