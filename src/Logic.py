@@ -12,11 +12,13 @@ from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
 from .game_objects import Mice
 from .game_objects import Car
+from .game_objects import Checkpoints
 
 from . import config
 
 import pytmx
 import pygame
+import copy
 
 class Logic():
 
@@ -30,13 +32,14 @@ class Logic():
         self.soundHelper = soundHelper
         self.ui = ui
         
-        self.chests = []
+        self.last_checkpoint = None
        
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
         
         # trigger data
+        self.chests = []
         self.enemy_waypoints = []
         self.map = game_map
         self.collision_objects = []
@@ -45,8 +48,6 @@ class Logic():
         self.keycards_spawnpoints = []
         self.checkpoints = []
         self.get_map_trigger()
-
-        print("self.checkpoints", self.checkpoints)
 
         self.doors = Door.Door_Container(self.map)
 
@@ -75,9 +76,18 @@ class Logic():
             return
         self.car.update()
         
+    def load_checkpoint(self,checkpoint):
+        self.player.x, self.player.y = checkpoint.player_pos
+        
     
     def update(self):
         self.player.update()
+        for checkpoint in self.checkpoints:
+            if checkpoint.hitbox.colliderect(self.player.player_hitbox) and not checkpoint.used:
+              checkpoint.save_gamestate(self.player)
+              self.last_checkpoint = checkpoint
+              self.game_state.set_game_state('checkpoint')
+              break  
         if self.player.has_moved:
             self.soundHelper.play_sfx(self.assets["sounds"]["actor"]["footsteps"]["concrete"],1)
         if self.doors.update(self.player, self.enemies):
@@ -175,7 +185,7 @@ class Logic():
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
-                        self.checkpoints.append(spot)
+                        self.checkpoints.append(Checkpoints.Checkpoint(self,spot))
                     elif properties["name"] == "keycard_spawnpoint":
                         self.keycards_spawnpoints.append(Point(properties['x'] * (config.TILE_SIZE/16), properties['y'] * (config.TILE_SIZE/16)))
                         
