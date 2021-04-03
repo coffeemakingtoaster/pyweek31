@@ -41,7 +41,7 @@ class Keycards():
                         # print("collided")
                         keycard["collectable"] = False
                         self.collect_counter += 1
-                        
+                        self.ui.hud.player_keycards.append(keycard["color"])
                         #dialog stuff
                         if self.collect_counter == 1:
                             if not SKIP_DIALOGS:

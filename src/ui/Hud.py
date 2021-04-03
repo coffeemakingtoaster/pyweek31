@@ -8,6 +8,7 @@ class Hud():
         self.primaryColor = (255,255,255)
         self.countColor = (0,0,0)
         self.player_inventory = defaultdict(lambda:0)
+        self.player_keycards = []
 
 
     def update(self):
@@ -19,6 +20,18 @@ class Hud():
         if self.ui.menu.open or self.ui.cut_scene.is_active:
             return
 
+        card_index = 0
+        for color in self.player_keycards:
+            self.ui.uiHelper.createSprite({
+            'x': 680,
+            'y': 100 + card_index*35,
+            'width': 15,
+            'height': 15,
+            'texture' : self.classes['assets']['textures']['keycards'][color],
+            'render': render
+            })
+            card_index+=1
+        
         self.ui.uiHelper.createSprite({
             'x': 206,
             'y': 395,
