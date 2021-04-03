@@ -31,7 +31,7 @@ class Logic():
         self.ui = ui
         
         self.chests = []
-        self.keycards = Keycard.Keycards(self.ui)
+       
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
@@ -74,6 +74,8 @@ class Logic():
         self.mice.append(Mice.Mouse())
         
         self.jammer = Jammer(self)
+        
+        self.keycards = Keycard.Keycards(self.ui,self.keycards_spawnpoints)
                
     def update_credits(self):
         if self.car.rect.y > 2000:
@@ -175,6 +177,7 @@ class Logic():
                         spot = pygame.Rect(x, y, width, height)
                     elif properties["name"] == "keycard_spawnpoint":
                         self.keycards_spawnpoints.append(Point(properties['x'] * (config.TILE_SIZE/16), properties['y'] * (config.TILE_SIZE/16)))
+                        
 
 
     def refresh_walls(self):
