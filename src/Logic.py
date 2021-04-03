@@ -81,13 +81,13 @@ class Logic():
         for enemy in self.enemies:
             enemy.update(self.walls)
             if self.game_state.is_over():
-                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],1)    
+                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],0)    
         for mouse in self.mice:
             mouse.update()
         self.donut.snap_trap()
         if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
             print("victory")
-            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],1) 
+            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
             self.game_state.set_game_state("victory")
         pass
                     
