@@ -15,7 +15,7 @@ class Coin(Item.Item):
         
         for guard in self.logic.enemies:
             if self.is_in_range(guard, center_x, center_y):
-                if guard.check_vision():
+                if guard.check_vision_to_point(Point(center_x, center_y)):
                     guard.former_current_waypoint = guard.current_waypoint
                     guard.off_patrol_position = Point(guard.pos.x, guard.pos.y)
                     guard.waypoints.insert(guard.current_waypoint, guard.off_patrol_position)
@@ -26,13 +26,3 @@ class Coin(Item.Item):
                     
     def is_in_range(self, actor, center_x, center_y):
         return pygame.math.Vector2(actor.pos.x - center_x, actor.pos.y - center_y).length() <= self.detection_radius
-    
-    def collection_handling(self):
-        if self.is_active:
-            for guard in self.logic.enemies:
-                if guard.pos.x <= self.x + 10 and guard.pos.x >= self.x - 10 and guard.pos.y <= self.y + 10 and guard.pos.y >= self.y - 10:
-                    self.is_active = False
-                    for guard in self.logic.enemies:
-                        if self.is_in_range(guard, self.x, self.y):
-                            if guard.check_vision():
-                                pass

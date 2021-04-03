@@ -196,7 +196,7 @@ class Guard(Actor.Actor):
     def vector_to_angle(self,x,y):
         return pygame.math.Vector2(x, y).angle_to((0, -1))
 
-    def check_vision_to_point(self,point,walls):
+    def check_vision_to_point(self, point):
 
 
         ray = Section(self.pos,point)
@@ -204,7 +204,7 @@ class Guard(Actor.Actor):
         y_axis_section = ray.startPoint.y - m * ray.startPoint.x
 
 
-        for wall in walls:
+        for wall in self.walls:
 
             if wall.endPoint.x == wall.startPoint.x:
                 intersection = Point(wall.endPoint.x, y_axis_section+m*wall.endPoint.x)
@@ -215,4 +215,4 @@ class Guard(Actor.Actor):
                 intersection = Point((wall.endPoint.y-y_axis_section)/m,wall.startPoint.y)
                 if wall.endPoint.x > intersection.x > wall.startPoint.x and min(ray.startPoint.x,ray.endPoint.x) < intersection.x < max(ray.startPoint.x,ray.endPoint.x):
                     return False
-
+        return True
