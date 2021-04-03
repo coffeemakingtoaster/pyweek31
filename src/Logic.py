@@ -44,7 +44,12 @@ class Logic():
 
         for enemy_waypoint in self.enemy_waypoints:
             #print(enemy_waypoint)
-            self.enemies.append(Guard.Guard(self, enemy_waypoint['spawn_point'], self.walls, self.player, enemy_waypoint['waypoints']))        
+
+            self.enemies.append(Guard.Guard(enemy_waypoint['spawn_point'], self.walls, self.player, enemy_waypoint['waypoints'], {
+                'type': enemy_waypoint['type'],
+                'speed': enemy_waypoint['speed'],
+                'logic': self
+            }))
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
@@ -95,14 +100,24 @@ class Logic():
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         # do something with win zone!!! 
-                    elif properties["name"] == "'waypoint'":
+                    elif properties["name"] == "waypoint":
                         enemy_waypoints = []
                         enemy_spawn_point = properties["points"][0]
+            
+                        # verify
+                        if "'speed'" not in properties["properties"] or properties["properties"]["'speed'"] == "":
+                            properties["properties"]["'speed'"] = "default"
+                        
+                        if properties["type"] == "" or properties["type"] is None:
+                            properties["type"] = "default"
+
                         for point in properties["points"][1:]:
                             enemy_waypoints.append(point)
                         self.enemy_waypoints.append({
                             'spawn_point': enemy_spawn_point,
-                            'waypoints': enemy_waypoints
+                            'waypoints': enemy_waypoints,
+                            'type': properties["type"],
+                            'speed': properties["properties"]["'speed'"]
                         })
                     elif properties["name"] == "'hiding_spot'":
                         x = properties['x'] * (config.TILE_SIZE/16)

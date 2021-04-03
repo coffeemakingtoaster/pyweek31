@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="99">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="103">
  <tileset firstgid="1" source="prison_inside.tsx"/>
  <tileset firstgid="18" source="gras.tsx"/>
  <layer id="1" name="background" width="128" height="64">
@@ -169,21 +169,18 @@
   <object id="85" name="'wall'" x="160" y="176" width="16" height="16"/>
   <object id="86" name="'wall'" x="208" y="176" width="16" height="16"/>
   <object id="87" name="'wall'" x="256" y="176" width="16" height="16"/>
-  <object id="93" name="'waypoint'" x="128" y="160">
+  <object id="93" name="waypoint" x="128" y="160">
    <polyline points="0,0 176,0 176,32 160,32 160,80 208,80"/>
   </object>
-  <object id="94" name="'waypoint'" x="560" y="128">
-   <polyline points="0,0 0,80 128,80 128,16 192,16 192,64"/>
-  </object>
-  <object id="95" name="'waypoint'" x="368" y="240">
-   <polyline points="0,0 80,0 128,0 128,32 224,48 224,0"/>
-  </object>
-  <object id="96" name="'waypoint'" x="432" y="336">
-   <polyline points="0,0 0,80 -128,80 -96,0"/>
-  </object>
-  <object id="97" name="'waypoint'" x="368" y="144">
-   <polyline points="0,0 0,32 80,32"/>
-  </object>
   <object id="98" name="'hiding_spot'" x="336" y="304" width="16" height="16"/>
+  <object id="101" name="waypoint" type="line" x="160" y="384">
+   <polyline points="0,0 0,32 192,32"/>
+  </object>
+  <object id="102" name="waypoint" type="line" x="160" y="336">
+   <properties>
+    <property name="'speed'" type="float" value="5"/>
+   </properties>
+   <polyline points="0,0 0,32 192,32"/>
+  </object>
  </objectgroup>
 </map>
