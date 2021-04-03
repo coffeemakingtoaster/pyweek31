@@ -46,7 +46,7 @@ class Logic():
         self.checkpoints = []
         self.get_map_trigger()
 
-        print("self.checkpoints", self.checkpoints)
+        #print("self.checkpoints", self.checkpoints)
 
         self.doors = Door.Door_Container(self.map)
 
