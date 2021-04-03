@@ -25,7 +25,7 @@ class Keycards():
     def create_keycards(self):
         for i in range(3):
             keycard_cords = random.choice(self.spawn_rects)
-            print(keycard_cords.x)
+            #print(keycard_cords.x)
             self.spawn_rects.remove(keycard_cords)
             keycard_rect = pygame.Rect(keycard_cords.x,keycard_cords.y,30,30)
             self.container.append({"x_cord":keycard_rect.x, "y_cord":keycard_rect.y, "collectable":True, "rect":keycard_rect, "color":self.keycard_colors[i]})

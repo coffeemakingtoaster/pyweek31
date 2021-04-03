@@ -9,9 +9,11 @@ class Coffee(Item.Item):
         self.duration = ITEM_COFFEE_DURATION
         
     def drink(self):
+        print("Drinking Coffee. Speed increase to " + str(self.logic.player.speed))
         self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["coffee"], 1)
         self.logic.player.speed = self.logic.player.speed * self.speed_boost
         threading.Timer(self.duration, self.digest).start()
         
     def digest(self):
         self.logic.player.speed = self.logic.player.speed / self.speed_boost
+        print('Effect of coffee has worn off, speed is now ' + str(self.logic.player.speed))
