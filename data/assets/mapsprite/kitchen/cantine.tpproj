@@ -1,6 +1,6 @@
 name=
 filename=
-output=../office
+output=../cantine
 
 alias=true
 alphaThreshold=0
@@ -32,7 +32,7 @@ limitMemory=true
 useIndexes=true
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:../office/chair.png,type:Input,regionName:null},{path:../office/fire_extinguisher.png,type:Input,regionName:null},{path:../office/locker.png,type:Input,regionName:null},{path:../office/table_bottom.png,type:Input,regionName:null},{path:../office/table_laptop.png,type:Input,regionName:null},{path:../office/wall.png,type:Input,regionName:null},{path:../office/wall_corner.png,type:Input,regionName:null},{path:../office/wall-mid.png,type:Input,regionName:null}]
+inputFiles=[{path:../cantine/plant.png,type:Input,regionName:null},{path:../cantine/table_cantine.png,type:Input,regionName:null},{path:../cantine/table_corner.png,type:Input,regionName:null},{path:../cantine/tile_cantine.png,type:Input,regionName:null}]
 
 
 -PROJ-
