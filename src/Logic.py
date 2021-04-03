@@ -31,7 +31,8 @@ class Logic():
         self.walls = self.translate_collision_objects(self.collision_objects)
         self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
         self.enemies = []
-        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player,[Point(900 ,900) ,Point(5000,900)]))
+        self.enemies.append(Guard.Guard(self, Point(1000,900),self.walls,self.player,[Point(900 ,900) ,Point(5000,900)]))
+        self.enemies.append(Guard.Guard(self, Point(1100,1100),self.walls,self.player,[Point(1100,1100)]))
 
         
 
@@ -49,6 +50,7 @@ class Logic():
             enemy.update()
  
         self.donut.snap_trap()
+        self.coin.collection_handling()
         pass
 
     def add_hiding_spots(self):

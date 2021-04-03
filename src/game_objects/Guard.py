@@ -8,22 +8,25 @@ import pygame
 
 class Guard(Actor.Actor):
 
-    def __init__(self,pos,walls,player,waypoints):
+    def __init__(self, logic, pos, walls, player, waypoints):
         super().__init__()
 
         self.pos = pos
         self.goalPos = Point(0, 0)
 
-        # TODO: add to movement
         self.hitbox = pygame.Rect(self.pos.x, self.pos.y, 50, 50)
 
+        self.logic = logic
         self.goalPos = waypoints[0]
         self.goalPosVector = Point(0,0)
         self.walls = walls
         self.player = player
         self.waypoints = waypoints
+        self.original_waypoints = self.waypoints
         self.current_waypoint = 0
         self.is_moving = True
+        self.off_patrol_position = Point(-1, -1)
+        self.former_current_waypoint = self.current_waypoint
 
         self.rotation = 0
         self.intersections = []
@@ -33,7 +36,7 @@ class Guard(Actor.Actor):
 
     def update(self):
 
-        self.move( self.goalPos,self.waypoints)
+        self.move(self.goalPos, self.waypoints)
         self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,10)
         self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
@@ -123,8 +126,23 @@ class Guard(Actor.Actor):
         return True
 
     def move(self,goalPos,waypoints):
+            if self.logic.coin.x - 10 <= self.pos.x <= self.logic.coin.x + 10 and self.logic.coin.y - 10 <= self.pos.y <= self.logic.coin.y + 10:
+                self.waypoints.pop(self.current_waypoint)
+                self.logic.coin.is_active = False
+                # self.current_waypoint -= 1
+                print("reached coin")
+                
+            if self.logic.coin.is_active == False and self.off_patrol_position.x - 10 <= self.pos.x <= self.off_patrol_position.x + 10 and self.off_patrol_position.y - 10 <= self.pos.y <= self.off_patrol_position.y + 10:
+                print(self.waypoints)
+                self.waypoints.pop(self.current_waypoint)
+                # print(self.waypoints)
+                self.waypoints = self.original_waypoints
+                self.off_patrol_position = Point(-1, -1)
+                self.current_waypoint = self.former_current_waypoint
+                print("reached off patrol point")
+                
             if goalPos.x == self.pos.x and goalPos.y ==  self.pos.y:
-                if self.current_waypoint == len(waypoints)-1:
+                if self.current_waypoint >= len(waypoints)-1:
                     self.current_waypoint = 0
                     return
                 self.current_waypoint += 1

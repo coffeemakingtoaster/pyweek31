@@ -35,6 +35,7 @@ class Player(Actor.Actor):
         self.inventory["coffee"] = 9999999
         self.inventory["jammer"] = 9999999
         self.inventory["donut"] = 9999999
+        self.inventory["coin"] = 9999999
 
         self.has_moved = False
         self.hiding_spots = hiding_spots
@@ -167,15 +168,16 @@ class Player(Actor.Actor):
     def use_coin(self):
         if pygame.key.get_pressed()[HOTKEY_2] == True and pygame.time.get_ticks() > self.keypress_time:
             self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
-            if self.coinmode == False and self.inventory["coin"] > 0:
+            if self.coinmode == False and self.inventory["coin"] > 0 and not self.logic.coin.is_active:
                 self.coinmode = True
             elif self.coinmode == True:
                 self.coinmode = False
             
         if self.coinmode == True and pygame.mouse.get_pressed()[0] == True and self.inventory["coin"] > 0:
             self.inventory["coin"] -= 1
-            print(pygame.mouse.get_pos())
-            self.logic.coin.throw(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
+            pointer_x = self.x - WINDOW_WIDHT / 2 + pygame.mouse.get_pos()[0]
+            pointer_y = self.y - WINDOW_HEIGHT / 2 + pygame.mouse.get_pos()[1]
+            self.logic.coin.throw(pointer_x, pointer_y)
             self.coinmode = False
             
     def use_donut(self):
