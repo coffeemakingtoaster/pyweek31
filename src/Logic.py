@@ -10,7 +10,7 @@ from .game_objects.items.Coin import Coin
 from .game_objects.items.Donut import Donut
 from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
-from . import Mice
+from .game_objects import Mice
 
 from . import config
 

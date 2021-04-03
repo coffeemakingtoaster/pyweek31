@@ -90,7 +90,7 @@ def launch_game():
         ])
     
     while running:
-        if game_state.is_over():
+        if game_state.is_reset():
             logic = Logic.Logic(gameMap)
             render = Render.Render(logic, assets, gameMap, ui, game_state)
             ticks_while_game_state_is_play_after_tick_start = 0 #longest variable in game heheh
@@ -154,4 +154,4 @@ def launch_game():
             game_state.set_game_state('play')
             
         if pygame.key.get_pressed()[config.PLAYER_RESET] == True:
-            game_state.set_game_state('over')
+            game_state.set_game_state('reset')

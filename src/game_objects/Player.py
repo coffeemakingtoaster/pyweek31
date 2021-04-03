@@ -14,6 +14,7 @@ class Player(Actor.Actor):
 
     def __init__(self, logic, chests, collision, hiding_spots):
         super().__init__()
+        pygame.mouse.set_cursor(pygame.cursors.arrow)
         self.logic = logic
         self.x = logic.player_spawn_point[0]
         self.y = logic.player_spawn_point[1]
