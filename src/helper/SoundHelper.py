@@ -16,6 +16,8 @@ class SoundHelper():
         self.atmo_channel = mixer.Channel(3)
         self.atmo_channel.set_volume(DEFAULT_AUDIO_VOLUME)
         self.cache = []
+        self.gamestate_channel = mixer.Channel(4)
+        self.gamestate_channel.set_volume(DEFAULT_AUDIO_VOLUME)
 
         #Can be set to false for example in settings menu
         self.allowSFX = True
@@ -49,6 +51,13 @@ class SoundHelper():
                 self.sfx2_channel.play(random.choice(sfx), loopsCount)
             else:
                 self.sfx_channel.play(sfx, loopsCount)
+                
+    def play_gamestate_sfx(self, sfx, loopsCount):
+        if self.allowSFX and not self.gamestate_channel.get_busy():
+            if isinstance(sfx, list): 
+                self.gamestate_channel.play(random.choice(sfx), loopsCount)
+            else:
+                self.gamestate_channel.play(sfx, loopsCount)
   
     """Use this to play music
     Args:

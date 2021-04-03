@@ -90,8 +90,6 @@ def launch_game():
         ])
     
     while running:
-        print(game_state.game_state)
-        
         if game_state.is_reset():
             logic = Logic.Logic(gameMap, soundHelper, assets,game_state)
             render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
@@ -152,7 +150,7 @@ def launch_game():
             game_state.set_game_state('pause')
         elif ui.cut_scene.is_active:
             game_state.set_game_state('cut_scene')
-        elif not game_state.is_over():
+        elif not game_state.is_over() and not game_state.is_victory():
             game_state.set_game_state('play')
 
             
