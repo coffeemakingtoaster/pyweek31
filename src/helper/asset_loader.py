@@ -35,5 +35,8 @@ class Assetloader():
                 ],
                 "ui": {
                     "menu_background": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'wall', 'wall_full_back_high_res.png'))
-                }
+                },
+                "mice": [
+                    pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'mapsprite', 'mouse1.png')),
+                    pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'mapsprite', 'mouse2.png'))]
             } 

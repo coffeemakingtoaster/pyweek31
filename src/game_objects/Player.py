@@ -91,8 +91,8 @@ class Player(Actor.Actor):
             return
         move_vector.scale_to_length(self.speed)
 
-        #print("player x:{} y:{}".format(self.x,self.y))
-        #print("hitbox x:{} y:{}".format(self.player_hitbox.x - 25 ,self.player_hitbox.y - 25))
+        print("player x:{} y:{}".format(self.x,self.y))
+        print("hitbox x:{} y:{}".format(self.player_hitbox.x - 25 ,self.player_hitbox.y - 25))
         
         self.player_hitbox.x += move_vector.x
         for blocker in self.collision:

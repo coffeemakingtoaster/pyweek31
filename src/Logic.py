@@ -9,6 +9,7 @@ from .game_objects.items.Coin import Coin
 from .game_objects.items.Donut import Donut
 from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
+from . import Mice
 
 from . import config
 
@@ -16,6 +17,7 @@ import pytmx
 import pygame
 
 class Logic():
+
     def __init__(self, game_map):
         self.chests = []
         self.chests.append(Chest.Chest())
@@ -49,6 +51,16 @@ class Logic():
         self.coffee = Coffee(self)
         self.coin = Coin(self)
         self.donut = Donut(self)        
+        
+        self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player))
+        self.enemies.append(Guard.Guard(Point(1000,800),self.walls,self.player))
+        self.enemies.append(Guard.Guard(Point(1000,700),self.walls,self.player))
+        
+        
+        self.mice = []
+        self.mice.append(Mice.Mouse())
+        self.mice.append(Mice.Mouse())
+        
         self.jammer = Jammer(self)        
 
     def update(self):
@@ -58,6 +70,8 @@ class Logic():
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
             enemy.update()
+        for mouse in self.mice:
+            mouse.update()
         pass
 
     def add_hiding_spots(self):
