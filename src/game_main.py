@@ -59,7 +59,7 @@ def launch_game():
     })
 
     #Create logic
-    logic = Logic.Logic(gameMap, soundHelper, assets,game_state)
+    logic = Logic.Logic(gameMap, soundHelper, assets, game_state)
 
     render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
     
@@ -90,9 +90,11 @@ def launch_game():
         ])
     
     while running:
-        if game_state.is_over():
-            logic = Logic.Logic(gameMap)
-            render = Render.Render(logic, assets, gameMap, ui, game_state)
+        #print(game_state.game_state)
+        
+        if game_state.is_reset():
+            logic = Logic.Logic(gameMap, soundHelper, assets,game_state)
+            render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
             ticks_while_game_state_is_play_after_tick_start = 0 #longest variable in game heheh
             ticks_of_last_frame = 0
             start_ticks = True # Set this to true and the ticker will start heheheheh (can be set later e.g.: when the player does his first move)
@@ -150,8 +152,9 @@ def launch_game():
             game_state.set_game_state('pause')
         elif ui.cut_scene.is_active:
             game_state.set_game_state('cut_scene')
-        else:
+        elif not game_state.is_over():
             game_state.set_game_state('play')
+
             
         if pygame.key.get_pressed()[config.PLAYER_RESET] == True:
-            game_state.set_game_state('over')
+            game_state.set_game_state('reset')

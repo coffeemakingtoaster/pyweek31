@@ -129,12 +129,13 @@ class Guard(Actor.Actor):
                     intersection = Point(section.endPoint.x, y_axis_section + m * section.endPoint.x)
                     if section.endPoint.y > intersection.y > section.startPoint.y and min(ray.startPoint.y,ray.endPoint.y) < intersection.y < max(ray.startPoint.y,ray.endPoint.y):
                         distance = self.distance(self.pos, intersection)
-                        intersections.append((distance, intersection,"player"))
+                        intersections.append((distance, intersection))
                 if section.endPoint.y == section.startPoint.y:
                     intersection = Point((section.endPoint.y - y_axis_section) / m, section.startPoint.y)
                     if section.endPoint.x > intersection.x > section.startPoint.x and min(ray.startPoint.x,ray.endPoint.x) < intersection.x < max(ray.startPoint.x,ray.endPoint.x):
                         distance = self.distance(self.pos, intersection)
-                        intersections.append((distance, intersection,"player"))
+                        intersections.append((distance, intersection))
+
 
 
 

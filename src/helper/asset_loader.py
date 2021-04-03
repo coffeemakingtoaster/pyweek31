@@ -8,6 +8,9 @@ class Assetloader():
         self.load_textures()
     
     def load_sounds(self):
+        #
+        # ACHTUNG PENIS: Wenn man ein Element schreibt kann man array weg lassen
+        #
         self.assets['sounds'] = {
             "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo.wav')),
             "bark" : [
@@ -28,11 +31,13 @@ class Assetloader():
                     ]
                 }
             },
-            "door" :[ pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'door_2.wav'))],
-            "coffee": [pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'Schlürf.wav'))],
-            "atmo":  [pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo.wav')),
-                      pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo_2.wav'))],
-            "jammer":[pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'PoliceCall.wav'))]     
+            "door" :pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'door_2.wav')),
+            "coffee": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'Schlürf.wav')),
+            "atmo":  [
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo.wav')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo_2.wav'))
+            ],
+            "jammer":pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'PoliceCall.wav'))     
         }
     
     def load_textures(self):

@@ -34,6 +34,10 @@ class Render():
         self.ui.draw_ui(self)
         self.frame_cnt+=1
         self.tiles_on_screen = 0
+        if self.logic.player.coinmode:
+            pygame.mouse.set_cursor(pygame.cursors.broken_x)
+        else:
+            pygame.mouse.set_cursor(pygame.cursors.arrow)
         return self.frame
 
     def draw_map(self):            
@@ -66,7 +70,7 @@ class Render():
                 self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["donut"],(25,25)), donut.x, donut.y)
         
         if self.logic.coin.is_active:
-            self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["coin"],(25,25)), self.logic.coin.x - int(config.TILE_SIZE/4), self.coin.donut - int(config.TILE_SIZE/4))
+            self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["coin"],(25,25)), self.logic.coin.x, self.logic.coin.y)
         
         mouse_count = 0
         for mouse in self.logic.mice:
