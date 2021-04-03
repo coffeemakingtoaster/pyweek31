@@ -19,16 +19,17 @@ import pygame
 
 class Logic():
 
-    def __init__(self, game_map, soundHelper, assets, game_state):
+    def __init__(self, game_map, soundHelper, assets, game_state, ui):
 
         self.game_state = game_state
         
         self.assets = assets
         
         self.soundHelper = soundHelper
+        self.ui = ui
         
         self.chests = []
-        self.keycards = Keycard.Keycards()
+        self.keycards = Keycard.Keycards(self.ui)
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
@@ -45,7 +46,7 @@ class Logic():
         self.doors = Door.Door_Container(self.map)
 
         self.walls = self.translate_collision_objects(self.collision_objects)
-        self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots)
+        self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots, self.ui)
         self.enemies = []
 
         for enemy_waypoint in self.enemy_waypoints:
@@ -81,13 +82,13 @@ class Logic():
         for enemy in self.enemies:
             enemy.update(self.walls)
             if self.game_state.is_over():
-                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],1)    
+                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],0)    
         for mouse in self.mice:
             mouse.update()
         self.donut.snap_trap()
         if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
             print("victory")
-            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],1) 
+            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
             self.game_state.set_game_state("victory")
         pass
                     

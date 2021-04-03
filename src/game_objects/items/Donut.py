@@ -22,7 +22,7 @@ class Donut(Item.Item):
             for guard in self.logic.enemies:
                 for trap in self.placed_traps:
                     if pygame.Rect.colliderect(trap, guard.hitbox):
-                        self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["donut_pickup"],1)
+                        self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["donut_pickup"],0)
                         guard.is_moving = False
                         threading.Timer(self.duration, lambda guard = guard: self.digest(guard)).start()  
                         self.placed_traps.remove(trap)
