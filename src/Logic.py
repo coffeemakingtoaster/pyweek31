@@ -27,19 +27,15 @@ class Logic():
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
         
+        # trigger data
         self.enemy_waypoints = []
-
-
         self.map = game_map
         self.collision_objects = []
-        
+        self.hiding_spots = []
+
         # get all map trigger points
         self.get_map_trigger()
 
-
-        self.hiding_spots = []
-        self.add_hiding_spots()
-        
         self.doors = Door.Door_Container(self.map)
 
         self.walls = self.translate_collision_objects(self.collision_objects)
@@ -77,24 +73,7 @@ class Logic():
             mouse.update()
 
         pass
-
-    
-            
-    def add_hiding_spots(self):
-        #print("checking for hiding spots")
-        for layer in self.map.visible_layers:
-            if isinstance(layer, pytmx.TiledObjectGroup):
-                # access collision object
-                for collision_object in layer:
-                    properties = collision_object.__dict__
-                    if properties["name"] == "'hiding spot'":
-                        x = properties['x'] * (config.TILE_SIZE/16)
-                        y = properties['y'] * (config.TILE_SIZE/16)
-                        width = properties['width'] * (config.TILE_SIZE/16)
-                        height = properties['height'] * (config.TILE_SIZE/16)
-                        spot = pygame.Rect(x, y, width, height)
-                        self.hiding_spots.append(spot)
-
+                    
     def get_map_trigger(self):
         #print("checking for map triggers")
         for layer in self.map.visible_layers:
@@ -125,6 +104,13 @@ class Logic():
                             'spawn_point': enemy_spawn_point,
                             'waypoints': enemy_waypoints
                         })
+                    elif properties["name"] == "'hiding_spot'":
+                        x = properties['x'] * (config.TILE_SIZE/16)
+                        y = properties['y'] * (config.TILE_SIZE/16)
+                        width = properties['width'] * (config.TILE_SIZE/16)
+                        height = properties['height'] * (config.TILE_SIZE/16)
+                        spot = pygame.Rect(x, y, width, height)
+                        self.hiding_spots.append(spot)
                         
 
     def refresh_walls(self):
