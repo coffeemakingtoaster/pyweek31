@@ -4,6 +4,7 @@
 # pause
 # cutscene
 # quit
+# over
 
 class GameStateManager(): 
     def __init__(self):
@@ -17,3 +18,6 @@ class GameStateManager():
 
     def is_cutscene(self):
         return self.game_state == "cutscene"
+    
+    def is_over(self):
+        return self.game_state == "over"

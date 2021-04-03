@@ -74,7 +74,6 @@ class Logic():
             enemy.update(self.walls)       
         for mouse in self.mice:
             mouse.update()
-
         pass
 
     

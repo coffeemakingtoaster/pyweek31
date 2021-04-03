@@ -19,6 +19,7 @@ PLAYER_MOVE_DOWN = pygame.K_DOWN
 PLAYER_MOVE_LEFT = pygame.K_LEFT
 PLAYER_MOVE_RIGHT = pygame.K_RIGHT
 PLAYER_INTERACT = pygame.K_e
+PLAYER_RESET = pygame.K_r
 
 
 HOTKEY_1 = pygame.K_1

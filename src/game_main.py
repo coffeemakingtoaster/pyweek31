@@ -22,6 +22,7 @@ from . import config
 def hallo_welt():
     print("Hello World! This is a test print! We should remove this!")
 
+
 def launch_game():
     pygame.mixer.pre_init(frequency=44100,size=-16,channels=2, buffer=2048)
     pygame.init()
@@ -88,6 +89,13 @@ def launch_game():
         ])
     
     while running:
+        if game_state.is_over():
+            logic = Logic.Logic(gameMap)
+            render = Render.Render(logic, assets, gameMap, ui, game_state)
+            ticks_while_game_state_is_play_after_tick_start = 0 #longest variable in game heheh
+            ticks_of_last_frame = 0
+            start_ticks = True # Set this to true and the ticker will start heheheheh (can be set later e.g.: when the player does his first move)
+            game_state.set_game_state('cutscene')
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_state.set_game_state('quit')
@@ -132,10 +140,13 @@ def launch_game():
         clock.tick(60)
 
         pygame.display.flip()
-
+        
         if ui.menu.open:
             game_state.set_game_state('pause')
         elif ui.cut_scene.is_active:
             game_state.set_game_state('cut_scene')
         else:
             game_state.set_game_state('play')
+            
+        if pygame.key.get_pressed()[config.PLAYER_RESET] == True:
+            game_state.set_game_state('over')
