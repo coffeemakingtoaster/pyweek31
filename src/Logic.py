@@ -83,7 +83,6 @@ class Logic():
             mouse.update()
 
         self.donut.snap_trap()
-        self.coin.collection_handling()
         pass
                     
     def get_map_trigger(self):
