@@ -4,6 +4,7 @@ import pytmx
 import os
 import time
 import sys
+import copy
 
 #local imports
 from . import pygame_additions
@@ -62,6 +63,10 @@ def launch_game():
     logic = Logic.Logic(gameMap, soundHelper, assets, game_state, ui)
 
     render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
+    
+    #used by checkpoints
+    old_logic = None
+    old_render = None
     
     last_second_frames = 0
     
@@ -156,6 +161,7 @@ def launch_game():
         clock.tick(60)
 
         pygame.display.flip()
+               
         
         if ui.menu.open:
             game_state.set_game_state('pause')
@@ -164,6 +170,12 @@ def launch_game():
         elif not game_state.is_over() and not game_state.is_victory():
             game_state.set_game_state('play')
 
-            
+
+        
         if pygame.key.get_pressed()[config.PLAYER_RESET] == True:
-            game_state.set_game_state('reset')
+                if logic.last_checkpoint is None or game_state.is_victory() or game_state.is_over():
+                    game_state.set_game_state('reset')
+                else:
+                    logic.load_checkpoint(logic.last_checkpoint)
+            
+                
