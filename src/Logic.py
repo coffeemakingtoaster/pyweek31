@@ -88,6 +88,7 @@ class Logic():
               checkpoint.save_gamestate(self.player)
               self.last_checkpoint = checkpoint
               self.game_state.set_game_state('checkpoint')
+              self.ui.say("Checkpoint reached")
               break  
         if self.player.has_moved:
             self.soundHelper.play_sfx(self.assets["sounds"]["actor"]["footsteps"]["concrete"],1)
