@@ -60,12 +60,6 @@ class Guard(Actor.Actor):
     def update(self, walls):
         self.walls = walls
         self.move(self.goalPos, self.waypoints)
-
-        #print(len(self.waypoints), "current_waypoint: " , self.current_waypoint)
-        # for x in range(len(waypoints)- 1):
-            # if self.current_waypoint > len(waypoints):
-                # self.current_waypoint -= 1
-                
         if self.current_waypoint < 0 or self.current_waypoint > len(self.waypoints) - 1:
             self.current_waypoint = 0
         if self.is_calculation_position:
