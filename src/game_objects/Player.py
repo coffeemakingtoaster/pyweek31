@@ -35,10 +35,10 @@ class Player(Actor.Actor):
         self.keypress_time = 0
         self.keypress_wait = 200
         
-        self.inventory["coffee"] = 9999999
-        self.inventory["jammer"] = 9999999
-        self.inventory["donut"] = 9999999
-        self.inventory["coin"] = 9999999
+        self.inventory["coffee"] = 10
+        self.inventory["jammer"] = 3
+        self.inventory["donut"] = 7
+        self.inventory["coin"] = 4
 
         self.has_moved = False
         self.hiding_spots = hiding_spots
@@ -52,6 +52,7 @@ class Player(Actor.Actor):
             self.player_movement()
             self.player_interact()
             self.player_use_item()
+            self.logic.ui.hud.player_inventory = self.inventory
         else:
             if pygame.key.get_pressed()[PLAYER_INTERACT] == True and time.time() - self.time_since_hidden > 1:
                 self.is_hidden = False

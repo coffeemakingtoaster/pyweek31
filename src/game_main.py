@@ -55,7 +55,7 @@ def launch_game():
     #Load User Interface
     ui = Ui({
         'assets': assets,
-        'soundHelper': soundHelper
+        'soundHelper': soundHelper, 
     })
 
     #Create logic
