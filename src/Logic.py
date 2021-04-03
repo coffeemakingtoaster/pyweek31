@@ -19,7 +19,12 @@ import pygame
 
 class Logic():
 
-    def __init__(self, game_map):
+    def __init__(self, game_map, soundHelper, assets):
+        
+        self.assets = assets
+        
+        self.soundHelper = soundHelper
+        
         self.chests = []
         self.chests.append(Chest.Chest())
         self.keycards = Keycard.Keycards()
@@ -63,6 +68,8 @@ class Logic():
 
     def update(self):
         self.player.update()
+        if self.player.has_moved:
+            self.soundHelper.play_sfx(self.assets["sounds"]["actor"],1)
         if self.doors.update(self.player, self.enemies):
             self.collision_objects = []
             self.walls = []
