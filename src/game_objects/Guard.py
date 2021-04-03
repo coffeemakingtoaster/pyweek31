@@ -11,6 +11,8 @@ class Guard(Actor.Actor):
     def __init__(self,pos,walls,player,waypoints):
         super().__init__()
 
+        self.guard_speed = 5
+
         #print(pos, waypoints)
         self.pos = Point.to_our_point(pos)
         self.goalPos = Point(0, 0)
@@ -24,6 +26,7 @@ class Guard(Actor.Actor):
         self.player = player
 
         self.waypoints = []
+        self.waypoint_variance = 3
         for waypoint in waypoints:
             self.waypoints.append(Point.to_our_point(waypoint))
 
@@ -40,7 +43,7 @@ class Guard(Actor.Actor):
         self.walls = walls
         self.move( self.goalPos,self.waypoints)
         self.goalPos = self.waypoints[self.current_waypoint]
-        normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y,1)
+        normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y, self.guard_speed)
         self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
         self.pos.x += normed_move_vec.x
         self.pos.y += normed_move_vec.y
@@ -133,7 +136,7 @@ class Guard(Actor.Actor):
 
     def move(self,goalPos,waypoints):
         #print(goalPos.x, self.pos.x, goalPos.y,  self.pos.y)
-        if goalPos.x == self.pos.x and goalPos.y ==  self.pos.y:
+        if goalPos.x + self.waypoint_variance > self.pos.x > goalPos.x - self.waypoint_variance and goalPos.y + self.waypoint_variance > self.pos.y > goalPos.y - self.waypoint_variance:
             if self.current_waypoint == len(waypoints)-1:
                 self.current_waypoint = 0
                 return
