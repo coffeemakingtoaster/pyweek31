@@ -33,10 +33,10 @@ class Player(Actor.Actor):
         self.keypress_time = 0
         self.keypress_wait = 200
         
-        self.inventory["coffee"] = 1
-        self.inventory["jammer"] = 0
-        self.inventory["donut"] = 1
-        self.inventory["coin"] = 0
+        self.inventory["coffee"] = GAMESTART_COFFEE_ITEMS
+        self.inventory["jammer"] = GAMESTART_JAMMER_ITEMS
+        self.inventory["donut"] = GAMESTART_DONUT_ITEMS
+        self.inventory["coin"] = GAMESTART_COIN_ITEMS
 
         self.has_moved = False
         self.hiding_spots = hiding_spots
