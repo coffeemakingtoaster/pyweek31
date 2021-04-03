@@ -2,6 +2,7 @@
 <map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="107">
  <tileset firstgid="1" source="prison_inside.tsx"/>
  <tileset firstgid="18" source="gras.tsx"/>
+ <tileset firstgid="29" source="prison.tsx"/>
  <layer id="1" name="background" width="128" height="64">
   <data encoding="csv">
 16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,20,20,20,16,16,16,16,16,16,16,16,20,20,20,20,20,20,20,20,20,
