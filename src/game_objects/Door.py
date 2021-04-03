@@ -87,13 +87,13 @@ class Door_Container(InteractiveObject.InteractiveObject):
                 return True
             self.is_open = True       
             if self.default_rotation == 180 or self.default_rotation == 0:
-                x,y = self.hitbox.bottomleft
+                x,y = self.hitbox.topleft
                 self.hitbox.center = ((x + config.TILE_SIZE/2,y - (4*(config.TILE_SIZE/16))/2))
-                height,width = self.old_hitbox_dimensions
+                height, width = self.old_hitbox_dimensions
                 self.hitbox.width = width
                 self.hitbox.height = height 
                 self.x = self.hitbox.x
-                self.y = self.hitbox.y 
+                self.y = self.hitbox.y
             else:
                 x,y = self.hitbox.topright
                 self.hitbox.center = ((x - config.TILE_SIZE/2,y + (4*(config.TILE_SIZE/16))/2))
