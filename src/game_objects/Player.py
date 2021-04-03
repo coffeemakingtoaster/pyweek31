@@ -1,8 +1,6 @@
 import pygame
 import math
 import time
-
-
 from collections import defaultdict
 
 from ..config import *
@@ -13,11 +11,12 @@ from . import Keycard
 class Player(Actor.Actor):
     
 
-    def __init__(self,chests,collision,hiding_spots):
 
+    def __init__(self, logic, chests, collision, hiding_spots):
         super().__init__()
-        self.x = 1000    
-        self.y = 1000
+        self.logic = logic
+        self.x = logic.player_spawn_point[0]
+        self.y = logic.player_spawn_point[1]
         self.speed = PLAYER_SPEED
         self.inventory = defaultdict(lambda: 0)
         self.selected_item = None
@@ -25,8 +24,17 @@ class Player(Actor.Actor):
         self.rotation = 0
         self.coffee_start_time = 0
         self.collision = collision
-        self.player_hitbox = pygame.Rect((0,0),(50,50))
+        self.player_hitbox = pygame.Rect((0,0),(45,45))
         self.player_hitbox.center = (0,0)
+
+        self.coinmode = False
+        
+        self.keypress_time = 0
+        self.keypress_wait = 200
+        
+        self.inventory["coffee"] = 9999999
+        self.inventory["jammer"] = 9999999
+
         self.has_moved = False
         self.hiding_spots = hiding_spots
         self.is_hidden = False
@@ -82,9 +90,9 @@ class Player(Actor.Actor):
             self.has_moved = False
             return
         move_vector.scale_to_length(self.speed)
-                          
-        #print("player x:{} y:{}".format(self.x,self.y))
-        #print("hitbox x:{} y:{}".format(self.player_hitbox.x - 25 ,self.player_hitbox.y - 25))
+
+        print("player x:{} y:{}".format(self.x,self.y))
+        print("hitbox x:{} y:{}".format(self.player_hitbox.x - 25 ,self.player_hitbox.y - 25))
         
         self.player_hitbox.x += move_vector.x
         for blocker in self.collision:
@@ -109,7 +117,7 @@ class Player(Actor.Actor):
         
     def player_interact(self):
         if pygame.key.get_pressed()[PLAYER_INTERACT] == True:
-            print("checking")
+            #print("checking")
             closest_object = {"obj":None, "dist":10000, "type":None}
             for chest in self.chests:
                 delta = (self.x - chest.x)**2
@@ -144,25 +152,41 @@ class Player(Actor.Actor):
 
                 
     def player_use_item(self):
-        used_item = None
+        self.use_coffee()
+        self.use_coin()
+        self.use_donut()
+        self.use_jammer()
         
-        if  time.time() - self.coffee_start_time > ITEM_COFFEE_DURATION and self.speed==ITEM_COFFEE_SPEED:
-            self.speed = PLAYER_SPEED
-            #print("coffee has worn off")
-        if pygame.key.get_pressed()[HOTKEY_1] == True:
-            used_item = "coffee"
+    def use_coffee(self):
+        if pygame.key.get_pressed()[HOTKEY_1] == True and self.inventory["coffee"] > 0 and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
+            self.inventory["coffee"] -= 1
+            self.logic.coffee.drink()
+    
+    def use_coin(self):
+        if pygame.key.get_pressed()[HOTKEY_2] == True and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
+            if self.coinmode == False and self.inventory["coin"] > 0:
+                self.coinmode = True
+            elif self.coinmode == True:
+                self.coinmode = False
             
-        if used_item is None:
-            return
-        
-        #print(self.inventory["coffee"])
-        if used_item == "coffee" and self.inventory["coffee"]>0 and not self.speed==ITEM_COFFEE_SPEED:
-            #print(self.inventory["coffee"])
-            #print("Now using {}".format(used_item))           
-            self.inventory["coffee"] -=1
-            self.speed = ITEM_COFFEE_SPEED
-            self.coffee_start_time = time.time()        
+        if self.coinmode == True and pygame.mouse.get_pressed()[0] == True and self.inventory["coin"] > 0:
+            self.inventory["coin"] -= 1
+            print(pygame.mouse.get_pos())
+            self.logic.coin.throw(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
+            self.coinmode = False
             
+    def use_donut(self):
+        if pygame.key.get_pressed()[HOTKEY_3] == True and self.inventory["donut"] > 0:
+            pass
+            
+    def use_jammer(self):
+        if pygame.key.get_pressed()[HOTKEY_4] == True and self.inventory["jammer"] > 0 and pygame.time.get_ticks() > self.keypress_time:
+            self.keypress_time = pygame.time.get_ticks() + self.keypress_wait
+            self.inventory["jammer"] -= 1
+            self.logic.jammer.activate()
+    
     def check_collide(self,x,y):
         hitbox = self.player_hitbox
         hitbox.x = self.player_hitbox.x + x      
@@ -174,8 +198,6 @@ class Player(Actor.Actor):
             if hitbox.colliderect(blocker):
                 return True      
         return False       
-
-        
 
     #call on item pickup    
     def add_item_to_inventory(self,item):

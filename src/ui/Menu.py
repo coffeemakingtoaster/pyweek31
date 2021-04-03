@@ -77,22 +77,31 @@ class Menu():
             self.add_option("Choose Color", str(color), lambda farbe: self.set_menu_color(self.primaryColor, farbe), color)
 
         self.add_menu('Credits', 'Pause')
-        self.add_option("Credits", "A dog", lambda: self.ui.say('Wufff wuffff'))
-        self.add_option("Credits", "Git expert", lambda: self.ui.say('Schau mal mein Monitor!'))
-        self.add_option("Credits", "Graphic Designer", lambda: self.ui.say('Red line with transparent ink?'))
-        self.add_option("Credits", "ARISCH Drinking alpha", lambda: self.ui.say('Kocht auch sehr lecker und sorgt sich um das Teams'))
-        self.add_option("Credits", "Notepad++ Coder", lambda: self.ui.say('Muss mit Git expert in einem Zimmer schlafen uff'))
-        self.add_option("Credits", "Best coder of the world", lambda: self.ui.say("Codet die komplexe UI (beste am Spiel)"))
+        self.add_option("Credits", "A dog", lambda: self.ui.say('Wufff wuffff', True))
+        self.add_option("Credits", "Git expert", lambda: self.ui.say('Schau mal mein Monitor!', True))
+        self.add_option("Credits", "Graphic Designer", lambda: self.ui.say('Red line with transparent ink?', True))
+        self.add_option("Credits", "ARISCH Drinking alpha", lambda: self.ui.say('Kocht auch sehr lecker und sorgt sich um das Teams', True))
+        self.add_option("Credits", "Notepad++ Coder", lambda: self.ui.say('Muss mit Git expert in einem Zimmer schlafen uff', True))
+        self.add_option("Credits", "Best coder of the world", lambda: self.ui.say("Codet die komplexe UI (beste am Spiel)", True))
 
         self.add_menu('Developer', 'Pause')
         self.add_option("Developer", "Dev play sounds", lambda: self.set_menu("Dev Play Sounds"))
         self.add_option("Developer", "DEBUG_DRAW_COLLISION", lambda: self.setTest())
+        self.add_option("Developer", "DEV_CUT_SCENE", lambda: self.debug_cut_scene())
 
         self.add_menu('Dev Play Sounds', 'Developer')
         self.add_option("Dev Play Sounds", "Play Dog Sound", lambda: classes['soundHelper'].play_sfx(classes['assets']['sounds']['bark'], 0))
         #print(self.menu)
 
         self.ui.say('ESC to pause game')
+
+    def debug_cut_scene(self):
+        self.ui.cut_scene.createCutScene([
+            ['Message 1', {'color': (255, 0, 0)}],
+            ['Message 2', {'color': (255, 255, 255)}],
+            ['Message 3', {}],
+        ])
+
 
     def enable_audio(self):
         if self.classes['soundHelper'].music_channel.get_volume() > 0 or self.classes['soundHelper'].sfx_channel.get_volume() > 0:
@@ -111,7 +120,7 @@ class Menu():
         else:
             current_level += 0.1
         which.set_volume(current_level)
-        self.ui.say('Volume set to ' + str(which.get_volume()), True)
+        self.ui.say('Set to ' + str(which.get_volume()), True)
 
     def kill_game(self):
         pygame.quit()
@@ -180,9 +189,9 @@ class Menu():
                 self.is_waiting = True
                 self.time_when_control = pygame.time.get_ticks() + self.time_wait_open
                 self.open = True
-                self.ui.say('ARROW KEYS to navigate')
-                self.ui.say('ENTER to select an option')
-                self.ui.say('ESC to go back/close')
+                self.ui.say('ARROW KEYS to navigate', False, 300)
+                self.ui.say('ENTER to select an option', False, 300)
+                self.ui.say('ESC to go back/close', False, 300)
             elif self.open is True and (pygame.key.get_pressed()[pygame.K_UP] == True or pygame.key.get_pressed()[pygame.K_DOWN] == True or pygame.key.get_pressed()[pygame.K_RETURN] == True or pygame.key.get_pressed()[pygame.K_ESCAPE] == True):
                 self.is_waiting = True
                 self.is_controlling = True

@@ -19,3 +19,10 @@ To run the game use
 All the assets and most of the sounds are/will be made by us, yet here are external sounds we used:
 
  - currently none
+
+## Gallery
+![Game Preview](https://cdn.discordapp.com/attachments/772861417824583720/827685544992440410/unknown.png)
+![Game Preview](https://cdn.discordapp.com/attachments/772861417824583720/827685800975925248/unknown.png)
+![Game Preview](https://cdn.discordapp.com/attachments/772861417824583720/827685593826852864/unknown.png)
+![Game Preview](https://cdn.discordapp.com/attachments/772861417824583720/827690824136392734/unknown.png)
+![Game Preview](https://cdn.discordapp.com/attachments/772861417824583720/827691320964284456/unknown.png)

@@ -9,7 +9,7 @@ class Assetloader():
     
     def load_sounds(self):
         self.assets['sounds'] = {
-            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'testing', 'background_music.mp3')),
+            "background" : pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo.wav')),
             "bark" : [
                 pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'testing', 'pew_sfx.mp3')),
                 pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'testing', 'bark.mp3')),

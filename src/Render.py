@@ -20,10 +20,13 @@ class Render():
         for enemy in self.logic.enemies:
             self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies'], game_state))
         self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'], game_state)
-        self.animated_mouse = AnimationHelper.AnimatedGameObject(1200,1000,assets['textures']['mice'], game_state)
+        self.animated_eyecandy = []
+        for mouse in self.logic.mice:
+            self.animated_eyecandy.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['mice'], game_state, 10))
 
 
-    def generate_new_frame(self):
+
+    def generate_new_frame(self): 
         self.frame = pygame.Surface(config.WINDOW_DIMENSIONS)
         self.draw_map()
         self.draw_game_objects()
@@ -57,6 +60,12 @@ class Render():
 
     
     def draw_game_objects(self):
+        mouse_count = 0
+        for mouse in self.logic.mice:
+            mouse_sprite = GraphicsHelper.render_helper.rotate_image(self.animated_eyecandy[mouse_count].get_current_asset(True), mouse.rotation)
+            self.add_asset_to_screen(pygame.transform.scale(mouse_sprite,(25,25)), mouse.x, mouse.y)
+            mouse_count+=1
+        
         enemy_count = 0
         for enemy in self.logic.enemies:
             debug_string = ""
@@ -72,7 +81,9 @@ class Render():
             enemy_visual = GraphicsHelper.render_helper.rotate_image(self.enemy_animations[enemy_count].get_current_asset(True), enemy.rotation)
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
+            
             #print(debug_string)
+
         for chest in self.logic.chests:
             self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
