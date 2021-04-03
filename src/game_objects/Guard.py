@@ -154,6 +154,7 @@ class Guard(Actor.Actor):
         if self.logic.coin.x - 10 <= self.pos.x <= self.logic.coin.x + 10 and self.logic.coin.y - 10 <= self.pos.y <= self.logic.coin.y + 10:
             self.waypoints.pop(self.current_waypoint)
             self.logic.coin.is_active = False
+            self.logic.coin.is_rendered = False
             # self.current_waypoint -= 1
             print("reached coin")
             

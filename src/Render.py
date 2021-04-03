@@ -69,8 +69,8 @@ class Render():
             for donut in self.logic.donut.placed_traps:
                 self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["items"]["donut"],(25,25)), donut.x, donut.y)
         
-        if self.logic.coin.is_active:
-            self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["items"]["coin"],(25,25)), self.logic.coin.x, self.logic.coin.y)
+        if self.logic.coin.is_rendered:
+            self.add_asset_to_screen(pygame.transform.scale(self.assets["textures"]["items"]["coin"],(25,25)), self.logic.coin.x, self.logic.coin.y)            
         
         mouse_count = 0
         for mouse in self.logic.mice:
