@@ -19,7 +19,7 @@ import pygame
 
 class Logic():
 
-    def __init__(self, game_map, soundHelper, assets ,game_state):
+    def __init__(self, game_map, soundHelper, assets, game_state):
 
         self.game_state = game_state
         
@@ -55,7 +55,7 @@ class Logic():
                 'type': enemy_waypoint['type'],
                 'speed': enemy_waypoint['speed'],
                 'logic': self
-            },game_state))
+            }, game_state))
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
@@ -79,10 +79,10 @@ class Logic():
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
-            enemy.update(self.walls)       
+            if enemy.update(self.walls):
+                self.game_state.set_game_state('over')     
         for mouse in self.mice:
             mouse.update()
-
         self.donut.snap_trap()
         pass
                     
