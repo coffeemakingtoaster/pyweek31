@@ -59,8 +59,9 @@ class Keycards():
         elif self.collect_counter >= 3:
             if not SKIP_DIALOGS and not self.cut_scene_called:
                 self.ui.cut_scene.createCutScene([
+                    ['This was the last one.', {}],
                     ['This trip was easier than handling git!', {}],
-                    ['Who built this prison? A bunch of drunk students?!', {}],
+                    ['Who built this prison? A bunch of drunken students?!', {}],
                     ['Now I need to find the exit without being raped by aliens...', {}],
                     ['...although...heh', {}]
                 ])
