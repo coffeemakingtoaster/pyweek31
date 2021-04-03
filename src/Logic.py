@@ -19,7 +19,9 @@ import pygame
 
 class Logic():
 
-    def __init__(self, game_map, soundHelper, assets):
+    def __init__(self, game_map, soundHelper, assets ,game_state):
+
+        self.game_state = game_state
         
         self.assets = assets
         
@@ -53,7 +55,7 @@ class Logic():
                 'type': enemy_waypoint['type'],
                 'speed': enemy_waypoint['speed'],
                 'logic': self
-            }))
+            },game_state))
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)

@@ -8,7 +8,7 @@ import pygame
 
 class Guard(Actor.Actor):
 
-    def __init__(self, pos,walls,player,waypoints, props):
+    def __init__(self, pos,walls,player,waypoints, props, game_state):
         super().__init__()
 
         # verify props
@@ -52,6 +52,8 @@ class Guard(Actor.Actor):
         self.intersections = []
         
         self.ray_length = GUARD_SIGHT_LENGTH
+
+        self.game_state = game_state
 
     def update(self, walls):
         self.walls = walls
@@ -121,19 +123,20 @@ class Guard(Actor.Actor):
                     distance = self.distance(self.pos,intersection)
                     intersections.append((distance,intersection))
 
-
-        for section in player_sections:
-            if section.endPoint.x == section.startPoint.x:
-                intersection = Point(section.endPoint.x, y_axis_section + m * section.endPoint.x)
-                if section.endPoint.y > intersection.y > section.startPoint.y and min(ray.startPoint.y,ray.endPoint.y) < intersection.y < max(ray.startPoint.y,ray.endPoint.y):
-                    distance = self.distance(self.pos, intersection)
-                    intersections.append((distance, intersection))
-            if section.endPoint.y == section.startPoint.y:
-                intersection = Point((section.endPoint.y - y_axis_section) / m, section.startPoint.y)
-                if section.endPoint.x > intersection.x > section.startPoint.x and min(ray.startPoint.x,ray.endPoint.x) < intersection.x < max(ray.startPoint.x,ray.endPoint.x):
-                    distance = self.distance(self.pos, intersection)
-                    intersections.append((distance, intersection))
-
+        if not self.player.is_hidden:
+            for section in player_sections:
+                if section.endPoint.x == section.startPoint.x:
+                    intersection = Point(section.endPoint.x, y_axis_section + m * section.endPoint.x)
+                    if section.endPoint.y > intersection.y > section.startPoint.y and min(ray.startPoint.y,ray.endPoint.y) < intersection.y < max(ray.startPoint.y,ray.endPoint.y):
+                        distance = self.distance(self.pos, intersection)
+                        intersections.append((distance, intersection))
+                        self.game_state = "over"
+                if section.endPoint.y == section.startPoint.y:
+                    intersection = Point((section.endPoint.y - y_axis_section) / m, section.startPoint.y)
+                    if section.endPoint.x > intersection.x > section.startPoint.x and min(ray.startPoint.x,ray.endPoint.x) < intersection.x < max(ray.startPoint.x,ray.endPoint.x):
+                        distance = self.distance(self.pos, intersection)
+                        intersections.append((distance, intersection))
+                        self.game_state = "over"
 
 
 

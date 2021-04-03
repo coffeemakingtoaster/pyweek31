@@ -59,7 +59,7 @@ def launch_game():
     })
 
     #Create logic
-    logic = Logic.Logic(gameMap, soundHelper, assets)
+    logic = Logic.Logic(gameMap, soundHelper, assets,game_state)
 
     render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
     
