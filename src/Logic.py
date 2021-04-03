@@ -68,11 +68,14 @@ class Logic():
         self.mice.append(Mice.Mouse())
         
         self.jammer = Jammer(self)
-        self.car = Car.Car(self.win_collide)        
-
+               
+    def update_credits(self):
+        if self.car.rect.y > 2000:
+            return
+        self.car.update()
+        
+    
     def update(self):
-        if self.game_state.is_victory():
-            self.car.update()
         self.player.update()
         if self.player.has_moved:
             self.soundHelper.play_sfx(self.assets["sounds"]["actor"]["footsteps"]["concrete"],1)
@@ -117,7 +120,7 @@ class Logic():
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         self.win_collide = pygame.Rect(x, y, width, height)
-                        # do something with win zone!!! 
+                        self.car = Car.Car(x, y, width, height) 
                     elif properties["name"] == "waypoint":
                         enemy_waypoints = []
                         enemy_spawn_point = properties["points"][0]

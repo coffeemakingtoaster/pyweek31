@@ -21,7 +21,7 @@ class Render():
         self.enemy_animations = []
         self.door_animations = []
         self.car_visual = random.choice(self.assets["textures"]["cars"])
-        self.car_visual = pygame.transform.scale(self.car_visual,(int(self.logic.car.rect.width * 3.125), int(self.logic.car.rect.height * 3.125)))
+        self.car_visual = pygame.transform.scale(self.car_visual,(int(self.logic.car.rect.width), int(self.logic.car.rect.height)))
         for enemy in self.logic.enemies:
             self.enemy_animations.append(AnimationHelper.AnimatedGameObject(enemy.pos.x,enemy.pos.y,assets['textures']['enemies'], game_state))
         self.animated_player = AnimationHelper.AnimatedGameObject(self.logic.player.x,self.logic.player.y,assets['textures']['player'], game_state)
@@ -128,7 +128,7 @@ class Render():
         
         #draw player
         
-        self.add_asset_to_screen(self.car_visual, key_x, key_y)
+        self.add_asset_to_screen(self.car_visual, self.logic.car.rect.x, self.logic.car.rect.y)
         if self.game_state.is_victory():
             return
         player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
