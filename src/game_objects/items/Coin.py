@@ -5,6 +5,7 @@ from ..helper.Point import Point
 class Coin(Item.Item):
     def __init__(self, logic):
         super().__init__('coin', logic)
+        self.logic = logic
         self.detection_radius = ITEM_COIN_DETECTION_RADIUS
         self.is_active = False
         self.x = 0
@@ -12,7 +13,7 @@ class Coin(Item.Item):
     
     def throw(self, center_x, center_y):
         # TODO: render coin on position?
-        
+        self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["coin"],1)
         for guard in self.logic.enemies:
             if self.is_in_range(guard, center_x, center_y):
                 if guard.check_vision_to_point(Point(center_x, center_y)):

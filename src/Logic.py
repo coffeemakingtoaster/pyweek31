@@ -79,14 +79,16 @@ class Logic():
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
-            if enemy.update(self.walls):
-                self.game_state.set_game_state('over')     
+            enemy.update(self.walls)
+            if self.game_state.is_over():
+                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],1)    
         for mouse in self.mice:
             mouse.update()
         self.donut.snap_trap()
-        if self.win_collide.colliderect(self.player.player_hitbox):
+        if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
+            print("victory")
+            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],1) 
             self.game_state.set_game_state("victory")
-            collide_winning_zone()
         pass
                     
     def get_map_trigger(self):
@@ -144,10 +146,7 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.chests.append(Chest.Chest(spot))
-                
-    def collide_winning_zone():
-        if win_collide.colliderect(self.player.player_hitbox):
-            print("yey")
+
 
     def refresh_walls(self):
         for layer in self.map.visible_layers:

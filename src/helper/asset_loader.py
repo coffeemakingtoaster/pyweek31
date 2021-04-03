@@ -32,12 +32,23 @@ class Assetloader():
                 }
             },
             "door" :pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'door_2.wav')),
-            "coffee": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'Schlürf.wav')),
+            "coffee": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'items', 'Schlürf.wav')),
             "atmo":  [
                 pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo.wav')),
-                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo_2.wav'))
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'GefängnisAtmo_2.wav')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'Hund.wav'))
             ],
-            "jammer":pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'PoliceCall.wav'))     
+            "victory": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'CarStart.wav')),
+            "jammer":pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'items', 'PoliceCall.wav')),
+            "coin": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'items', 'coin.wav')),
+            "caught": [
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'caught_1.wav')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'caught_2.wav'))
+            ],
+            "donut_pickup": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'items', 'donut_pickup.wav')),
+            "talk":[
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'talk_1.wav')),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'talk_2.wav'))]     
         }
     
     def load_textures(self):
