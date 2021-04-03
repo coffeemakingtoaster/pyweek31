@@ -63,7 +63,7 @@ class Logic():
                 'type': enemy_waypoint['type'],
                 'speed': enemy_waypoint['speed'],
                 'logic': self
-            }, game_state))
+            }, game_state, self.soundHelper,self.assets))
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
@@ -99,9 +99,7 @@ class Logic():
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
-            enemy.update(self.walls)
-            if self.game_state.is_over():
-                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],0)    
+            enemy.update(self.walls)             
         for mouse in self.mice:
             mouse.update()
         self.donut.snap_trap()
