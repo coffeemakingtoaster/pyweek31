@@ -1,10 +1,12 @@
 from collections import defaultdict
+from ..config import *
 
 class Hud():
 
     def __init__(self, ui, classes):
         self.ui = ui
         self.classes = classes
+        self.game_state = self.classes['game_state']
         self.primaryColor = (255,255,255)
         self.countColor = (0,0,0)
         self.player_inventory = defaultdict(lambda:0)
@@ -155,4 +157,24 @@ class Hud():
             'y': 460 - self.ui.uiHelper.fonts['h2']['font_height'],
             'color': self.countColor
         })
+
+
+        if self.game_state.is_over():
+            self.ui.uiHelper.createSprite({
+                'x': 0,
+                'y': 0,
+                'width': WINDOW_WIDHT,
+                'height': WINDOW_HEIGHT,
+                'texture' : self.classes['assets']['textures']['ui']['game_over'],
+                'render': render
+            })
+
+            self.ui.uiHelper.createText("Press R to reset to last checkpoint", {
+                'font': self.ui.uiHelper.fonts['text']['font'],
+                'render': render,
+                'x': WINDOW_WIDHT/2 - 200,
+                'y': WINDOW_HEIGHT/2 + 100,
+                'color': (255, 255, 255)
+            })
+
         
