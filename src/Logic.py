@@ -169,12 +169,6 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.chests.append(Chest.Chest(spot))
-                    elif properties["name"] == "chest":
-                        x = properties['x'] * (config.TILE_SIZE/16)
-                        y = properties['y'] * (config.TILE_SIZE/16)
-                        width = properties['width'] * (config.TILE_SIZE/16)
-                        height = properties['height'] * (config.TILE_SIZE/16)
-                        spot = pygame.Rect(x, y, width, height)
                     elif properties["name"] == "keycard_spawnpoint":
                         self.keycards_spawnpoints.append(Point(properties['x'] * (config.TILE_SIZE/16), properties['y'] * (config.TILE_SIZE/16)))
                         

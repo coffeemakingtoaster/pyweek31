@@ -104,8 +104,11 @@ class Render():
             
             #print(debug_string)
         #TODO: Display empty chests as such (coffee)
-        #for chest in self.logic.chests:
-        #    self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
+        for chest in self.logic.chests:
+            chest_visual = self.assets['textures']['chest']
+            if chest.is_empty:
+                chest_visual = self.assets['textures']['empty_chest']
+            self.add_asset_to_screen(pygame.transform.scale(chest_visual,(config.TILE_SIZE,config.TILE_SIZE)), chest.x + 25, chest.y + 25)
 
         for door in self.logic.doors.door_list:
             if door.rotation % 180 == 0:

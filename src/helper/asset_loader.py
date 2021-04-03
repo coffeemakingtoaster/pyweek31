@@ -61,6 +61,7 @@ class Assetloader():
                              "red": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'red.png')),
                              "grey": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'grey.png'))},
                 "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
+                "empty_chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'mapsprite', 'empty_bin.png')),
                 "hud" : [
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'testing', 'hud_1.png')),
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'testing', 'hud_2.png')),

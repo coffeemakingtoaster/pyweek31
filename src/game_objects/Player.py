@@ -147,7 +147,9 @@ class Player(Actor.Actor):
                 
             if closest_object["obj"] is not None:
                 if closest_object["type"] == "chest":
-                    self.add_item_to_inventory(closest_object["obj"].open())
+                    found_item = closest_object["obj"].open()
+                    if found_item:
+                        self.add_item_to_inventory(found_item)
                     # dialog stuff
                     if self.is_first_chest_interaction and not SKIP_DIALOGS:
                         self.ui.cut_scene.createCutScene([
@@ -158,7 +160,6 @@ class Player(Actor.Actor):
                         self.is_first_chest_interaction = False
                 elif closest_object["type"] == "hiding spot":
                     self.hide_player(closest_object)
-                print(self.inventory)
     
     def hide_player(self, spot):
         self.is_hidden = True   
