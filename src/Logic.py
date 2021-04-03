@@ -65,10 +65,8 @@ class Logic():
         self.player.update()
         if self.doors.update(self.player, self.enemies):
             self.collision_objects = []
-            self.add_collision_objects()
-            self.collision_objects = self.doors.add_closed_doors(self.collision_objects)
             self.walls = []
-            self.walls = self.translate_collision_objects(self.collision_objects)
+            self.refresh_walls()
         for keycard in self.keycards.container:
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
@@ -128,7 +126,19 @@ class Logic():
                         })
                         
 
-
+    def refresh_walls(self):
+        for layer in self.map.visible_layers:
+            if isinstance(layer, pytmx.TiledObjectGroup):
+                for trigger_object in layer:
+                    properties = trigger_object.__dict__
+                    if properties["name"] == "'wall'":
+                        x = properties['x'] * (config.TILE_SIZE/16)
+                        y = properties['y'] * (config.TILE_SIZE/16)
+                        width = properties['width'] * (config.TILE_SIZE/16)
+                        height = properties['height'] * (config.TILE_SIZE/16)
+                        wall = pygame.Rect(x, y, width, height)
+                        self.collision_objects.append(wall)
+        self.walls = self.translate_collision_objects(self.collision_objects)    
 
     def translate_collision_objects(self,collision_objects):
         walls_as_sections = []
