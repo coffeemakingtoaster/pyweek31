@@ -84,9 +84,9 @@ class Render():
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
             
             #print(debug_string)
-
-        for chest in self.logic.chests:
-            self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
+        #TODO: Display empty chests as such (coffee)
+        #for chest in self.logic.chests:
+        #    self.add_asset_to_screen(pygame.transform.scale(self.assets['textures']['chest'],(config.TILE_SIZE,config.TILE_SIZE)), chest.x, chest.y)
 
         for door in self.logic.doors.door_list:
             if door.rotation % 180 == 0:

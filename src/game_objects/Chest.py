@@ -5,10 +5,12 @@ from .. import config
 
 class Chest(InteractiveObject):
 
-    def __init__(self):
+    def __init__(self,rect):
         super().__init__()
-        self.x = 100
-        self.y = 100
+        self.x = rect.x
+        self.y = rect.y
+        self.height = rect.height
+        self.width = rect.width
         self.is_empty = False
         self.possible_items = ["coin","donut","coffee","jammer"]
         self.probabilities = [config.ITEM_COIN_CHANCE,config.ITEM_DONUT_CHANCE,config.ITEM_COFFEE_CHANCE,config.ITEM_JAMMER_CHANCE]
