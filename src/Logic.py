@@ -108,6 +108,8 @@ class Logic():
         if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
             print("victory")
             self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
+            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
+
             # dialog stuff
             if not config.SKIP_DIALOGS and not self.cut_scene_called:
                 self.ui.cut_scene.createCutScene([
