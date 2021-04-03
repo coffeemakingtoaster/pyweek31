@@ -7,7 +7,7 @@ class Notification():
         self.notifications = []
         self.x = 20
         self.y = WINDOW_HEIGHT - 40
-        self.is_active = False
+        self.is_active = True
 
     def pushNotification(self, text, props):
         if props['force_display'] == False:
@@ -25,7 +25,7 @@ class Notification():
     def render(self, render):
         if self.is_active is not True:
             return
-            
+
         index = 0
         for notification in self.notifications:
             if notification['time'] > 0:

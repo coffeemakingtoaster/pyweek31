@@ -34,7 +34,7 @@ def launch_game():
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS, pygame.FULLSCREEN)
     else:
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
-    gameMap = pytmx.load_pygame("data/maps/test-map.tmx")
+    gameMap = pytmx.load_pygame("data/maps/map_test_128_64.tmx")
     running = True
     #button = pygame_additions.button(40,40,100,100)
     #button.set_action(hallo_welt)
@@ -65,10 +65,27 @@ def launch_game():
     
     start_time = time.time()
 
-    ticks_while_game_state_is_play = 0
+    ticks_while_game_state_is_play_after_tick_start = 0 #longest variable in game heheh
     ticks_of_last_frame = 0
+    start_ticks = True # Set this to true and the ticker will start heheheheh (can be set later e.g.: when the player does his first move)
 
-    game_state.set_game_state('play')
+    game_state.set_game_state('cutscene')
+
+    # cut_scene.createCutScene([<message>, {'time': <time>, 'color': <color>}])
+    # <message>: text to display
+    #
+    # optional:
+    # <time>: time to wait till you can press space
+    # <color>: color of your text
+    # WARNING: props must be at least an empty object (if someone knows how to fix that: DO it! )
+
+    if(not SKIP_INTRO):
+        ui.cut_scene.createCutScene([
+            ['Ahh where I am?', { 'color': (255, 0, 0), 'time': 100}],
+            ['Where is my thomy mayonnaise?', {'color': (255, 255, 0), 'time': 900}],
+            ['Maybe the one dog ate it...', {'color': (255, 0, 255)}],
+            ['hehehehehe', {}],
+        ])
     
     while running:
         for event in pygame.event.get():
@@ -88,10 +105,11 @@ def launch_game():
             logic.update()
         next_frame = render.generate_new_frame()
         
-        if game_state.is_play():
-            ticks_while_game_state_is_play += pygame.time.get_ticks() - ticks_of_last_frame
+        if game_state.is_play() and start_ticks:
+            ticks_while_game_state_is_play_after_tick_start += pygame.time.get_ticks() - ticks_of_last_frame
         ticks_of_last_frame = pygame.time.get_ticks()
-        ui.uiHelper.createText(str(ui.uiHelper.formatTime(ticks_while_game_state_is_play)[0]) + ":" + str(ui.uiHelper.formatTime(ticks_while_game_state_is_play)[1]), {
+
+        ui.uiHelper.createText(str(ui.uiHelper.formatTime(ticks_while_game_state_is_play_after_tick_start)[0]) + ":" + str(ui.uiHelper.formatTime(ticks_while_game_state_is_play_after_tick_start)[1]), {
             'font': ui.uiHelper.fonts['text']['font'],
             'render': render,
             'x': WINDOW_WIDHT - 200,

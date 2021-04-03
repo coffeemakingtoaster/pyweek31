@@ -1,0 +1,125 @@
+
+unnamed.png
+size: 1024,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bush
+  rotate: false
+  xy: 454, 2
+  size: 128, 16
+  orig: 128, 16
+  offset: 0, 0
+  index: -1
+filled_bin
+  rotate: false
+  xy: 654, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flor_tiles
+  rotate: false
+  xy: 762, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+gras
+  rotate: false
+  xy: 276, 2
+  size: 176, 16
+  orig: 176, 16
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 636, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+grass
+  rotate: false
+  xy: 780, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+grass
+  rotate: false
+  xy: 798, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+grass_blank
+  rotate: false
+  xy: 618, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 584, 2
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+prison_inside
+  rotate: false
+  xy: 2, 2
+  size: 272, 16
+  orig: 272, 16
+  offset: 0, 0
+  index: -1
+wall1
+  rotate: false
+  xy: 672, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall2
+  rotate: false
+  xy: 834, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall3
+  rotate: false
+  xy: 690, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall4
+  rotate: false
+  xy: 708, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall5
+  rotate: false
+  xy: 726, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall6
+  rotate: false
+  xy: 744, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_horizontal
+  rotate: false
+  xy: 816, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
