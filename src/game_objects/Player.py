@@ -150,7 +150,7 @@ class Player(Actor.Actor):
                 if closest_object["type"] == "chest":
                     self.add_item_to_inventory(closest_object["obj"].open())
                     # dialog stuff
-                    if self.is_first_chest_interaction:
+                    if self.is_first_chest_interaction and not SKIP_DIALOGS:
                         self.ui.cut_scene.createCutScene([
                             ['Man I wish this was a thomy mayonnaise.', {}],
                             ['Day would be saved.', {}],
