@@ -14,5 +14,4 @@ class Coffee(Item.Item):
         print(self.logic.player.speed)
         
     def digest(self):
-        print("Coffee is digested") 
         self.logic.player.speed = self.logic.player.speed / self.speed_boost

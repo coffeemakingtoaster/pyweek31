@@ -44,9 +44,7 @@ class Logic():
 
         for enemy_waypoint in self.enemy_waypoints:
             #print(enemy_waypoint)
-            self.enemies.append(Guard.Guard(enemy_waypoint['spawn_point'], self.walls, self.player, enemy_waypoint['waypoints']))
-
-        
+            self.enemies.append(Guard.Guard(self, enemy_waypoint['spawn_point'], self.walls, self.player, enemy_waypoint['waypoints']))        
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
@@ -71,6 +69,9 @@ class Logic():
             enemy.update(self.walls)       
         for mouse in self.mice:
             mouse.update()
+
+        self.donut.snap_trap()
+        self.coin.collection_handling()
         pass
                     
     def get_map_trigger(self):

@@ -8,7 +8,7 @@ import pygame
 
 class Guard(Actor.Actor):
 
-    def __init__(self,pos,walls,player,waypoints):
+    def __init__(self, logic, pos, walls, player, waypoints):
         super().__init__()
 
         self.guard_speed = 5
@@ -17,9 +17,9 @@ class Guard(Actor.Actor):
         self.pos = Point.to_our_point(pos)
         self.goalPos = Point(0, 0)
 
-        # TODO: add to movement
-        self.hitbox = pygame.Rect((0,0),(50,50))
+        self.hitbox = pygame.Rect(self.pos.x, self.pos.y, 50, 50)
 
+        self.logic = logic
         self.goalPos = waypoints[0]
         self.goalPosVector = Point(0,0)
         self.walls = walls
@@ -29,25 +29,32 @@ class Guard(Actor.Actor):
         self.waypoint_variance = 3
         for waypoint in waypoints:
             self.waypoints.append(Point.to_our_point(waypoint))
+        #print(self.waypoints)
+        
+        self.original_waypoints = self.waypoints
 
         self.current_waypoint = 0
-
+        self.is_moving = True
+        self.off_patrol_position = Point(-1, -1)
+        self.former_current_waypoint = self.current_waypoint
 
         self.rotation = 0
         self.intersections = []
         
         self.ray_length = GUARD_SIGHT_LENGTH
 
-
     def update(self, walls):
         self.walls = walls
-        self.move( self.goalPos,self.waypoints)
+        self.move(self.goalPos, self.waypoints)
+        print(self.waypoints, " crrent_waypoint: " ,self.current_waypoint)
         self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y, self.guard_speed)
         self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
-        self.pos.x += normed_move_vec.x
-        self.pos.y += normed_move_vec.y
-
+        if self.is_moving == True:
+            self.pos.x += normed_move_vec.x
+            self.pos.y += normed_move_vec.y
+            self.hitbox.x += normed_move_vec.x
+            self.hitbox.y += normed_move_vec.y
 
         #rad_rot = self.angle_to_rad(self.rotation)
         #self.goalPosVector = Point(-math.sin(rad_rot),-math.cos(rad_rot))
@@ -126,21 +133,33 @@ class Guard(Actor.Actor):
             correct_intersection = intersections[0]
             return Point(correct_intersection[1].x,correct_intersection[1].y)
 
-
-
-
-
-
-
-
+    def check_vision(self):
+        return True
 
     def move(self,goalPos,waypoints):
-        #print(goalPos.x, self.pos.x, goalPos.y,  self.pos.y)
-        if goalPos.x + self.waypoint_variance > self.pos.x > goalPos.x - self.waypoint_variance and goalPos.y + self.waypoint_variance > self.pos.y > goalPos.y - self.waypoint_variance:
-            if self.current_waypoint == len(waypoints)-1:
-                self.current_waypoint = 0
-                return
-            self.current_waypoint += 1
+            if self.logic.coin.x - 10 <= self.pos.x <= self.logic.coin.x + 10 and self.logic.coin.y - 10 <= self.pos.y <= self.logic.coin.y + 10:
+                self.waypoints.pop(self.current_waypoint)
+                self.logic.coin.is_active = False
+                # self.current_waypoint -= 1
+                print("reached coin")
+                
+            if self.logic.coin.is_active == False and self.off_patrol_position.x - 10 <= self.pos.x <= self.off_patrol_position.x + 10 and self.off_patrol_position.y - 10 <= self.pos.y <= self.off_patrol_position.y + 10:
+                print(self.waypoints)
+                self.waypoints.pop(self.current_waypoint)
+                # print(self.waypoints)
+                self.waypoints = self.original_waypoints
+                self.off_patrol_position = Point(-1, -1)
+                self.current_waypoint = self.former_current_waypoint
+                print("reached off patrol point")
+                
+            if goalPos.x == self.pos.x and goalPos.y ==  self.pos.y:
+                # self.current_waypoint += 1
+                if self.current_waypoint >= len(waypoints)-1:
+                    self.current_waypoint = 0
+                else:
+                    self.current_waypoint += 1
+                
+            # self.current_waypoint += 1
             #print(self.current_waypoint)
 
 
