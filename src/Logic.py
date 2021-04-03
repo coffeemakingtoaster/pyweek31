@@ -41,7 +41,7 @@ class Logic():
         self.map = game_map
         self.collision_objects = []
         self.hiding_spots = []
-        self.mice_areas = []
+        self.mice = []
         self.keycards_spawnpoints = []
         # MAX:
         # self.keycards_spawnpoints[0].x and self.keycards_spawnpoints[0].y
@@ -67,12 +67,7 @@ class Logic():
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
-        self.donut = Donut(self)        
-
-        self.mice = []
-        self.mice.append(Mice.Mouse())
-        self.mice.append(Mice.Mouse())
-        
+        self.donut = Donut(self)                
         self.jammer = Jammer(self)
                
     def update_credits(self):
@@ -167,14 +162,17 @@ class Logic():
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.chests.append(Chest.Chest(spot))
-                    elif properties["name"] == "chest":
+                    elif properties["name"] == "mouse":
                         x = properties['x'] * (config.TILE_SIZE/16)
                         y = properties['y'] * (config.TILE_SIZE/16)
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
+                        self.mice.append(Mice.Mouse(spot))
+
                     elif properties["name"] == "keycard_spawnpoint":
                         self.keycards_spawnpoints.append(Point(properties['x'] * (config.TILE_SIZE/16), properties['y'] * (config.TILE_SIZE/16)))
+                        
 
 
     def refresh_walls(self):
