@@ -26,6 +26,7 @@ class Player(Actor.Actor):
         self.collision = collision
         self.player_hitbox = pygame.Rect((0,0),(45,45))
         self.player_hitbox.center = (0,0)
+        self.time_since_hidden = 0
 
         self.coinmode = False
         
@@ -46,8 +47,9 @@ class Player(Actor.Actor):
             self.player_interact()
             self.player_use_item()
         else:
-            if pygame.key.get_pressed()[PLAYER_INTERACT] == True:
+            if pygame.key.get_pressed()[PLAYER_INTERACT] == True and time.time() - self.time_since_hidden > 1:
                 self.is_hidden = False
+                self.time_since_hidden = time.time()
         
     def player_movement(self):
         self.has_moved = True
@@ -131,7 +133,8 @@ class Player(Actor.Actor):
                             closest_object["dist"] = delta
                             closest_object["type"] = "chest"
             for spot in self.hiding_spots:
-                if self.player_hitbox.colliderect(spot):
+                if self.player_hitbox.colliderect(spot) and time.time() - self.time_since_hidden > 0.5:
+                    self.time_since_hidden = time.time()
                     closest_object["obj"] = spot
                     closest_object["dist"] = None
                     closest_object["type"] = "hiding spot"
@@ -146,8 +149,8 @@ class Player(Actor.Actor):
     
     def hide_player(self, spot):
         self.is_hidden = True   
-        self.x = spot["obj"].centerx + 25
-        self.y = spot["obj"].centery + 25
+        self.x = spot["obj"].centerx 
+        self.y = spot["obj"].centery 
         self.player_hitbox.center = (self.x, self.y)
 
                 
