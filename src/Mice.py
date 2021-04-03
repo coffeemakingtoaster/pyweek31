@@ -1,51 +1,38 @@
 import random
 import pygame
 
-class Mice():
-
+class Mouse():
     def __init__(self):
-        self.pos_x = 0
-        self.pos_y = 0
-        self.speed = 100
-        self.moving = False
-        self.destination_x = 0
-        self.destination_y = 0
-
-    moving_areas = [{"x": (986, 1466), "y":(543, 663)}, {"x":(376, 1715), "y":(1373, 1472)}, {"x":(378, 476), "y":(1579, 2273)}, {"x":(3030, 3511), "y":(1932, 2073)}, {"x":(4291, 6021), "y":(2173, 2223)}]
-    mice_start_surface = pygame.image.load('data/assets/mapsprite/mouse1.png')
-    mice_moved_surface = pygame.image.load('data/assets/mapsprite/mouse2.png')
-
-    def create(self, mouse):
-        mouse = []
-        for i in range(3):
-            index = random.choice(self.moving_areas)
-            x1, x2 = index["x"]
-            self.pos_x = random.randrange(x1,x2)
-            y1, y2 = index["y"]
-            self.pos_y = random.randrange(y1,y2)
-            self.destination_x = random.randrange(x1,x2)
-            self.destination_y = random.randrange(y1,y2)
-            mouse[i].append({"x": self.pos_x, "y": self.pos_y, "dest_x": self.destination_x, "dest_y": self.destination_y})
-            return mouse
-
-    def moving_animation(self):
-        pass
-
-    def update(self, pos_x, pos_y, destination_x, destination_y):
-        if not self.moving:
-            self.moving = True
-            print("Mouse", self.pos_x, self.pos_y, self.destination_x, self.destination_y)
-            if self.pos_x != self.destination_x or self.pos_y != self.destination_y:
-                if self.pos_x == self.destination_x:
-                        self.pos_y += self.speed
-                if self.pos_x != self.destination_x:
-                    if self.pos_y == self.destination_y:
-                        self.pos_x += self.speed
-                    elif self.pos_y != self.destination_y:
-                        self.pos_x += self.speed
-                        self.pos_y += self.speed
-            self.moving = False
-            print("Mouse", self.pos_x, self.pos_y, self.destination_x, self.destination_y)
+        self.moving_areas = [{"x": (986, 1466), "y":(543, 663)}, {"x":(376, 1715), "y":(1373, 1472)}, {"x":(378, 476), "y":(1579, 2273)}, {"x":(3030, 3511), "y":(1932, 2073)}, {"x":(4291, 6021), "y":(2173, 2223)},{"x": (1000, 1000), "y":(1000, 1500)}]
+        self.area_index = random.randint(0,len(self.moving_areas)-1)
+        target = self.moving_areas[self.area_index]      
+        x1,x2 = target["x"]
+        y1,y2 = target["y"]
+        self.target = (x2,y2)
+        self.start = (x1,y1)
+        self.x = x1
+        self.y = y1
+        self.speed = 2
+        self.rotation = 0
+    
+    def calculate_new_waypoint(self):
+        x_boundry1, x_boundry2 = self.moving_areas[self.area_index]["x"]
+        y_boundry1, y_boundry2 = self.moving_areas[self.area_index]["y"]
+        self.target = (random.randint(x_boundry1,x_boundry2),random.randint(y_boundry1,y_boundry2))
+        
+     
+    def update(self):
+        x,y = self.target
+        move_vector = pygame.Vector2(x-self.x,y-self.y)
+        self.rotation = move_vector.angle_to(pygame.Vector2(0,1))
+        if move_vector.length() <= self.speed:
+            self.x = x
+            self.y = y
+            self.calculate_new_waypoint()
+        else:
+            move_vector.scale_to_length(self.speed)
+            self.x += move_vector.x
+            self.y += move_vector.y
 
 
 

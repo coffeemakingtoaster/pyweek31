@@ -17,8 +17,6 @@ import pygame
 
 class Logic():
 
-    mouse = Mice.Mice()
-
     def __init__(self, game_map):
         self.chests = []
         self.chests.append(Chest.Chest())
@@ -42,16 +40,26 @@ class Logic():
         self.enemies.append(Guard.Guard(Point(1000,900),self.walls,self.player))
         self.enemies.append(Guard.Guard(Point(1000,800),self.walls,self.player))
         self.enemies.append(Guard.Guard(Point(1000,700),self.walls,self.player))
+        
+        
+        self.mice = []
+        self.mice.append(Mice.Mouse())
+        self.mice.append(Mice.Mouse())
+        self.mice.append(Mice.Mouse())
+        self.mice.append(Mice.Mouse())
+        self.mice.append(Mice.Mouse())
+        self.mice.append(Mice.Mouse())
+        self.mice.append(Mice.Mouse())
+        
 
     def update(self):
         self.player.update()
-        mice = self.mouse.create()
         for keycard in self.keycards.container:
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
             enemy.update()
-        for mouse in mice:
+        for mouse in self.mice:
             mouse.update()
         pass
 
