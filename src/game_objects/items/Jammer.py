@@ -9,6 +9,7 @@ class Jammer(Item.Item):
     
     def activate(self):
         self.logic.soundHelper.play_tickless_sfx(self.logic.assets["sounds"]["jammer"], 0)
+        print('Jammer activated. Guards have halfed vision.')
         x = self.logic.player.x
         y = self.logic.player.y
         for guard in self.logic.enemies:
@@ -16,5 +17,6 @@ class Jammer(Item.Item):
         threading.Timer(self.duration, self.reset).start()
           
     def reset(self):
+        print('Jammer deactivated.')
         for guard in self.logic.enemies:
             guard.ray_length = GUARD_SIGHT_LENGTH

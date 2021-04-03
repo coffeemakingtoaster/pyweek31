@@ -102,7 +102,6 @@ class Render():
             enemy_visual = pygame.transform.scale(enemy_visual,(config.TILE_SIZE,config.TILE_SIZE)) 
             self.add_asset_to_screen(enemy_visual, enemy.pos.x , enemy.pos.y)
             
-            #print(debug_string)
         #TODO: Display empty chests as such (coffee)
         for chest in self.logic.chests:
             chest_visual = self.assets['textures']['chest']
