@@ -9,9 +9,12 @@ import time, threading
 
 class Guard(Actor.Actor):
 
-    def __init__(self, pos, walls, player, waypoints, props, game_state):
+    def __init__(self, pos, walls, player, waypoints, props, game_state, soundHelper, assets):
         super().__init__()
 
+        self.assets = assets
+        self.soundHelper = soundHelper
+        
         # verify props
         if props['speed'] == "default":
             props['speed'] = 2
@@ -65,7 +68,7 @@ class Guard(Actor.Actor):
         if self.is_calculation_position:
             self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y, self.guard_speed)
-        if self.is_moving:
+        if self.is_calculation_position:
             self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
         
         # blocks player for donut item
@@ -152,7 +155,8 @@ class Guard(Actor.Actor):
         for tuple in intersections:
             correct_intersection = intersections[0]
             if correct_intersection[2] == "player":
-                self.game_state.set_game_state("over")
+                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],0) 
+                self.game_state.set_game_state('over')
             return Point(correct_intersection[1].x,correct_intersection[1].y)
 
     def check_vision(self):

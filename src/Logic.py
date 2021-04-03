@@ -12,11 +12,13 @@ from .game_objects.items.Jammer import Jammer
 from .game_objects import Keycard
 from .game_objects import Mice
 from .game_objects import Car
+from .game_objects import Checkpoints
 
 from . import config
 
 import pytmx
 import pygame
+import copy
 
 class Logic():
 
@@ -30,13 +32,14 @@ class Logic():
         self.soundHelper = soundHelper
         self.ui = ui
         
-        self.chests = []
+        self.last_checkpoint = None
        
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
         
         # trigger data
+        self.chests = []
         self.enemy_waypoints = []
         self.map = game_map
         self.collision_objects = []
@@ -46,7 +49,6 @@ class Logic():
         self.checkpoints = []
         self.get_map_trigger()
 
-        #print("self.checkpoints", self.checkpoints)
 
         self.doors = Door.Door_Container(self.map)
 
@@ -61,7 +63,7 @@ class Logic():
                 'type': enemy_waypoint['type'],
                 'speed': enemy_waypoint['speed'],
                 'logic': self
-            }, game_state))
+            }, game_state, self.soundHelper,self.assets))
 
         self.coffee = Coffee(self)
         self.coin = Coin(self)
@@ -75,9 +77,18 @@ class Logic():
             return
         self.car.update()
         
+    def load_checkpoint(self,checkpoint):
+        self.player.x, self.player.y = checkpoint.player_pos
+        
     
     def update(self):
         self.player.update()
+        for checkpoint in self.checkpoints:
+            if checkpoint.hitbox.colliderect(self.player.player_hitbox) and not checkpoint.used:
+              checkpoint.save_gamestate(self.player)
+              self.last_checkpoint = checkpoint
+              self.game_state.set_game_state('checkpoint')
+              break  
         if self.player.has_moved:
             self.soundHelper.play_sfx(self.assets["sounds"]["actor"]["footsteps"]["concrete"],1)
         if self.doors.update(self.player, self.enemies):
@@ -88,15 +99,15 @@ class Logic():
             keycard_rect = keycard["rect"]
             self.keycards.keycard_player_collision(self.player.player_hitbox)
         for enemy in self.enemies:
-            enemy.update(self.walls)
-            if self.game_state.is_over():
-                self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["caught"],0)    
+            enemy.update(self.walls)             
         for mouse in self.mice:
             mouse.update()
         self.donut.snap_trap()
         if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
             print("victory")
-            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
+            #self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
+            self.soundHelper.play_win_music(self.assets["sounds"]["victory_music"]) 
+
             # dialog stuff
             if not config.SKIP_DIALOGS and not self.cut_scene_called:
                 self.ui.cut_scene.createCutScene([
@@ -175,7 +186,7 @@ class Logic():
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
-                        self.checkpoints.append(spot)
+                        self.checkpoints.append(Checkpoints.Checkpoint(self,spot))
                     elif properties["name"] == "keycard_spawnpoint":
                         self.keycards_spawnpoints.append(Point(properties['x'] * (config.TILE_SIZE/16), properties['y'] * (config.TILE_SIZE/16)))
                         
