@@ -84,6 +84,9 @@ class Logic():
         for mouse in self.mice:
             mouse.update()
         self.donut.snap_trap()
+        if self.win_collide.colliderect(self.player.player_hitbox):
+            self.game_state.set_game_state("victory")
+            collide_winning_zone()
         pass
                     
     def get_map_trigger(self):
@@ -106,9 +109,7 @@ class Logic():
                         y = properties['y'] * (config.TILE_SIZE/16)
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
-                        win_collide = pygame.Rect(x, y, width, height)
-                        if win_collide.colliderect(self.player.player_hitbox):
-                            collide_winning_zone()
+                        self.win_collide = pygame.Rect(x, y, width, height)
                         # do something with win zone!!! 
                     elif properties["name"] == "waypoint":
                         enemy_waypoints = []
