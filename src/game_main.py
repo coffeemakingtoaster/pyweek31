@@ -50,6 +50,7 @@ def launch_game():
     #Play background music
     soundHelper.play_music(assets['sounds']['background'], -1)
 
+    time_since_last_atmo = 0
     
     #Load User Interface
     ui = Ui({
@@ -58,9 +59,9 @@ def launch_game():
     })
 
     #Create logic
-    logic = Logic.Logic(gameMap)
+    logic = Logic.Logic(gameMap, soundHelper, assets)
 
-    render = Render.Render(logic, assets, gameMap, ui, game_state)
+    render = Render.Render(logic, assets, gameMap, ui, game_state, soundHelper)
     
     last_second_frames = 0
     
@@ -96,6 +97,10 @@ def launch_game():
             ticks_of_last_frame = 0
             start_ticks = True # Set this to true and the ticker will start heheheheh (can be set later e.g.: when the player does his first move)
             game_state.set_game_state('cutscene')
+        
+        if time.time() - time_since_last_atmo > 40:
+            soundHelper.play_atmo_sound(assets["sounds"]["atmo"])
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_state.set_game_state('quit')

@@ -7,7 +7,8 @@ import math
 
 class Render(): 
 
-    def __init__(self, logic, assets, gameMap, ui, game_state):
+    def __init__(self, logic, assets, gameMap, ui, game_state, soundHelper):
+        self.soundHelper = soundHelper
         self.logic = logic
         self.assets = assets
         self.map = gameMap
@@ -93,7 +94,8 @@ class Render():
             else:
                 kind = "door_rot"
             if door.is_changing:
-                door_visual = self.assets['textures']["doors"][kind][1]     
+                door_visual = self.assets['textures']["doors"][kind][1]
+                self.soundHelper.play_sfx(self.assets["sounds"]["door"],1)     
             else:
                 door_visual = self.assets['textures']["doors"][kind][0]
             if door.is_open and not door.is_changing:
