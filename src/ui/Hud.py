@@ -8,6 +8,8 @@ class Hud():
         self.primaryColor = (255,255,255)
         self.countColor = (0,0,0)
         self.player_inventory = defaultdict(lambda:0)
+        self.player_keycards = []
+        self.avaible_keycards = ["green","red","blue"]
 
 
     def update(self):
@@ -19,12 +21,32 @@ class Hud():
         if self.ui.menu.open or self.ui.cut_scene.is_active:
             return
 
+        card_index = 0
+        for color in self.avaible_keycards:
+            if color in self.player_keycards:
+                card_visual = self.classes['assets']['textures']['keycards'][color]
+            else:
+                card_visual = self.classes['assets']['textures']['keycards']["grey"]
+            self.ui.uiHelper.createSprite({
+                'x': 680,
+                'y': 100 + card_index*35,
+                'width': 15,
+                'height': 15,
+                'texture' : card_visual,
+                'render': render
+            })
+            card_index+=1
+            
+        if self.player_inventory["coffee"] == 0:
+            coffee_visual = self.classes['assets']['textures']['empty_items']['coffee']
+        else:
+           coffee_visual = self.classes['assets']['textures']['items']['coffee']
         self.ui.uiHelper.createSprite({
             'x': 206,
             'y': 395,
             'width': 50,
             'height': 50,
-            'texture' : self.classes['assets']['textures']['items']['coffee'],
+            'texture' : coffee_visual,
             'render': render
         })
         
@@ -45,12 +67,16 @@ class Hud():
             'color': self.countColor
         })
 
+        if self.player_inventory["coin"] == 0:
+            coin_visual = self.classes['assets']['textures']['empty_items']['coin']
+        else:
+           coin_visual = self.classes['assets']['textures']['items']['coin']
         self.ui.uiHelper.createSprite({
             'x': 293,
             'y': 395,
             'width': 50,
             'height': 50,
-            'texture' : self.classes['assets']['textures']['items']['coin'],
+            'texture' : coin_visual,
             'render': render
         })
         
@@ -70,12 +96,17 @@ class Hud():
             'color': self.countColor
         })
 
+        if self.player_inventory["donut"] == 0:
+            donut_visual = self.classes['assets']['textures']['empty_items']['donut']
+        else:
+           donut_visual = self.classes['assets']['textures']['items']['donut']
+        
         self.ui.uiHelper.createSprite({
             'x': 379,
             'y': 395,
             'width': 50,
             'height': 50,
-            'texture' : self.classes['assets']['textures']['items']['donut'],
+            'texture' : donut_visual,
             'render': render
         })
         
@@ -95,12 +126,17 @@ class Hud():
             'color': self.countColor
         })
 
+        if self.player_inventory["jammer"] == 0:
+            jammer_visual = self.classes['assets']['textures']['empty_items']['jammer']
+        else:
+           jammer_visual = self.classes['assets']['textures']['items']['jammer']
+        
         self.ui.uiHelper.createSprite({
             'x': 466,
             'y': 395,
             'width': 50,
             'height': 50,
-            'texture' : self.classes['assets']['textures']['items']['jammer'],
+            'texture' : jammer_visual,
             'render': render
         })
         

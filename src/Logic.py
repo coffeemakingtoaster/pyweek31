@@ -31,7 +31,7 @@ class Logic():
         self.ui = ui
         
         self.chests = []
-        self.keycards = Keycard.Keycards(self.ui)
+       
         
         # this is moved here because it gets parsed below with the get_map_trigger... This is not good. 
         self.player_spawn_point = (1000, 1000)
@@ -69,6 +69,8 @@ class Logic():
         self.coin = Coin(self)
         self.donut = Donut(self)                
         self.jammer = Jammer(self)
+        
+        self.keycards = Keycard.Keycards(self.ui,self.keycards_spawnpoints)
                
     def update_credits(self):
         if self.car.rect.y > 2000:

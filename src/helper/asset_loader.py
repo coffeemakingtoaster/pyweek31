@@ -58,7 +58,8 @@ class Assetloader():
                          pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'guard', 'guard2.png'))],
                 "keycards": {"blue": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'blue.png')),
                              "green": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'green.png')),
-                             "red": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'red.png'))},
+                             "red": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'red.png')),
+                             "grey": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'keycards', 'grey.png'))},
                 "chest" : pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'mapsprite', 'filled_bin.png')),
                 "hud" : [
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'testing', 'hud_1.png')),
@@ -85,6 +86,12 @@ class Assetloader():
                     "coin": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'coin.png')),
                     "coffee": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'coffee.png')),
                     "jammer": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'jammer.png'))
+                },
+                "empty_items":{
+                    "donut": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'donut_grey.png')),
+                    "coin": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'coin_grey.png')),
+                    "coffee": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'coffee_grey.png')),
+                    "jammer": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'items', 'jammer_grey.png'))
                 },
                 "cars":[
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'car', 'green.png')),
