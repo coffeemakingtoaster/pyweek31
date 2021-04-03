@@ -82,8 +82,8 @@ def launch_game():
 
     if(not SKIP_INTRO):
         ui.cut_scene.createCutScene([
-            ['Ahh where I am?', { 'color': (255, 0, 0), 'time': 100}],
-            ['Where is my thomy mayonnaise?', {'color': (255, 255, 0), 'time': 900}],
+            ['Ahh where I am?', { 'color': (255, 0, 0)}],
+            ['Where is my thomy mayonnaise?', {'color': (255, 255, 0)}],
             ['Maybe the one dog ate it...', {'color': (255, 0, 255)}],
             ['hehehehehe', {}],
         ])
