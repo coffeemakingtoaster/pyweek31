@@ -5,6 +5,7 @@ from ..config import *
 from pygame.math import Vector2
 import math
 import pygame
+import time, threading
 
 class Guard(Actor.Actor):
 
@@ -44,6 +45,7 @@ class Guard(Actor.Actor):
 
         self.current_waypoint = 0
         self.is_moving = True
+        self.is_calculation_position = True
         self.off_patrol_position = Point(-1, -1)
         self.former_current_waypoint = self.current_waypoint
 
@@ -58,17 +60,13 @@ class Guard(Actor.Actor):
     def update(self, walls):
         self.walls = walls
         self.move(self.goalPos, self.waypoints)
-
-        #print(len(self.waypoints), "current_waypoint: " , self.current_waypoint)
-        # for x in range(len(waypoints)- 1):
-            # if self.current_waypoint > len(waypoints):
-                # self.current_waypoint -= 1
-                
         if self.current_waypoint < 0 or self.current_waypoint > len(self.waypoints) - 1:
             self.current_waypoint = 0
-        self.goalPos = self.waypoints[self.current_waypoint]
+        if self.is_calculation_position:
+            self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y, self.guard_speed)
-        self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
+        if self.is_moving:
+            self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
         
         # blocks player for donut item
         if self.is_moving == True:
@@ -176,6 +174,11 @@ class Guard(Actor.Actor):
             if self.guard_waypoints_logic == 'circle':
                 if self.current_waypoint >= len(waypoints) - 1:
                     self.current_waypoint = 0
+                    if self.is_moving:
+                        self.is_moving = False
+                        self.is_calculation_position = False
+                        threading.Timer(GUARD_WAIT_TIME, self.unpause_movement).start()
+                        threading.Timer(GUARD_WAIT_TIME - 0.1, self.unpause_position_calculation).start()
                     return
                 self.current_waypoint += 1
             elif self.guard_waypoints_logic == 'line':
@@ -185,7 +188,18 @@ class Guard(Actor.Actor):
                     self.current_waypoint -= 1
                 else:
                     self.current_waypoint += 1
+                if self.is_moving:
+                    self.is_moving = False
+                    self.is_calculation_position = False
+                    threading.Timer(GUARD_WAIT_TIME, self.unpause_movement).start()
+                    threading.Timer(GUARD_WAIT_TIME - 0.1, self.unpause_position_calculation).start()
             #print("self.current_waypoint", self.current_waypoint, "self.guard_waypoints_logic", self.guard_waypoints_logic)
+    
+    def unpause_movement(self):
+        self.is_moving = True
+        
+    def unpause_position_calculation(self):
+        self.is_calculation_position = True
 
     def distance(self,a,b):
         return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)

@@ -49,6 +49,7 @@ class Logic():
         self.checkpoints = []
         self.get_map_trigger()
 
+
         self.doors = Door.Door_Container(self.map)
 
         self.walls = self.translate_collision_objects(self.collision_objects)
