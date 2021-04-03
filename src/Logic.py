@@ -126,14 +126,20 @@ class Logic():
                             'type': properties["type"],
                             'speed': properties["properties"]["'speed'"]
                         })
-                    elif properties["name"] == "'hiding_spot'":
+                    elif properties["name"] == "hiding_spot":
                         x = properties['x'] * (config.TILE_SIZE/16)
                         y = properties['y'] * (config.TILE_SIZE/16)
                         width = properties['width'] * (config.TILE_SIZE/16)
                         height = properties['height'] * (config.TILE_SIZE/16)
                         spot = pygame.Rect(x, y, width, height)
                         self.hiding_spots.append(spot)
-                        
+
+                    elif properties["name"] == "chest":
+                        x = properties['x'] * (config.TILE_SIZE/16)
+                        y = properties['y'] * (config.TILE_SIZE/16)
+                        width = properties['width'] * (config.TILE_SIZE/16)
+                        height = properties['height'] * (config.TILE_SIZE/16)
+                        spot = pygame.Rect(x, y, width, height)
 
     def refresh_walls(self):
         for layer in self.map.visible_layers:
