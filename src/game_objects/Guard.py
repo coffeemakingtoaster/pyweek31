@@ -60,7 +60,7 @@ class Guard(Actor.Actor):
         self.intersections = []
         if self.distance(self.pos,Point(self.player.x,self.player.y)) < 600:
 
-            for x in range(-40,41,20):
+            for x in range(-40,41,15):
                 self.intersections.append(self.raycast(x, self.ray_length, self.walls, player_sections))
         pass
 
@@ -160,4 +160,24 @@ class Guard(Actor.Actor):
 
     def vector_to_angle(self,x,y):
         return pygame.math.Vector2(x, y).angle_to((0, -1))
+
+    def check_vision_to_point(self,point,walls):
+
+
+        ray = Section(self.pos,point)
+        m = (ray.endPoint.y - ray.startPoint.y) / (ray.endPoint.x - ray.startPoint.x)
+        y_axis_section = ray.startPoint.y - m * ray.startPoint.x
+
+
+        for wall in walls:
+
+            if wall.endPoint.x == wall.startPoint.x:
+                intersection = Point(wall.endPoint.x, y_axis_section+m*wall.endPoint.x)
+                if wall.endPoint.y > intersection.y > wall.startPoint.y and min(ray.startPoint.y,ray.endPoint.y) < intersection.y < max(ray.startPoint.y,ray.endPoint.y):
+                    return False
+
+            if wall.endPoint.y == wall.startPoint.y:
+                intersection = Point((wall.endPoint.y-y_axis_section)/m,wall.startPoint.y)
+                if wall.endPoint.x > intersection.x > wall.startPoint.x and min(ray.startPoint.x,ray.endPoint.x) < intersection.x < max(ray.startPoint.x,ray.endPoint.x):
+                    return False
 

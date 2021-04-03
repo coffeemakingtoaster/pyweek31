@@ -47,6 +47,7 @@ class Logic():
         self.enemies = []
 
         for enemy_waypoint in self.enemy_waypoints:
+            #print(enemy_waypoint)
             self.enemies.append(Guard.Guard(enemy_waypoint['spawn_point'], self.walls, self.player, enemy_waypoint['waypoints']))
 
         
