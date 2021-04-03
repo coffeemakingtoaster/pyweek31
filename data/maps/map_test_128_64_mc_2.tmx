@@ -148,7 +148,6 @@
    <point/>
   </object>
   <object id="63" name="'win_zone'" x="1776" y="432" width="128" height="128"/>
-  <object id="64" x="1914" y="1168"/>
   <object id="98" name="hiding_spot" x="336" y="304" width="16" height="16"/>
   <object id="102" name="waypoint" type="line" x="160" y="335">
    <properties>
