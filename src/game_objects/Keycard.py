@@ -33,12 +33,9 @@ class Keycards():
     
     def keycard_player_collision(self, player_rect):
         if self.collect_counter <= 2:
-            # print(self.collect_counter)
             for keycard in self.container:
-                # print("schleife")
                 if keycard["rect"].colliderect(player_rect):
                     if keycard["collectable"] == True:
-                        # print("collided")
                         keycard["collectable"] = False
                         self.collect_counter += 1
                         self.ui.hud.player_keycards.append(keycard["color"])
@@ -52,7 +49,6 @@ class Keycards():
                                     ['Can’t remember his name tho...', {}],
                                     ['...think it was something with Y…', {}]
                                 ])                            
-                        # print(self.collect_counter)
         elif self.collect_counter >= 3:
             if not SKIP_DIALOGS and not self.cut_scene_called:
                 self.ui.cut_scene.createCutScene([

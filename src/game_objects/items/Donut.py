@@ -11,7 +11,6 @@ class Donut(Item.Item):
         self.placed_traps = []
         
     def place(self, x, y):
-        # TODO: render donut on position?
         width = 50
         height = 50
         self.placed_traps.append(pygame.Rect(x, y, width, height))
