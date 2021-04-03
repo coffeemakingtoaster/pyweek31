@@ -202,11 +202,9 @@ class Guard(Actor.Actor):
             #print("self.current_waypoint", self.current_waypoint, "self.guard_waypoints_logic", self.guard_waypoints_logic)
     
     def unpause_movement(self):
-        # print('moving again')
         self.is_moving = True
         
     def unpause_position_calculation(self):
-        # print('calc pos again')
         self.is_calculation_position = True
 
     def distance(self,a,b):
