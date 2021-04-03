@@ -144,7 +144,7 @@ class Guard(Actor.Actor):
         for tuple in intersections:
             correct_intersection = intersections[0]
             if correct_intersection[2] == "player":
-                self.game_state = "over"
+                self.game_state.set_game_state("over")
             return Point(correct_intersection[1].x,correct_intersection[1].y)
 
     def check_vision(self):
