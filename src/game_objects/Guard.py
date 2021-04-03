@@ -65,7 +65,7 @@ class Guard(Actor.Actor):
         if self.is_calculation_position:
             self.goalPos = self.waypoints[self.current_waypoint]
         normed_move_vec = self.normVector(self.goalPos.x-self.pos.x,self.goalPos.y-self.pos.y, self.guard_speed)
-        if self.is_moving:
+        if self.is_calculation_position:
             self.rotation = self.vector_to_angle(normed_move_vec.x,normed_move_vec.y)
         
         # blocks player for donut item
