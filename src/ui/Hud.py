@@ -10,6 +10,10 @@ class Hud():
 
 
     def render(self, render):
+
+        if self.ui.menu.open or self.ui.cut_scene.is_active:
+            return
+
         self.ui.uiHelper.createSprite({
             'x': 206,
             'y': 395,
