@@ -28,10 +28,10 @@ class Hud():
             else:
                 card_visual = self.classes['assets']['textures']['keycards']["grey"]
             self.ui.uiHelper.createSprite({
-                'x': 680,
-                'y': 100 + card_index*35,
-                'width': 15,
-                'height': 15,
+                'x': 650,
+                'y': 71 + card_index * 55,
+                'width': 44,
+                'height': 44,
                 'texture' : card_visual,
                 'render': render
             })
