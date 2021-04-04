@@ -13,7 +13,7 @@ class GameStateManager():
         self.game_state = "load"
 
     def set_game_state(self, game_state):
-        print(self.game_state, " is getting updated to ", game_state)            
+        #print(self.game_state, " is getting updated to ", game_state)            
         self.game_state = game_state
 
 

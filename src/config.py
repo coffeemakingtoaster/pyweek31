@@ -3,7 +3,7 @@ import pygame
 
 WINDOW_HEIGHT = 480
 WINDOW_WIDHT = 720
-FULLSCREEN = False
+FULLSCREEN = True
 
 FRAME_TIME = 20
 
@@ -64,7 +64,7 @@ DEBUG_DRAW_COLLISION = False
 
 # Cut Scenes
 SKIP_INTRO = True
-SKIP_DIALOGS = True
+SKIP_DIALOGS = False
 
 # Audio
 DEFAULT_MUSIC_VOLUME = 0.3
