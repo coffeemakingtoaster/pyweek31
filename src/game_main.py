@@ -173,7 +173,7 @@ def launch_game():
             game_state.set_game_state('play')
             
         if pygame.key.get_pressed()[config.PLAYER_RESET] == True:
-                if logic.last_checkpoint is None or game_state.is_victory():
+                if logic.last_checkpoint is None or game_state.is_victory() or game_state.is_kriha():
                     game_state.set_game_state('reset')
                 else:
                     logic.load_checkpoint(logic.last_checkpoint)
