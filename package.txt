@@ -1,0 +1,3 @@
+//this is the command to package this...saving this here for next time i start to doubt my
+//career path because of pyinstaller
+pyinstaller --noconsole --add-data 'data;data' --onefile .\run_game.py
