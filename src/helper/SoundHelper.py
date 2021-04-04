@@ -19,9 +19,16 @@ class SoundHelper():
         self.gamestate_channel = mixer.Channel(4)
         self.gamestate_channel.set_volume(DEFAULT_AUDIO_VOLUME)
 
+        self.checkpoint_channel = mixer.Channel(5)
+        self.checkpoint_channel.set_volume(DEFAULT_AUDIO_VOLUME)
+
         #Can be set to false for example in settings menu
         self.allowSFX = True
         self.allowMusic = True
+
+    def play_checkpoint(self, audio):
+        if not self.checkpoint_channel.get_busy():
+            self.checkpoint_channel.play(audio, 0)
 
     """Use this to play sfx sounds
     Args:

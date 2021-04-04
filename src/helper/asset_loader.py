@@ -33,6 +33,10 @@ class Assetloader():
                     ]
                 }
             },
+            "bush": [
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'bush_01.wav',)),
+                pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'bush_01.wav',)),
+            ],
             "door" :pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'world', 'door_2.wav')),
             "coffee": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'items', 'Schlürf.wav')),
             "atmo":  [
@@ -45,6 +49,7 @@ class Assetloader():
             "coin": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'items', 'coin.wav')),
             "caught": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'caught_1.wav')),
             "donut_pickup": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'items', 'donut_pickup.wav')),
+            "check_point_reached": pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'audio', 'sfx', 'world', 'checkpoint_reached.wav')),    
             "talk":[
                 pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'talk_1.wav')),
                 pygame.mixer.Sound(os.path.join(os.path.dirname( __file__ ), '..','..', 'data', 'assets', 'audio', 'sfx', 'actor', 'talk_2.wav'))]     
@@ -99,5 +104,5 @@ class Assetloader():
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'car', 'green.png')),
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'car', 'blue.png')),
                     pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'car', 'pink.png')) 
-                ]         
+                ],
             } 

@@ -53,7 +53,7 @@ class Logic():
         self.doors = Door.Door_Container(self.map)
 
         self.walls = self.translate_collision_objects(self.collision_objects)
-        self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots, self.ui)
+        self.player = Player.Player(self, self.chests, self.collision_objects, self.hiding_spots, self.ui, self.soundHelper, self.assets)
         self.enemies = []
 
         for enemy_waypoint in self.enemy_waypoints:
@@ -93,6 +93,7 @@ class Logic():
               checkpoint.save_gamestate(self.player)
               self.last_checkpoint = checkpoint
               self.game_state.set_game_state('checkpoint')
+              self.soundHelper.play_checkpoint(self.assets["sounds"]["check_point_reached"])
               self.ui.say("Checkpoint reached")
               break  
         if self.player.has_moved:

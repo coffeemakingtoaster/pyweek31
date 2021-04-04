@@ -1,6 +1,7 @@
 import pygame
 import math
 import time
+import random
 from collections import defaultdict
 
 from ..config import *
@@ -10,11 +11,13 @@ from ..ui.Ui import *
 
 class Player(Actor.Actor):
     
-    def __init__(self, logic, chests, collision, hiding_spots, ui):
+    def __init__(self, logic, chests, collision, hiding_spots, ui, soundHelper, assets):
         super().__init__()
         pygame.mouse.set_cursor(pygame.cursors.arrow)
         self.logic = logic
         self.ui = ui
+        self.assets = assets
+        self.soundHelper = soundHelper
         self.x = logic.player_spawn_point[0]
         self.y = logic.player_spawn_point[1]
         self.speed = PLAYER_SPEED
@@ -166,7 +169,7 @@ class Player(Actor.Actor):
         self.x = spot["obj"].centerx 
         self.y = spot["obj"].centery 
         self.player_hitbox.center = (self.x, self.y)
-
+        self.soundHelper.play_checkpoint(random.choice(self.assets["sounds"]["bush"]))
                 
     def player_use_item(self):
         self.use_coffee()
