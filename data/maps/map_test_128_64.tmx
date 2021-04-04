@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="2518">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="2520">
  <tileset firstgid="1" source="map_test_128_64.tsx"/>
  <layer id="4" name="foreground2" width="128" height="64">
   <data encoding="csv">
@@ -219,9 +219,6 @@
   </object>
   <object id="294" name="waypoint" type="line" x="1095" y="249.5">
    <polyline points="0,0 -144.5,1 -0.5,0"/>
-  </object>
-  <object id="295" name="waypoint" type="line" x="1095" y="122">
-   <polyline points="0,0 -131,-0.5 -132,202 -6,202 -6.5,179 -131,180 -131,0.5 -5,-1"/>
   </object>
   <object id="301" name="'wall'" x="1028" y="350" width="7.33333" height="18"/>
   <object id="302" name="'wall'" x="1024.25" y="164" width="79.75" height="24.25"/>
@@ -514,7 +511,7 @@
   <object id="2469" name="checkpoint" x="672" y="752.667" width="32" height="32"/>
   <object id="2470" name="checkpoint" x="184.667" y="623.333" width="32" height="32"/>
   <object id="2471" name="checkpoint" x="706" y="650" width="32" height="32"/>
-  <object id="2472" name="checkpoint" x="480" y="144" width="32" height="32"/>
+  <object id="2472" name="checkpoint" x="576" y="144" width="32" height="32"/>
   <object id="2474" name="chest" x="1424" y="672" width="16" height="16"/>
   <object id="2475" name="chest" x="1536" y="576" width="16" height="16"/>
   <object id="2476" name="chest" x="1424" y="448" width="16" height="16"/>
@@ -551,14 +548,12 @@
   <object id="2513" name="waypoint" type="line" x="720" y="160">
    <polyline points="0,0 16,0 192,0"/>
   </object>
-  <object id="2514" name="waypoint" type="line" x="720" y="96">
-   <polyline points="0,0 16,0 192,0"/>
-  </object>
   <object id="2515" name="waypoint" type="line" x="800" y="144">
    <polyline points="0,0 0,16 0,80"/>
   </object>
   <object id="2517" name="'spawnpoint'" x="137" y="115.5">
    <point/>
   </object>
+  <object id="2519" name="checkpoint" x="576" y="89.875" width="32" height="22.125"/>
  </objectgroup>
 </map>
