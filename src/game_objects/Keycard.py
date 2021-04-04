@@ -17,7 +17,7 @@ class Keycards():
         self.is_picked_up = False
         self.container = []
         self.create_keycards()
-        self.all_collected = False
+        self.all_collected = True
         self.collect_counter = 0
         self.cut_scene_called = False
     

@@ -134,7 +134,7 @@ class Render():
         #draw player
         
         self.add_asset_to_screen(self.car_visual, self.logic.car.rect.x, self.logic.car.rect.y)
-        if self.game_state.is_victory():
+        if self.game_state.is_victory() or self.game_state.is_kriha():
             return
         player_asset = self.animated_player.get_current_asset(self.logic.player.has_moved).copy()
         if self.logic.player.is_hidden:  
