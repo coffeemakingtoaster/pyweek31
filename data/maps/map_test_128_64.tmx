@@ -10,7 +10,6 @@
  <tileset firstgid="361" source="map_test_128_64.tsx"/>
  <tileset firstgid="8553" source="basketball und wäsche.tsx"/>
  <tileset firstgid="8585" source="tilest.tsx"/>
- <tileset firstgid="9685" source="unnamed.tsx"/>
  <layer id="4" name="foreground2" width="128" height="64">
   <data encoding="csv">
 361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,
@@ -208,7 +207,7 @@
   <object id="271" name="'wall'" x="898.333" y="178" width="27.3333" height="28" visible="0"/>
   <object id="272" name="'wall'" x="738" y="242" width="123.333" height="27.6667" visible="0"/>
   <object id="273" name="'wall'" x="898" y="242.333" width="28" height="27" visible="0"/>
-  <object id="282" name="keycard_spawnpoint" x="118.667" y="680" visible="0">
+  <object id="282" name="keycard_spawnpoint" x="129.334" y="680">
    <point/>
   </object>
   <object id="285" name="waypoint" type="line" x="970" y="712.667" visible="0">
@@ -220,13 +219,10 @@
     <property name="'type'" value="start"/>
    </properties>
   </object>
-  <object id="288" name="keycard_spawnpoint" x="1160.33" y="93" visible="0">
+  <object id="288" name="keycard_spawnpoint" x="1157.66" y="90.3333">
    <point/>
   </object>
-  <object id="289" name="keycard_spawnpoint" x="807.667" y="249.667" visible="0">
-   <point/>
-  </object>
-  <object id="290" name="keycard_spawnpoint" x="152" y="824.667" visible="0">
+  <object id="289" name="keycard_spawnpoint" x="839.667" y="216.334">
    <point/>
   </object>
   <object id="292" name="waypoint" type="line" x="1096.5" y="199.5" visible="0">
