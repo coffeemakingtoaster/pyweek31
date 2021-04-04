@@ -36,7 +36,7 @@ def launch_game():
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS, pygame.FULLSCREEN)
     else:
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
-    gameMap = pytmx.load_pygame("data/maps/map_test_128_64.tmx")
+    gameMap = pytmx.load_pygame("data/maps/map_test_128_64_mc_2.tmx")
     running = True
     #button = pygame_additions.button(40,40,100,100)
     #button.set_action(hallo_welt)
@@ -163,8 +163,9 @@ def launch_game():
 
         pygame.display.flip()
                
-        
-        if ui.menu.open:
+        if game_state.is_victory() or game_state.is_kriha():
+            pass
+        elif ui.menu.open:
             game_state.set_game_state('pause')
         elif ui.cut_scene.is_active:
             game_state.set_game_state('cut_scene')

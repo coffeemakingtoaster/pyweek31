@@ -23,7 +23,7 @@ import copy
 class Logic():
 
     def __init__(self, game_map, soundHelper, assets, game_state, ui):
-    
+        self.game_is_won = False
         self.game_state = game_state
         
         self.assets = assets
@@ -105,9 +105,11 @@ class Logic():
         for mouse in self.mice:
             mouse.update()
         self.donut.snap_trap()
-        if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected:
-            print("victory")
-            #self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
+        #print(self.game_state.game_state)
+        if self.win_collide.colliderect(self.player.player_hitbox) and self.keycards.all_collected and not self.game_is_won:
+            self.game_is_won = True
+            #print("victory")
+            self.soundHelper.play_gamestate_sfx(self.assets["sounds"]["victory"],0) 
             self.soundHelper.play_win_music(self.assets["sounds"]["victory_music"]) 
 
             # dialog stuff

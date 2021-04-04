@@ -177,4 +177,22 @@ class Hud():
                 'color': (255, 255, 255)
             })
 
+        if self.game_state.is_kriha():
+            #print("sdasdasdsadsadsadasdsada")
+            self.ui.uiHelper.createSprite({
+                'x': 0,
+                'y': 0,
+                'width': WINDOW_WIDHT,
+                'height': WINDOW_HEIGHT,
+                'texture' : self.classes['assets']['textures']['ui']['kriha'],
+                'render': render
+            })
+
+            self.ui.uiHelper.createText("Press R to reset", {
+                'font': self.ui.uiHelper.fonts['text']['font'],
+                'render': render,
+                'x': WINDOW_WIDHT/2 - 200,
+                'y': WINDOW_HEIGHT/2 + 100,
+                'color': (255, 255, 255)
+            })
         

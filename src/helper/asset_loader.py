@@ -72,6 +72,7 @@ class Assetloader():
                 ],
                 "ui": {
                     "menu_background": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'wall', 'wall_full_back_high_res.png')),
+                    "kriha": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'ui', 'kriha.png')),
                     "game_over": pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'ui', 'game_over.png'))
                 },
                 "doors" : {"door": [pygame.image.load(os.path.join(os.path.dirname( __file__ ), '..', '..', 'data', 'assets', 'mapsprite', 'door.png')),

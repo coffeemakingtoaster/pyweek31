@@ -53,7 +53,6 @@ class SoundHelper():
                 self.sfx2_channel.play(sfx, loopsCount)
                 
     def play_gamestate_sfx(self, sfx, loopsCount):
-        print("played sound")
         if self.allowSFX and not self.gamestate_channel.get_busy():
             if isinstance(sfx, list): 
                 if len(self.cache) == 0:

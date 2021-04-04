@@ -6,14 +6,16 @@
 # quit
 # reset
 # victory
-#over
+# over
 
 class GameStateManager(): 
     def __init__(self):
         self.game_state = "load"
 
     def set_game_state(self, game_state):
+        print(self.game_state, " is getting updated to ", game_state)            
         self.game_state = game_state
+
 
     def is_play(self):
         return self.game_state == "play"
@@ -32,3 +34,6 @@ class GameStateManager():
     
     def is_checkpointReached(self):
         return self.game_state == "checkpoint"
+
+    def is_kriha(self):
+        return self.game_state == "kriha"
