@@ -79,7 +79,11 @@ class Logic():
         self.car.update()
         
     def load_checkpoint(self,checkpoint):
+        if self.game_state.is_over():
+            self.game_state.set_game_state("play")
         self.player.x, self.player.y = checkpoint.player_pos
+        self.player.player_hitbox.x, self.player.player_hitbox.y = checkpoint.player_pos 
+        
         
     
     def update(self):
