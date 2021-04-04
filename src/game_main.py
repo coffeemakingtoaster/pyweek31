@@ -36,7 +36,7 @@ def launch_game():
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS, pygame.FULLSCREEN)
     else:
         screen = pygame.display.set_mode(config.WINDOW_DIMENSIONS)
-    gameMap = pytmx.load_pygame("data/maps/map_test_128_64_mc_2.tmx")
+    gameMap = pytmx.load_pygame("data/maps/map_test_128_64.tmx")
     running = True
     #button = pygame_additions.button(40,40,100,100)
     #button.set_action(hallo_welt)
