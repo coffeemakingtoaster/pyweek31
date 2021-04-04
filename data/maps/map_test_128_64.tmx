@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="2526">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="128" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="2549">
  <tileset firstgid="1" source="map_test_128_64.tsx"/>
  <layer id="4" name="foreground2" width="128" height="64">
   <data encoding="csv">
@@ -556,9 +556,27 @@
   <object id="2521" name="chest" x="672" y="176" width="16" height="16"/>
   <object id="2522" name="chest" x="1344" y="752" width="16" height="16"/>
   <object id="2523" name="'wall'" x="1120" y="432" width="16" height="320"/>
-  <object id="2524" name="'spawnpoint'" x="201.333" y="527.333">
+  <object id="2524" name="'spawnpoint'" x="137.333" y="114.667">
    <point/>
   </object>
   <object id="2525" name="hiding_spot" x="192" y="528" width="16" height="16"/>
+  <object id="2526" name="mouse" x="112" y="80" width="48" height="64"/>
+  <object id="2527" name="mouse" x="432" y="192" width="32" height="64"/>
+  <object id="2530" name="mouse" x="512" y="144" width="48" height="32"/>
+  <object id="2531" name="mouse" x="640" y="112" width="32" height="64"/>
+  <object id="2532" name="mouse" x="960" y="96" width="48" height="112"/>
+  <object id="2533" name="mouse" x="144" y="304" width="112" height="80"/>
+  <object id="2534" name="mouse" x="224" y="320" width="48" height="48"/>
+  <object id="2535" name="mouse" x="288" y="320" width="48" height="48"/>
+  <object id="2536" name="mouse" x="176" y="288" width="176" height="96"/>
+  <object id="2537" name="mouse" x="144" y="368" width="208" height="48"/>
+  <object id="2538" name="mouse" x="192" y="320" width="160" height="80"/>
+  <object id="2540" name="mouse" x="1280" y="784" width="32" height="32"/>
+  <object id="2541" name="mouse" x="1168" y="80" width="96" height="16"/>
+  <object id="2542" name="mouse" x="128" y="736" width="32" height="16"/>
+  <object id="2544" name="mouse" x="1664" y="672" width="48" height="80"/>
+  <object id="2545" name="mouse" x="1664" y="800" width="48" height="80"/>
+  <object id="2547" name="mouse" x="1664" y="688" width="48" height="80"/>
+  <object id="2548" name="mouse" x="1568" y="496" width="48" height="80"/>
  </objectgroup>
 </map>
