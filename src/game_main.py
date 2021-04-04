@@ -159,7 +159,7 @@ def launch_game():
         screen.blit(next_frame, (0, 0)) 
         #button.draw(screen)
 
-        clock.tick(60)
+        clock.tick(30)
 
         pygame.display.flip()
                
