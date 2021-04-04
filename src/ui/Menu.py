@@ -54,7 +54,7 @@ class Menu():
         self.add_option("Pause", "Resume", lambda: self.exit_menu())
         self.add_option("Pause", "Options", lambda: self.set_menu('Options'))
         self.add_option("Pause", "Credits", lambda: self.set_menu('Credits'))
-        self.add_option("Pause", "Developer", lambda: self.set_menu('Developer'))
+        #self.add_option("Pause", "Developer", lambda: self.set_menu('Developer'))
         self.add_option("Pause", "End", lambda: self.kill_game())
 
         self.add_menu('Options', 'Pause')
