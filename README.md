@@ -1,6 +1,6 @@
-# pyweek31
+# Cool cop
 
-This is a top down stealth game written entirely in Python for the 31. pyweek game jam.
+This is a top down stealth game written entirely in Python for the 31. pyweek game jam...and yes we are terribly uncreative with names.
 
 
 ## Requirements
